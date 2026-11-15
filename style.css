@@ -110,24 +110,41 @@ header p {
 }
 
 /* Кнопка "На главную" */
+/* Кнопка "На главную" с эффектом продавливания */
 .back-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     padding: 10px 20px;
+    background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 12px;
     font-weight: 600;
     font-size: 14px;
-    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
     color: var(--ink);
     margin-bottom: 24px;
+    
+    /* Создаем объем */
+    box-shadow: 0 4px 0 var(--line);
+    /* Быстрый переход для мгновенной реакции */
+    transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease, background 0.1s ease;
 }
+
 .back-link:hover {
     background: var(--inset);
     border-color: var(--blue);
-    box-shadow: 0 0 10px rgba(110, 168, 255, 0.2);
+    /* Сохраняем объем, но добавляем легкий неон */
+    box-shadow: 0 4px 0 var(--line), 0 0 10px rgba(110, 168, 255, 0.2);
+}
+
+/* Эффект нажатия (продавливания) */
+.back-link:active {
+    /* Сдвигаем кнопку вниз на толщину тени */
+    transform: translateY(4px);
+    /* Убираем тень, чтобы кнопка "упала" на место */
+    box-shadow: 0 0 0 var(--line);
+    background: var(--inset);
 }
 
 /* --- Кнопки магазинов приложений (Store Buttons) --- */
@@ -164,8 +181,9 @@ header p {
 }
 
 .store-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 0 8px rgba(110, 168, 255, 0.4);
+    /* Кнопка слегка уходит вниз при клике */
+    transform: translateY(2px); 
+    box-shadow: 0 0 5px rgba(110, 168, 255, 0.2);
 }
 
 /* --- Подвал (Footer) --- */
