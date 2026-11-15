@@ -68,3 +68,103 @@ footer {
     color: #888;
     font-size: 0.9rem;
 }
+
+/* Обновленная 3D-кнопка "На главную" */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 2px solid #2e7d32;
+    border-radius: 8px;
+    /* Создаем объем снизу */
+    box-shadow: 0 4px 0 #2e7d32; 
+    transition: all 0.1s ease;
+    cursor: pointer;
+}
+
+.back-link:hover {
+    background-color: #f0fdf4; /* Слегка зеленоватый фон при наведении */
+}
+
+/* Эффект нажатия */
+.back-link:active {
+    transform: translateY(4px); /* Кнопка сдвигается вниз на толщину тени */
+    box-shadow: 0 0 0 #2e7d32;  /* Тень исчезает, создавая эффект вдавливания */
+    background-color: #e8f5e9;
+}
+
+/* --- Стили для кнопок магазинов приложений --- */
+.store-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin: 40px 0 20px;
+    flex-wrap: wrap;
+}
+
+.store-btn {
+    display: flex;
+    align-items: center;
+    background-color: #1e1e24; /* Темный фон, как на референсе */
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+    min-width: 200px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.store-btn:hover {
+    background-color: #2a2a35;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.store-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.store-btn svg {
+    width: 32px;
+    height: 32px;
+    margin-right: 14px;
+    flex-shrink: 0;
+}
+
+/* Цвета иконок */
+.icon-google {
+    fill: #ffffff;
+}
+.icon-rustore {
+    fill: #0077ff; /* Фирменный синий цвет RuStore */
+}
+
+.store-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    text-align: left;
+}
+
+.store-text span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #a0a0a0;
+    margin-bottom: 2px;
+}
+
+.store-text strong {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
