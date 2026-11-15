@@ -100,6 +100,7 @@ footer {
 }
 
 /* --- Стили для кнопок магазинов приложений --- */
+/* --- Обновленные кнопки магазинов с неоновым свечением --- */
 .store-buttons {
     display: flex;
     gap: 16px;
@@ -109,35 +110,31 @@ footer {
 }
 
 .store-btn {
-    display: flex;
-    align-items: center;
-    background-color: #1e1e24; /* Темный фон, как на референсе */
-    color: #ffffff;
-    text-decoration: none;
-    padding: 10px 20px;
+    display: inline-block;
     border-radius: 12px;
-    border: 1px solid #333;
-    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
-    min-width: 200px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden; /* Чтобы картинка не вылезала за скругления */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    line-height: 0; /* Убирает лишний отступ под картинкой */
+    border: 2px solid transparent; /* Резервируем место под рамку */
 }
 
+.store-btn img {
+    display: block;
+    height: 56px; /* Стандартная высота бейджа */
+    width: auto;
+}
+
+/* Эффект при наведении */
 .store-btn:hover {
-    background-color: #2a2a35;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    transform: translateY(-3px);
+    /* Голубоватое неоновое свечение */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6), 
+                0 0 5px rgba(0, 255, 255, 0.4);
+    border-color: rgba(0, 255, 255, 0.8);
 }
 
 .store-btn:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.store-btn svg {
-    width: 32px;
-    height: 32px;
-    margin-right: 14px;
-    flex-shrink: 0;
 }
 
 /* Цвета иконок */
