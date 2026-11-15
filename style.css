@@ -110,13 +110,13 @@ header p {
 }
 
 /* Кнопка "На главную" */
-/* Кнопка "На главную" с эффектом продавливания */
+/* Кнопка "На главную" с ярким эффектом продавливания */
 .back-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 10px 20px;
+    padding: 12px 24px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 12px;
@@ -124,25 +124,31 @@ header p {
     font-size: 14px;
     color: var(--ink);
     margin-bottom: 24px;
+    cursor: pointer;
     
-    /* Создаем объем */
-    box-shadow: 0 4px 0 var(--line);
-    /* Быстрый переход для мгновенной реакции */
-    transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease, background 0.1s ease;
+    /* Делаем тень более контрастной (используем цвет линии, но потолще) */
+    box-shadow: 0 5px 0 var(--line); 
+    
+    /* Плавный переход только для нужных свойств */
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+    
+    /* Фиксируем позицию */
+    position: relative;
+    top: 0;
 }
 
 .back-link:hover {
     background: var(--inset);
     border-color: var(--blue);
-    /* Сохраняем объем, но добавляем легкий неон */
-    box-shadow: 0 4px 0 var(--line), 0 0 10px rgba(110, 168, 255, 0.2);
+    /* При наведении добавляем легкий неон к тени */
+    box-shadow: 0 5px 0 var(--line), 0 0 10px rgba(110, 168, 255, 0.3);
 }
 
-/* Эффект нажатия (продавливания) */
+/* Эффект нажатия */
 .back-link:active {
-    /* Сдвигаем кнопку вниз на толщину тени */
-    transform: translateY(4px);
-    /* Убираем тень, чтобы кнопка "упала" на место */
+    /* Кнопка сдвигается вниз ровно на толщину тени */
+    transform: translateY(5px);
+    /* Тень исчезает, создавая эффект "прилипания" к фону */
     box-shadow: 0 0 0 var(--line);
     background: var(--inset);
 }
