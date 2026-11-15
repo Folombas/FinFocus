@@ -1,5 +1,5 @@
 /* ==========================================================================
-   FinFocus — стиль в духе фоломании (тёмная тема, неон, акценты)
+   FinFocus — полный стиль (Главная + Внутренние страницы)
    ========================================================================== */
 
 :root {
@@ -20,103 +20,114 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body { margin: 0; line-height: 1.55; }
 
 a { color: inherit; text-decoration: none; }
-button { font: inherit; cursor: pointer; }
-img { display: block; max-width: 100%; height: auto; }
 
-h1, h2, h3, p, figure { margin: 0; }
-h1, h2, h3 { line-height: 1.07; letter-spacing: -.045em; }
-
-:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
-
-.wrap {
-    width: min(1000px, calc(100% - 40px));
-    margin-inline: auto;
-    padding-block: 40px;
+/* --- Стили для ГЛАВНОЙ СТРАНИЦЫ (index.html) --- */
+header {
+    text-align: center;
+    padding: 80px 20px 40px;
 }
 
-/* --- Шапка (Header) --- */
-.site-header {
-    border-bottom: 1px solid #34445e70;
-    padding-block: 16px;
-}
-.header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-}
-.brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 24px;
+header h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 750;
-    letter-spacing: -.06em;
-    white-space: nowrap;
+    letter-spacing: -.05em;
+    margin: 0 0 16px 0;
+    color: var(--ink);
 }
-.brand-colon { color: var(--blue); }
 
-/* --- Основной контент --- */
-.hero {
-    padding-block: 60px 40px;
-    border-bottom: 1px solid #34445e70;
-    background: radial-gradient(ellipse at 70% 40%, #1c3157 0%, #111827 38%, var(--background) 67%);
-}
-.hero h1 {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    margin-bottom: 16px;
-}
-.hero p {
+header p {
     color: var(--muted);
     font-size: 1.2rem;
     max-width: 700px;
+    margin: 0 auto;
 }
 
-.content {
-    padding-block: 40px 60px;
+/* Сетка карточек */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 20px 60px;
 }
+
+/* Карточка-кнопка */
+.card {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    margin: 0 0 12px 0;
+    color: var(--ink);
+    letter-spacing: -.03em;
+}
+
+.card p {
+    color: var(--muted);
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Наведение на карточку (неон) */
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--blue);
+    box-shadow: 0 0 20px rgba(110, 168, 255, 0.15), inset 0 0 20px rgba(110, 168, 255, 0.05);
+}
+
+/* --- Стили для ВНУТРЕННИХ СТРАНИЦ (например, habits.html) --- */
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 20px 60px;
+}
+
 .content h2 {
     font-size: 1.8rem;
-    margin-top: 40px;
-    margin-bottom: 16px;
+    margin: 40px 0 16px;
     color: var(--ink);
+    letter-spacing: -.03em;
 }
-.content h2:first-of-type {
-    margin-top: 0;
-}
+.content h2:first-of-type { margin-top: 0; }
+
 .content p {
     color: var(--muted);
     font-size: 1.05rem;
     margin-bottom: 16px;
-    max-width: 800px;
 }
 
-/* --- Кнопка "На главную" (стиль как у header-install) --- */
+/* Кнопка "На главную" */
 .back-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
-    padding: 10px 16px;
+    gap: 10px;
+    padding: 10px 20px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    font-weight: 690;
+    font-weight: 600;
     font-size: 14px;
-    white-space: nowrap;
-    transition: background-color 180ms ease, border-color 180ms ease;
-    background: transparent;
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
     color: var(--ink);
     margin-bottom: 24px;
 }
-.back-link span { color: var(--blue); }
 .back-link:hover {
     background: var(--inset);
     border-color: var(--blue);
+    box-shadow: 0 0 10px rgba(110, 168, 255, 0.2);
 }
 
 /* --- Кнопки магазинов приложений (Store Buttons) --- */
@@ -135,7 +146,7 @@ h1, h2, h3 { line-height: 1.07; letter-spacing: -.045em; }
     line-height: 0;
     border: 2px solid transparent;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    background: var(--surface); /* Подложка, чтобы кнопка не сливалась с фоном */
+    background: var(--surface);
 }
 
 .store-btn img {
@@ -145,12 +156,10 @@ h1, h2, h3 { line-height: 1.07; letter-spacing: -.045em; }
     border-radius: 10px;
 }
 
-/* 🌟 НЕОНОВОЕ СВЕЧЕНИЕ ПРИ НАВЕДЕНИИ 🌟 */
+/* НЕОНОВОЕ СВЕЧЕНИЕ КНОПОК */
 .store-btn:hover {
     transform: translateY(-3px);
-    /* Голубоватое неоновое свечение */
-    box-shadow: 0 0 15px rgba(110, 168, 255, 0.6), 
-                0 0 5px rgba(110, 168, 255, 0.4);
+    box-shadow: 0 0 15px rgba(110, 168, 255, 0.6), 0 0 5px rgba(110, 168, 255, 0.4);
     border-color: var(--blue);
 }
 
@@ -165,5 +174,5 @@ footer {
     padding: 40px 20px;
     color: var(--muted);
     font-size: 0.9rem;
-    border-top: 1px solid #34445e70;
+    border-top: 1px solid var(--line);
 }
