@@ -57,3 +57,43 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollReveals();
     initTactileFeedback();
 });
+
+// 4. Аккордеон для FAQ
+function initFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+
+            // Закрываем все остальные открытые вопросы (по желанию)
+            // Если хочешь, чтобы можно было открывать несколько сразу, удали этот блок
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                }
+            });
+
+            // Переключаем текущий
+            if (isActive) {
+                item.classList.remove('active');
+                answer.style.maxHeight = null;
+            } else {
+                item.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        });
+    });
+}
+
+// Не забудь вызвать функцию внутри document.addEventListener('DOMContentLoaded', ...)
+document.addEventListener('DOMContentLoaded', () => {
+    initPageLoadAnimations();
+    initScrollReveals();
+    initTactileFeedback();
+    initFAQ(); // <-- Добавляем вызов
+});
