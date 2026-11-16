@@ -349,3 +349,90 @@ footer {
     font-size: 1rem;
     line-height: 1.6;
 }
+
+/* ==========================================================================
+   Специфические стили для страницы Бюджета (Сайдбар + контент)
+   ========================================================================== */
+
+.budget-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 20px 60px;
+    align-items: start;
+}
+
+/* Делаем контент внутри страницы бюджета чуть аккуратнее */
+.budget-layout .content {
+    padding: 0;
+}
+
+/* Стили для правого блока с тезисами */
+.toc {
+    position: sticky;
+    top: 20px; /* Прилипает к верху экрана при скролле */
+    background: var(--surface);
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+}
+
+.toc h3 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    color: var(--ink);
+    letter-spacing: -.03em;
+}
+
+.toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.toc a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: block;
+}
+
+.toc a:hover {
+    color: var(--blue);
+    transform: translateX(4px); /* Небольшой сдвиг вправо при наведении */
+}
+
+/* Отступ при прокрутке к якорю, чтобы заголовок не прятался под край экрана */
+.content section {
+    scroll-margin-top: 40px;
+}
+
+/* Адаптивность: на мобильных тезисы уходят наверх */
+@media (max-width: 768px) {
+    .budget-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .toc {
+        position: static;
+        order: -1; /* Ставим блок с тезисами перед контентом */
+        margin-bottom: 20px;
+    }
+    
+    .toc ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .toc a {
+        background: var(--inset);
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+}
