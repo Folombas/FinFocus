@@ -423,3 +423,86 @@ footer {
 .faq-eco .faq-question:hover {
     color: var(--mint); /* При наведении текст тоже становится мятным */
 }
+
+/* ==========================================================================
+   Стили для страницы Бюджета (Карточки и Callouts)
+   ========================================================================== */
+
+/* Сетка для правила 50/30/20 */
+.budget-rule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.rule-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.rule-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--blue);
+}
+
+.rule-percent {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 12px;
+    letter-spacing: -.05em;
+}
+
+/* Цвета для процентов */
+.rule-card.needs .rule-percent { color: #ff7b72; } /* Красноватый */
+.rule-card.wants .rule-percent { color: var(--violet); } /* Фиолетовый */
+.rule-card.future .rule-percent { color: var(--mint); } /* Мятный */
+
+.rule-card h4 {
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+}
+
+.rule-card p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Стили для выделенных блоков (Callout) */
+.callout {
+    background: rgba(110, 168, 255, 0.05); /* Легкий синий оттенок */
+    border-left: 4px solid var(--blue);
+    padding: 20px 24px;
+    border-radius: 0 12px 12px 0;
+    margin: 30px 0;
+    font-size: 1.05rem;
+    color: var(--ink);
+    line-height: 1.6;
+}
+
+.callout strong {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+/* Разные цвета для разных советов */
+.callout-blue {
+    background: rgba(110, 168, 255, 0.08);
+    border-left-color: var(--blue);
+}
+.callout-blue strong { color: var(--blue); }
+
+.callout-green {
+    background: rgba(85, 213, 170, 0.08);
+    border-left-color: var(--mint);
+}
+.callout-green strong { color: var(--mint); }
