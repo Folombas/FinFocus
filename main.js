@@ -8,7 +8,6 @@ function initPageLoadAnimations() {
         el.style.transform = 'translateY(20px)';
         el.style.transition = `opacity 0.6s ease-out ${index * 0.05}s, transform 0.6s ease-out ${index * 0.05}s`;
         
-        // Небольшая задержка, чтобы браузер применил начальные стили
         setTimeout(() => {
             el.style.opacity = '1';
             el.style.transform = 'translateY(0)';
@@ -24,13 +23,12 @@ function initScrollReveals() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target); // Анимируем только один раз
+                observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.1 });
 
-    // Наблюдаем за всеми карточками и крупными блоками контента
-    document.querySelectorAll('.card, .content h2, .content p, .store-buttons').forEach(el => {
+    document.querySelectorAll('.card, .content h2, .content p, .store-buttons, .interactive-block').forEach(el => {
         el.classList.add('reveal-on-scroll');
         observer.observe(el);
     });
@@ -51,30 +49,26 @@ function initTactileFeedback() {
     });
 }
 
-// Запускаем всё после загрузки DOM
-document.addEventListener('DOMContentLoaded', () => {
-    initPageLoadAnimations();
-    initScrollReveals();
-    initTactileFeedback();
-});
-
-// 4. Аккордеон для FAQ
+// 4. Аккордеон для FAQ (ЧАСТЫЕ ВОПРОСЫ)
 function initFAQ() {
     const faqItems = document.querySelectorAll('.faq-item');
+    if (faqItems.length === 0) return;
 
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
         const answer = item.querySelector('.faq-answer');
 
+        if (!question || !answer) return;
+
         question.addEventListener('click', () => {
             const isActive = item.classList.contains('active');
 
-            // Закрываем все остальные открытые вопросы (по желанию)
-            // Если хочешь, чтобы можно было открывать несколько сразу, удали этот блок
+            // Закрываем остальные
             faqItems.forEach(otherItem => {
                 if (otherItem !== item) {
                     otherItem.classList.remove('active');
-                    otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                    const otherAns = otherItem.querySelector('.faq-answer');
+                    if (otherAns) otherAns.style.maxHeight = null;
                 }
             });
 
@@ -90,15 +84,7 @@ function initFAQ() {
     });
 }
 
-// Не забудь вызвать функцию внутри document.addEventListener('DOMContentLoaded', ...)
-document.addEventListener('DOMContentLoaded', () => {
-    initPageLoadAnimations();
-    initScrollReveals();
-    initTactileFeedback();
-    initFAQ(); // <-- Добавляем вызов
-});
-
-// 5. Интерактивный калькулятор накоплений
+// 5. Интерактивный калькулятор накоплений (Ползунок)
 function initSavingsCalculator() {
     const slider = document.getElementById('savingsSlider');
     if (!slider) return; // Если мы не на странице накоплений, выходим
@@ -109,23 +95,18 @@ function initSavingsCalculator() {
 
     function updateCalculator() {
         const daily = parseInt(slider.value);
+        if (dailyLabel) dailyLabel.textContent = `${daily} ₽/день`;
         
-        // Обновляем текст над ползунком
-        dailyLabel.textContent = `${daily} ₽/день`;
-        
-        // Считаем месяц (30 дней) и год (365 дней)
         const monthSum = daily * 30;
         const yearSum = daily * 365;
-
-        // Форматируем числа с пробелами (например, 108 000)
         const formatNum = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-        resMonth.textContent = `${formatNum(monthSum)} ₽`;
-        resYear.textContent = `${formatNum(yearSum)} ₽`;
+        if (resMonth) resMonth.textContent = `${formatNum(monthSum)} ₽`;
+        if (resYear) resYear.textContent = `${formatNum(yearSum)} ₽`;
     }
 
     slider.addEventListener('input', updateCalculator);
-    updateCalculator(); // Инициализация при загрузке
+    updateCalculator(); 
 }
 
 // 6. Переключение вкладок (Tabs)
@@ -136,24 +117,23 @@ function initTabs() {
 
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Убираем активный класс у всех
             tabBtns.forEach(b => b.classList.remove('active'));
             tabContents.forEach(c => c.classList.remove('active'));
 
-            // Добавляем активный класс текущей кнопке
             btn.classList.add('active');
-
-            // Показываем нужный контент
             const targetId = btn.getAttribute('data-tab');
-            document.getElementById(targetId).classList.add('active');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) targetContent.classList.add('active');
         });
     });
 }
 
-// НЕ ЗАБУДЬ ДОБАВИТЬ ВЫЗОВЫ В КОНЕЦ:
+// 🚀 ГЛАВНЫЙ ЗАПУСК ВСЕХ ФУНКЦИЙ
 document.addEventListener('DOMContentLoaded', () => {
-    // ... твои старые вызовы ...
+    initPageLoadAnimations();
+    initScrollReveals();
+    initTactileFeedback();
     initFAQ();
-    initSavingsCalculator(); // <-- Добавить
-    initTabs();              // <-- Добавить
+    initSavingsCalculator();
+    initTabs();
 });
