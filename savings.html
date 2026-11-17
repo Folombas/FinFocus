@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Накопления — FinFocus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-top-bar">
+            <a href="index.html" class="back-link">← На главную</a>
+        </div>
+        <h1>🏦 Как копить</h1>
+        <p>Даже 500 рублей в неделю — это начало большого пути.</p>
+    </header>
+
+    <main class="content">
+        
+        <!-- 1. ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР -->
+        <section class="interactive-block">
+            <h2>🧮 Калькулятор «Тихих побед»</h2>
+            <p>Подвинь ползунок, чтобы узнать, сколько можно накопить, если отказаться от ежедневных мелких трат (например, от того самого рафа с шокоболом).</p>
+            
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>100 ₽/день</span>
+                    <span id="dailyAmount">300 ₽/день</span>
+                    <span>1000 ₽/день</span>
+                </div>
+                <input type="range" id="savingsSlider" min="100" max="1000" step="50" value="300">
+            </div>
+
+            <div class="calc-results">
+                <div class="result-card">
+                    <span class="result-label">За месяц</span>
+                    <span class="result-value" id="resMonth">9 000 ₽</span>
+                </div>
+                <div class="result-card accent">
+                    <span class="result-label">За год</span>
+                    <span class="result-value" id="resYear">108 000 ₽</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ВКЛАДКИ (TABS) -->
+        <section class="interactive-block">
+            <h2>🗂️ Стратегии накопления</h2>
+            <div class="tabs-container">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="tab1">Метод конвертов</button>
+                    <button class="tab-btn" data-tab="tab2">Автосписание</button>
+                    <button class="tab-btn" data-tab="tab3">Округление</button>
+                </div>
+                
+                <div class="tab-contents">
+                    <div class="tab-content active" id="tab1">
+                        <h3>Классика от бабушек</h3>
+                        <p>Самый надежный метод. Как только приходит зарплата, ты сразу снимаешь 10% наличными и кладешь в конверт (или отдельную коробку). Эти деньги нельзя трогать до конца месяца. Минус: они не работают и могут обесцениваться от инфляции, но для дисциплины — идеально.</p>
+                    </div>
+                    <div class="tab-content" id="tab2">
+                        <h3>Для тех, кто забывает</h3>
+                        <p>Настрой в своем банковском приложении автоматический перевод 5-10% от зарплаты на отдельный накопительный счет в день поступления зарплаты. Ты просто не видишь этих денег, и мозг не воспринимает их как потерянные. Это лучший способ для ленивых.</p>
+                    </div>
+                    <div class="tab-content" id="tab3">
+                        <h3>Копейка рубль бережет</h3>
+                        <p>Настрой функцию в банке, которая округляет каждую покупку до целого числа в большую сторону, а разницу переводит на счет. Например, покупаешь кофе за 230 рублей, банк списывает 250, а 20 рублей уходят в копилку. За месяц набегает приятная сумма!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. КАСТОМНЫЙ ЧЕК-ЛИСТ -->
+        <section class="interactive-block">
+            <h2>✅ Чек-лист экономии</h2>
+            <p>Отмечай пункты, которые уже внедрил в жизнь:</p>
+            <div class="custom-checklist">
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Беру термос с кофе из дома</span>
+                </label>
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Хожу за продуктами со списком</span>
+                </label>
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Использую кэшбэк-карты</span>
+                </label>
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Отключил лишние подписки</span>
+                </label>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 4. FAQ -->
+    <section class="faq-section">
+        <h2 class="faq-title">Частые вопросы про накопления</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>С какой суммы вообще начинать копить?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>С любой! Даже если ты отложишь 100 рублей, это уже победа. Главное — начать и сделать это регулярным. Психологи говорят, что привычка формируется за 21 день. Попробуй откладывать по 50-100 рублей каждый день в течение трех недель.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Куда складывать накопления?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Лучше всего — на отдельный накопительный счет в банке с возможностью снятия без потери процентов. Не храни дома наличные — их съедает инфляция и соблазн потратить. И не инвестируй эти деньги в акции, если это твоя первая подушка безопасности.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Что делать, если срываюсь и трачу накопленное?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Не ругай себя. Срывы бывают у всех. Просто начни заново на следующий день. Если срывы происходят часто, возможно, сумма слишком большая, или ты копишь на то, что тебе не так уж и нужно. Пересмотри цель.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Зачем копить, если деньги обесцениваются?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Да, инфляция есть. Но накопления — это твоя финансовая безопасность. Если завтра сломается телефон или уволят с работы, у тебя будет подушка, чтобы не брать кредит под грабительский процент. Подушка безопасности — это не про инвестиции, это про спокойный сон.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Какая должна быть цель накоплений?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Первая цель — подушка безопасности (3-6 месячных расходов). Вторая цель — любая крупная покупка (отпуск, техника, ремонт). Важно, чтобы цель была конкретной и желанной, тогда копить будет легче.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>FinFocus — проект о деньгах для людей, а не для инвесторов.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

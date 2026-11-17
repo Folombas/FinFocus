@@ -97,3 +97,63 @@ document.addEventListener('DOMContentLoaded', () => {
     initTactileFeedback();
     initFAQ(); // <-- Добавляем вызов
 });
+
+// 5. Интерактивный калькулятор накоплений
+function initSavingsCalculator() {
+    const slider = document.getElementById('savingsSlider');
+    if (!slider) return; // Если мы не на странице накоплений, выходим
+
+    const dailyLabel = document.getElementById('dailyAmount');
+    const resMonth = document.getElementById('resMonth');
+    const resYear = document.getElementById('resYear');
+
+    function updateCalculator() {
+        const daily = parseInt(slider.value);
+        
+        // Обновляем текст над ползунком
+        dailyLabel.textContent = `${daily} ₽/день`;
+        
+        // Считаем месяц (30 дней) и год (365 дней)
+        const monthSum = daily * 30;
+        const yearSum = daily * 365;
+
+        // Форматируем числа с пробелами (например, 108 000)
+        const formatNum = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
+        resMonth.textContent = `${formatNum(monthSum)} ₽`;
+        resYear.textContent = `${formatNum(yearSum)} ₽`;
+    }
+
+    slider.addEventListener('input', updateCalculator);
+    updateCalculator(); // Инициализация при загрузке
+}
+
+// 6. Переключение вкладок (Tabs)
+function initTabs() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    if (tabBtns.length === 0) return;
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Убираем активный класс у всех
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+
+            // Добавляем активный класс текущей кнопке
+            btn.classList.add('active');
+
+            // Показываем нужный контент
+            const targetId = btn.getAttribute('data-tab');
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+}
+
+// НЕ ЗАБУДЬ ДОБАВИТЬ ВЫЗОВЫ В КОНЕЦ:
+document.addEventListener('DOMContentLoaded', () => {
+    // ... твои старые вызовы ...
+    initFAQ();
+    initSavingsCalculator(); // <-- Добавить
+    initTabs();              // <-- Добавить
+});
