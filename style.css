@@ -413,3 +413,13 @@ footer {
     margin: 0 auto;
     padding: 20px 20px 60px;
 }
+
+/* Эко-стиль для страницы велосипеда */
+.faq-eco .faq-icon::before,
+.faq-eco .faq-icon::after {
+    background-color: var(--mint); /* Используем мятный цвет из нашей палитры */
+}
+
+.faq-eco .faq-question:hover {
+    color: var(--mint); /* При наведении текст тоже становится мятным */
+}
