@@ -160,6 +160,48 @@ function initTabs() {
     });
 }
 
+// 6.1 Интерактивный калькулятор инфляции (сумма × срок)
+function formatMoney(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
+function yearsWord(years) {
+    if (years === 1) return 'год';
+    if (years >= 2 && years <= 4) return 'года';
+    return 'лет';
+}
+
+function initInflationCalculator() {
+    const sumSlider = document.getElementById('sumSlider');
+    const yearsSlider = document.getElementById('yearsSlider');
+    if (!sumSlider || !yearsSlider) return; // Если мы не на странице грамотности, выходим
+
+    const sumLabel = document.getElementById('sumAmount');
+    const yearsLabel = document.getElementById('yearsAmount');
+    const resLoss = document.getElementById('resLoss');
+    const resValue = document.getElementById('resValue');
+
+    const INFLATION_RATE = 0.08;
+
+    function updateCalculator() {
+        const sum = parseInt(sumSlider.value);
+        const years = parseInt(yearsSlider.value);
+
+        if (sumLabel) sumLabel.textContent = `${formatMoney(sum)} ₽`;
+        if (yearsLabel) yearsLabel.textContent = `${years} ${yearsWord(years)}`;
+
+        const futureValue = Math.round(sum * Math.pow(1 - INFLATION_RATE, years));
+        const loss = sum - futureValue;
+
+        if (resValue) resValue.textContent = `${formatMoney(futureValue)} ₽`;
+        if (resLoss) resLoss.textContent = `${formatMoney(loss)} ₽`;
+    }
+
+    sumSlider.addEventListener('input', updateCalculator);
+    yearsSlider.addEventListener('input', updateCalculator);
+    updateCalculator();
+}
+
 // 🚀 ГЛАВНЫЙ ЗАПУСК ВСЕХ ФУНКЦИЙ
 document.addEventListener('DOMContentLoaded', () => {
     initPageLoadAnimations();
@@ -168,5 +210,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initFAQ();
     initSavingsCalculator();
     initDiscountsCalculator();
+    initInflationCalculator();
     initTabs();
 });
