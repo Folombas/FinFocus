@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Финансовая грамотность — FinFocus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-top-bar">
+            <a href="index.html" class="back-link">← На главную</a>
+
+            <div class="toc-top">
+                <span class="toc-title">Тезисы:</span>
+                <a href="#inflation-calc" class="toc-link">Инфляция</a>
+                <a href="#dictionary" class="toc-link">Словарь</a>
+                <a href="#basics-checklist" class="toc-link">База</a>
+            </div>
+        </div>
+
+        <h1>🎓 Финансовая грамотность</h1>
+        <p>Инфляция, подушка безопасности и главные ошибки — простыми словами, без заумных терминов.</p>
+    </header>
+
+    <main class="content">
+
+        <!-- 1. ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР -->
+        <section class="interactive-block" id="inflation-calc">
+            <h2>🧮 Сколько съедает инфляция</h2>
+            <p>Деньги под матрасом не «лежат спокойно» — они тихо обесцениваются. Подвинь ползунки, чтобы увидеть, сколько покупательной способности теряет сумма, которая просто хранится без прироста (при инфляции около 8% в год).</p>
+
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>10 тыс ₽</span>
+                    <span id="sumAmount">200 000 ₽</span>
+                    <span>1 млн ₽</span>
+                </div>
+                <input type="range" id="sumSlider" min="10000" max="1000000" step="10000" value="200000">
+                <p><strong>Сумма, которая лежит без прироста</strong> (наличные, обычная карта без процентов)</p>
+            </div>
+
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>1 год</span>
+                    <span id="yearsAmount">5 лет</span>
+                    <span>10 лет</span>
+                </div>
+                <input type="range" id="yearsSlider" min="1" max="10" step="1" value="5">
+                <p><strong>Срок хранения</strong></p>
+            </div>
+
+            <div class="calc-results">
+                <div class="result-card">
+                    <span class="result-label">Съест инфляция</span>
+                    <span class="result-value" id="resLoss">68 184 ₽</span>
+                </div>
+                <div class="result-card accent">
+                    <span class="result-label">Реальная стоимость через срок</span>
+                    <span class="result-value" id="resValue">131 816 ₽</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ВКЛАДКИ (TABS) -->
+        <section class="interactive-block" id="dictionary">
+            <h2>📚 Мини-словарь</h2>
+            <p>Три понятия, которых хватает для спокойной финансовой жизни без инвесторских подкастов.</p>
+            <div class="tabs-container">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="ftab1">Инфляция</button>
+                    <button class="tab-btn" data-tab="ftab2">Подушка безопасности</button>
+                    <button class="tab-btn" data-tab="ftab3">Кредит</button>
+                </div>
+
+                <div class="tab-contents">
+                    <div class="tab-content active" id="ftab1">
+                        <h3>Почему 100 ₽ сегодня ≠ 100 ₽ через год</h3>
+                        <p>Инфляция — это рост цен на всё вокруг. Если цены выросли за год на 8%, то на те же 100 ₽ ты купишь уже не полную корзину, а примерно как раньше на 92 ₽. Деньги по сути не исчезают — исчезает то, что на них можно купить. Именно поэтому хранить подушку «в тумбочке» невыгодно: банк на вкладе всё равно добавляет процентов больше, чем тумбочка. Правило на пальцах: деньги, которые лежат годами без движения, каждый год становятся «легче» примерно на одну десятую часть.</p>
+                    </div>
+                    <div class="tab-content" id="ftab2">
+                        <h3>Спокойный сон в цифрах</h3>
+                        <p>Подушка безопасности — это запас живых денег на случай неприятностей: сломался телефон, задержали зарплату, заболел зуб. Объём — 3–6 месячных расходов. Не для инвестиций и не для ипотеки: просто лежат на вкладе с быстрым снятием. Логика простая: с подушкой любая неприятность — это «неприятность», а без неё — «кредит под 40%».</p>
+                    </div>
+                    <div class="tab-content" id="ftab3">
+                        <h3>Инструмент, который кусается</h3>
+                        <p>Кредит — это покупка сейчас за счёт твоего будущего. Иногда это оправданно (жильё, лечение), но брать кредиты на телефоны и отпуска — самая дорогая роскошь в жизни. Простая арифметика: кредит на 100 000 ₽ под 25% годовых за год обойдётся примерно в 112 500 ₽ — то есть телефон за сто тысяч превращается в телефон за сто двенадцать, при том, что через год он стоит вдвое дешевле. Правило: если вещь не переживёт кредит — она того не стоит.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. КАСТОМНЫЙ ЧЕК-ЛИСТ -->
+        <section class="interactive-block" id="basics-checklist">
+            <h2>✅ База финансовой грамотности</h2>
+            <p>Отмечай пункты, которые уже про тебя:</p>
+            <div class="custom-checklist">
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Знаю, куда уходят деньги хотя бы примерно</span>
+                </label>
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Имею подушку безопасности хотя бы на месяц расходов</span>
+                </label>
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Не беру кредиты на вещи, которые быстро обесцениваются</span>
+                </label>
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Деньги лежат не под матрасом, а там, где есть процент</span>
+                </label>
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Никому не диктую коды из СМС — даже «сотруднику банка»</span>
+                </label>
+            </div>
+        </section>
+
+        <section class="interactive-block">
+            <div class="callout callout-green">
+                <strong>🛡️ Правило безопасности:</strong> никто из настоящих банков, полиции или налоговой никогда не попросит код из СМС, пароль или перевод на «безопасный счёт». Если звонящий давит, торопит и пугает блокировкой — это мошенник. Положи трубку и сам позвони на номер, который написан на обратной стороне твоей карты. Сначала проверяем — потом говорим.
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 4. FAQ -->
+    <section class="faq-section">
+        <h2 class="faq-title">Частые вопросы про деньги</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>С чего начать, если я вообще ничего не знаю?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>С учёта: в течение месяца просто записывай, куда уходят деньги. Ничего не меняй, не экономь, не кори себя — только наблюдай. В конце месяца ты впервые увидишь свою реальную картину, и обычно уже она сама подсказывает две-три очевидные дыры. Это фундамент, без которого остальные советы не работают.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Что делать в первую очередь: копить или гасить кредит?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Сначала — мини-подушка примерно на месяц расходов, чтобы новый неожиданный расход не затолкал тебя в новый кредит. Параллельно гаси самые дорогие кредиты (у кого выше ставка — тому раньше). Как только дорогие кредиты закрыты, наращивай подушку до 3–6 месячных расходов.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Нужно ли вести таблицу с точностью до копейки?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Нет. Точность до копейки нужна бухгалтеру, а тебе нужен список категорий: еда, транспорт, подписки, услуги, прочее. Даже заметка на телефон с одной строкой в день даёт 90% пользы. Идеальная таблица, которую бросил через неделю, хуже простой заметки, которую ведёшь годами.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Как быстро понять, что мне пытаются навязать ерунду?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>По эмоциям. Всё, что топит на «срочно», «последний шанс», «гарантированный доход без риска» и «все уже вложились, а ты кто» — это либо обман, либо агрессивная продажа. Любой честный финансовый выдержит одну ночь на раздумья. Пауза в 24 часа стоит дорого только тем, кто собирается продать тебе ерунду.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Если доход маленький, есть ли смысл во всей этой грамотности?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Вообще даже больше. При маленьком доходе цена ошибки выше: один дорогой кредит легко съедает месячный бюджет. Учёт трат, подушка с малой суммы и отказ от кредитов на ерунду работают при любой зарплате — просто в масштабе 50 рублей вместо 5000.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>FinFocus — проект о деньгах для людей, а не для инвесторов.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
