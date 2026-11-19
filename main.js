@@ -109,6 +109,38 @@ function initSavingsCalculator() {
     updateCalculator(); 
 }
 
+// 5.1 Интерактивный калькулятор выгоды со скидок (два ползунка)
+function initDiscountsCalculator() {
+    const spendSlider = document.getElementById('spendSlider');
+    const discountSlider = document.getElementById('discountSlider');
+    if (!spendSlider || !discountSlider) return; // Если мы не на странице скидок, выходим
+
+    const spendLabel = document.getElementById('spendAmount');
+    const discountLabel = document.getElementById('discountAmount');
+    const resMonth = document.getElementById('resMonth');
+    const resYear = document.getElementById('resYear');
+
+    const formatNum = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
+    function updateCalculator() {
+        const spend = parseInt(spendSlider.value);
+        const discount = parseInt(discountSlider.value);
+
+        if (spendLabel) spendLabel.textContent = `${formatNum(spend)} ₽/мес`;
+        if (discountLabel) discountLabel.textContent = `${discount}%`;
+
+        const monthSum = Math.round(spend * discount / 100);
+        const yearSum = monthSum * 12;
+
+        if (resMonth) resMonth.textContent = `${formatNum(monthSum)} ₽`;
+        if (resYear) resYear.textContent = `${formatNum(yearSum)} ₽`;
+    }
+
+    spendSlider.addEventListener('input', updateCalculator);
+    discountSlider.addEventListener('input', updateCalculator);
+    updateCalculator(); 
+}
+
 // 6. Переключение вкладок (Tabs)
 function initTabs() {
     const tabBtns = document.querySelectorAll('.tab-btn');
@@ -135,5 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initTactileFeedback();
     initFAQ();
     initSavingsCalculator();
+    initDiscountsCalculator();
     initTabs();
 });
