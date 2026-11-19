@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Финансовая грамотность — FinFocus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-top-bar">
+            <a href="index.html" class="back-link">← На главную</a>
+
+            <div class="toc-top">
+                <span class="toc-title">Тезисы:</span>
+                <a href="#inflation-calc" class="toc-link">Инфляция</a>
+                <a href="#dictionary" class="toc-link">Словарь</a>
+                <a href="#basics-checklist" class="toc-link">База</a>
+            </div>
+        </div>
+
+        <h1>🎓 Финансовая грамотность</h1>
+        <p>Инфляция, подушка безопасности и главные ошибки — простыми словами, без заумных терминов.</p>
+    </header>
+
+    <main class="content">
+
+        <!-- 1. ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР -->
+        <section class="interactive-block" id="inflation-calc">
+            <h2>🧮 Сколько съедает инфляция</h2>
+            <p>Деньги под матрасом не «лежат спокойно» — они тихо обесцениваются. Подвинь ползунки, чтобы увидеть, сколько покупательной способности теряет сумма, которая просто хранится без прироста (при инфляции около 8% в год).</p>
+
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>10 тыс ₽</span>
+                    <span id="sumAmount">200 000 ₽</span>
+                    <span>1 млн ₽</span>
+                </div>
+                <input type="range" id="sumSlider" min="10000" max="1000000" step="10000" value="200000">
+                <p><strong>Сумма, которая лежит без прироста</strong> (наличные, обычная карта без процентов)</p>
+            </div>
+
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>1 год</span>
+                    <span id="yearsAmount">5 лет</span>
+                    <span>10 лет</span>
+                </div>
+                <input type="range" id="yearsSlider" min="1" max="10" step="1" value="5">
+                <p><strong>Срок хранения</strong></p>
+            </div>
+
+            <div class="calc-results">
+                <div class="result-card">
+                    <span class="result-label">Съест инфляция</span>
+                    <span class="result-value" id="resLoss">68 184 ₽</span>
+                </div>
+                <div class="result-card accent">
+                    <span class="result-label">Реальная стоимость через срок</span>
+                    <span class="result-value" id="resValue">131 816 ₽</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>FinFocus — проект о деньгах для людей, а не для инвесторов.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
