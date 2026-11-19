@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Долги и кредиты — FinFocus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-top-bar">
+            <a href="index.html" class="back-link">← На главную</a>
+
+            <div class="toc-top">
+                <span class="toc-title">Тезисы:</span>
+                <a href="#loan-calc" class="toc-link">Переплата</a>
+                <a href="#loan-rules" class="toc-link">Правила</a>
+                <a href="#loan-checklist" class="toc-link">Безопасность</a>
+            </div>
+        </div>
+
+        <h1>🏦 Долги и кредиты</h1>
+        <p>Как банк считает твои платежи и во сколько на самом деле обходится «всего 25% годовых».</p>
+    </header>
+
+    <main class="content">
+
+        <!-- 1. ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР -->
+        <section class="interactive-block" id="loan-calc">
+            <h2>🧮 Сколько стоит кредит на самом деле</h2>
+            <p>Банк называет ставку в год, но забирает деньги каждый месяц. Подвинь ползунки (ставку возьмём типичный потребительский вариант — 25% в год) и посмотри, сколько ты заплатишь сверху, кроме самой суммы кредита.</p>
+
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>50 тыс ₽</span>
+                    <span id="amountLabel">300 000 ₽</span>
+                    <span>1 млн ₽</span>
+                </div>
+                <input type="range" id="amountSlider" min="50000" max="1000000" step="50000" value="300000">
+                <p><strong>Сумма кредита</strong></p>
+            </div>
+
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>6 мес</span>
+                    <span id="termLabel">24 мес</span>
+                    <span>60 мес</span>
+                </div>
+                <input type="range" id="termSlider" min="6" max="60" step="6" value="24">
+                <p><strong>Срок кредита</strong></p>
+            </div>
+
+            <div class="calc-results">
+                <div class="result-card">
+                    <span class="result-label">Платёж в месяц</span>
+                    <span class="result-value" id="resPayment">16 011 ₽</span>
+                </div>
+                <div class="result-card accent">
+                    <span class="result-label">Переплата банку за весь срок</span>
+                    <span class="result-value" id="resOverpay">84 264 ₽</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>FinFocus — проект о деньгах для людей, а не для инвесторов.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
