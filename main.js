@@ -202,6 +202,39 @@ function initInflationCalculator() {
     updateCalculator();
 }
 
+// 6.2 Калькулятор переплаты по кредиту (аннуитет)
+function initLoanCalculator() {
+    const amountSlider = document.getElementById('amountSlider');
+    const termSlider = document.getElementById('termSlider');
+    if (!amountSlider || !termSlider) return; // Если мы не на странице кредитов, выходим
+
+    const amountLabel = document.getElementById('amountLabel');
+    const termLabel = document.getElementById('termLabel');
+    const resPayment = document.getElementById('resPayment');
+    const resOverpay = document.getElementById('resOverpay');
+
+    const RATE = 0.25; // годовая ставка 25%
+
+    function updateCalculator() {
+        const amount = parseInt(amountSlider.value);
+        const months = parseInt(termSlider.value);
+
+        if (amountLabel) amountLabel.textContent = `${formatMoney(amount)} ₽`;
+        if (termLabel) termLabel.textContent = `${months} мес`;
+
+        const monthlyRate = RATE / 12;
+        const payment = Math.round(amount * monthlyRate / (1 - Math.pow(1 + monthlyRate, -months)));
+        const overpay = Math.round(payment * months - amount);
+
+        if (resPayment) resPayment.textContent = `${formatMoney(payment)} ₽`;
+        if (resOverpay) resOverpay.textContent = `${formatMoney(overpay)} ₽`;
+    }
+
+    amountSlider.addEventListener('input', updateCalculator);
+    termSlider.addEventListener('input', updateCalculator);
+    updateCalculator();
+}
+
 // 🚀 ГЛАВНЫЙ ЗАПУСК ВСЕХ ФУНКЦИЙ
 document.addEventListener('DOMContentLoaded', () => {
     initPageLoadAnimations();
@@ -211,5 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initSavingsCalculator();
     initDiscountsCalculator();
     initInflationCalculator();
+    initLoanCalculator();
     initTabs();
 });

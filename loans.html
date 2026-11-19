@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Долги и кредиты — FinFocus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-top-bar">
+            <a href="index.html" class="back-link">← На главную</a>
+
+            <div class="toc-top">
+                <span class="toc-title">Тезисы:</span>
+                <a href="#loan-calc" class="toc-link">Переплата</a>
+                <a href="#loan-rules" class="toc-link">Правила</a>
+                <a href="#loan-checklist" class="toc-link">Безопасность</a>
+            </div>
+        </div>
+
+        <h1>🏦 Долги и кредиты</h1>
+        <p>Как банк считает твои платежи и во сколько на самом деле обходится «всего 25% годовых».</p>
+    </header>
+
+    <main class="content">
+
+        <!-- 1. ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР -->
+        <section class="interactive-block" id="loan-calc">
+            <h2>🧮 Сколько стоит кредит на самом деле</h2>
+            <p>Банк называет ставку в год, но забирает деньги каждый месяц. Подвинь ползунки (ставку возьмём типичный потребительский вариант — 25% в год) и посмотри, сколько ты заплатишь сверху, кроме самой суммы кредита.</p>
+
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>50 тыс ₽</span>
+                    <span id="amountLabel">300 000 ₽</span>
+                    <span>1 млн ₽</span>
+                </div>
+                <input type="range" id="amountSlider" min="50000" max="1000000" step="50000" value="300000">
+                <p><strong>Сумма кредита</strong></p>
+            </div>
+
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>6 мес</span>
+                    <span id="termLabel">24 мес</span>
+                    <span>60 мес</span>
+                </div>
+                <input type="range" id="termSlider" min="6" max="60" step="6" value="24">
+                <p><strong>Срок кредита</strong></p>
+            </div>
+
+            <div class="calc-results">
+                <div class="result-card">
+                    <span class="result-label">Платёж в месяц</span>
+                    <span class="result-value" id="resPayment">16 011 ₽</span>
+                </div>
+                <div class="result-card accent">
+                    <span class="result-label">Переплата банку за весь срок</span>
+                    <span class="result-value" id="resOverpay">84 264 ₽</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ВКЛАДКИ (TABS) -->
+        <section class="interactive-block" id="loan-rules">
+            <h2>🗂️ Три правила кредита</h2>
+            <div class="tabs-container">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="ltab1">Нужное vs ерунда</button>
+                    <button class="tab-btn" data-tab="ltab2">Считай полную цену</button>
+                    <button class="tab-btn" data-tab="ltab3">Платёж ≤ 20%</button>
+                </div>
+
+                <div class="tab-contents">
+                    <div class="tab-content active" id="ltab1">
+                        <h3>Может ли подождать?</h3>
+                        <p>Кредит оправдан для того, что спасает здоровье, время или жильё и не может подождать. Телефон, наушники, отпуск и новый айфон потому что «у всех есть» — ждут, пока накопишь. Простой тест: если вещь через два года будет стоить вдвое дешевле, а кредит за это время добавит четверть цены — ты платишь больше, чтобы постарее. Сначала подушка, потом накопление, и только в крайнем случае — кредит.</p>
+                    </div>
+                    <div class="tab-content" id="ltab2">
+                        <h3>Ставка ≠ цена кредита</h3>
+                        <p>«Всего 1% в день» — это около 30% в месяц и несколько сот процентов в год. Реклама любит называть месячную ставку, потому что она кажется смешной. Перед подписанием всегда находи в договоре полную стоимость кредита (ПСК) — там банк обязан показать настоящую переплату. И проверяй скрытые страховки: их часто вписывают сразу, увеличивая платёж на заметный кусок.</p>
+                    </div>
+                    <div class="tab-content" id="ltab3">
+                        <h3>Тест на пригодность</h3>
+                        <p>Ежемесячная плата по всем твоим кредитам вместе не должна превышать примерно 20% дохода. Если банк одобрил больше — это не комплимент, а расчёт на то, что процент ты всё равно потянешь, пусть и ценой всей остальной жизни. Перед оформлением выпиши все свои платежи (карта рассрочки, рассрочка за телефон, и это тоже кредит) и честно сложи.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. КАСТОМНЫЙ ЧЕК-ЛИСТ -->
+        <section class="interactive-block" id="loan-checklist">
+            <h2>✅ Чек-лист долгового здоровья</h2>
+            <p>Отмечай пункты, которые уже про тебя:</p>
+            <div class="custom-checklist">
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Знаю сумму и срок всех своих кредитов и рассрочек</span>
+                </label>
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Платежи по долгам — не больше пятой части дохода</span>
+                </label>
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Перед подписанием смотрю полную стоимость кредита в договоре</span>
+                </label>
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Не беру новый кредит, чтобы закрыть старый</span>
+                </label>
+                <label class="check-item">
+                    <input type="checkbox">
+                    <span class="check-box"></span>
+                    <span class="check-text">Плачу вовремя — просрочки портят кредитную историю надолго</span>
+                </label>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 4. FAQ -->
+    <section class="faq-section">
+        <h2 class="faq-title">Частые вопросы про кредиты</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Вообще может ли кредит быть полезным?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Да — если он спасает от большой беды или покупает то, что служит годами и не может подождать: лечение, жильё, рабочий инструмент, срочный ремонт. Плохой кредит — это тот, который оплачивает мгновенное желание, а платится годами. Хорошее правило: если через день ты уже не можешь объяснить, зачем брал эти деньги — отдавай быстрее, пока можешь.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Что делать, если уже есть несколько кредитов?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Выпиши их все: сумма, ставка, платёж, срок. Дальше гаси досрочно тот, у которого выше ставка, а не тот, который просто больше по сумме. Минимальные платежи — по всем, лишние рубли — в самый дорогой. Новый кредит для закрытия старых — только если ставка реально ниже, иначе это просто круг с худшими условиями.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Рассрочка «0%» — это бесплатный кредит?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Почти, но часто в цену товара уже вписана страховка или завышенная стоимость, а одна просрочка может включить полноценную ставку задним числом. Ещё рассрочки складываются незаметно: пять платежей по 3000 ₽ — это уже 15 000 ₽ в месяц, у которого ты и не заметишь. Брать можно, но вести список рассрочек обязательно.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Портится ли кредитная история, если я просто не беру кредиты?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Нет, «не пользуюсь кредитами» — это нормально. Пустая история — не минус, а просто нейтраль. Минус — просрочки, займы в микрозаймах и новые кредиты для покрытия старых. Если когда-нибудь понадобится ипотека, главное будет — стабильный доход и отсутствие просрочек, а не количество использованных кредитных карт в прошлом.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Мне звонят «из банка» и требуют погасить долг сегодня — это правда?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Проверяй номером из договора или на обратной стороне карты — а не тем, который тебе продиктовал звонящий. Банк не требует перевод на чужой счёт и не забирает деньги «за час». Если ты не уверен даже в своих кредитах, запроси кредитный отчёт через Госуслуги — там официально видны все твои долги.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>FinFocus — проект о деньгах для людей, а не для инвесторов.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
