@@ -1440,3 +1440,93 @@ html[data-theme="light"] .hint-chip.warn { background: rgba(201, 68, 58, 0.08); 
 @media (max-width: 720px) {
     .calc-results.triples { grid-template-columns: 1fr; }
 }
+
+/* --- Спецэффекты (effects.js): прогресс скролла --- */
+#fx-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    z-index: 200;
+    pointer-events: none;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    background: linear-gradient(90deg, var(--blue), var(--violet), var(--mint));
+    border-radius: 0 999px 999px 0;
+}
+
+/* --- Фоновые частицы --- */
+#fx-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* --- 3D-tilt карточек и блик за курсором --- */
+.fx-tilt { will-change: transform; }
+.fx-tilt.tilting { transition: none !important; }
+.fx-tilt::after {
+    background: radial-gradient(160px circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.16), transparent 70%);
+}
+html[data-theme="light"] .fx-tilt::after {
+    background: radial-gradient(160px circle at var(--gx, 50%) var(--gy, 50%), rgba(47, 107, 255, 0.10), transparent 70%);
+}
+.fx-tilt:hover { transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px); }
+
+/* --- Ripple-волна на кнопках --- */
+.fx-host { position: relative; overflow: hidden; }
+.fx-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--blue) 40%, transparent);
+    pointer-events: none;
+    transform: scale(0);
+    animation: fx-ripple 0.55s var(--ease-out) forwards;
+}
+@keyframes fx-ripple { to { transform: scale(2.6); opacity: 0; } }
+
+/* --- Конфетти-эмодзи --- */
+.fx-confetti {
+    position: fixed;
+    z-index: 300;
+    pointer-events: none;
+    font-size: 1.3rem;
+    animation: fx-fall 1s var(--ease-out) forwards;
+}
+@keyframes fx-fall {
+    from { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+    to { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(1.15); opacity: 0; }
+}
+
+/* --- Мерцание градиента в заголовках --- */
+header h1 {
+    background: linear-gradient(90deg, var(--blue), var(--violet), var(--mint), var(--violet), var(--blue));
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: fx-shimmer 7s ease-in-out infinite alternate;
+}
+@keyframes fx-shimmer { to { background-position: 220% 0; } }
+
+/* --- Каскадное появление пунктов шторки --- */
+.drawer-open .drawer-nav a {
+    animation: fx-rise 0.35s var(--ease-out) backwards;
+}
+.drawer-open .drawer-nav a:nth-child(1) { animation-delay: 0.03s; }
+.drawer-open .drawer-nav a:nth-child(2) { animation-delay: 0.06s; }
+.drawer-open .drawer-nav a:nth-child(3) { animation-delay: 0.09s; }
+.drawer-open .drawer-nav a:nth-child(4) { animation-delay: 0.12s; }
+.drawer-open .drawer-nav a:nth-child(5) { animation-delay: 0.15s; }
+.drawer-open .drawer-nav a:nth-child(6) { animation-delay: 0.18s; }
+.drawer-open .drawer-nav a:nth-child(7) { animation-delay: 0.21s; }
+.drawer-open .drawer-nav a:nth-child(8) { animation-delay: 0.24s; }
+.drawer-open .drawer-nav a:nth-child(9) { animation-delay: 0.27s; }
+@keyframes fx-rise { from { opacity: 0; transform: translateX(-16px); } }
+
+/* --- Пружинка на тумблере --- */
+.ui-switch input:checked + .sw-track .sw-knob { animation: fx-boing 0.35s var(--ease-out); }
+@keyframes fx-boing { 0% { transform: translateX(0) scale(1); } 45% { transform: translateX(23px) scale(1.18); } 100% { transform: translateX(20px) scale(1); } }

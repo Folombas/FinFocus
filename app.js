@@ -92,7 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
             if (answered === 0) { score.textContent = '🤔 Сначала выбери хотя бы один ответ'; }
-            else if (right === names.length) { score.textContent = '🏆 ' + right + ' из ' + names.length + ' — финансовый ниндзя!'; }
+            else if (right === names.length) { if (window.finfocusBurst) { var r0 = quizCheck.getBoundingClientRect(); finfocusBurst(r0.left + r0.width / 2, r0.top + r0.height / 2, 30); }
+            score.textContent = '🏆 ' + right + ' из ' + names.length + ' — финансовый ниндзя!'; }
             else { score.textContent = '✅ ' + right + ' из ' + names.length + '. Красные подсвечены не зря — перечитай и попробуй ещё раз.'; }
         });
         var quizReset = document.getElementById('quizReset');
