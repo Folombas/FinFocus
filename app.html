@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Интерактивный тренажёр финансовой грамотности: собери свой бюджет из ползунков, тумблеров и радиокнопок и узнай, сколько реально можешь откладывать.">
+    <meta name="theme-color" content="#0e1118">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="theme.js"></script>
+    <script src="menu.js" defer></script>
+    <title>Финансовый тренажёр — FinFocus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="site-nav" aria-label="Навигация по FinFocus">
+        <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="side-menu"><span></span><span></span><span></span></button>
+        <div class="site-nav-links">
+            <a href="index.html">🏠 Главная</a>
+            <a href="budget.html">📊 Бюджет</a>
+            <a href="savings.html">🎯 Накопления</a>
+            <a href="discounts.html">🏷️ Скидки</a>
+            <a href="finlit.html">🎓 Финграмотность</a>
+            <a href="habits.html">🧠 Привычки</a>
+            <a href="loans.html">💳 Кредиты</a>
+            <a href="bicycle.html">🚲 Велосипед</a>
+            <a href="app.html" aria-current="page">🕹️ Тренажёр</a>
+        </div>
+        <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">
+            <span class="tt-icon tt-sun">☀️</span><span class="tt-icon tt-moon">🌙</span>
+        </button>
+    </nav>
+
+    <header>
+        <h1>🕹️ Финансовый тренажёр</h1>
+        <p>Поелизай ползунками, потумблерами и порадиокнопками — и увидь свой бюджет вживую.</p>
+    </header>
+
+    <main class="content">
+
+        <section class="interactive-block">
+            <h2>🎚️ Шаг 1. Твой доход</h2>
+            <p>Двигай ползунок и смотри, как меняется весь расчёт.</p>
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>15 тыс ₽</span>
+                    <span id="incomeVal">80 000 ₽</span>
+                    <span>400 тыс ₽</span>
+                </div>
+                <input type="range" id="income" min="15000" max="400000" step="1000" value="80000">
+            </div>
+        </section>
+
+        <section class="interactive-block">
+            <h2>🔀 Шаг 2. Сценарий жизни</h2>
+            <div class="seg" role="radiogroup" aria-label="Сценарий жизни">
+                <input type="radio" name="scenario" id="sc-student" value="40" data-share="40">
+                <label for="sc-student">🎓 Студент</label>
+                <input type="radio" name="scenario" id="sc-work" value="55" data-share="55" checked>
+                <label for="sc-work">💼 Работаю</label>
+                <input type="radio" name="scenario" id="sc-family" value="70" data-share="70" checked>
+                <label for="sc-family">👨‍👩‍👧 Семья</label>
+            </div>
+            <p class="seg-hint">Это доля дохода, которая уходит на обязательное: жильё, еда, транспорт, связь. Чем больше иждивенцев — тем выше доля.</p>
+        </section>
+
+        <section class="interactive-block">
+            <h2>🧻 Шаг 3. Убери лишнее (тумблеры)</h2>
+            <p>Каждый включённый тумблер — импульсивная трата, съедающая miễnно выделенные 30% «желаний». Пощёлкай и посмотри на результат.</p>
+            <div class="habit-list">
+                <label class="ui-switch">
+                    <input type="checkbox" class="habit" data-price="4 500" checked>
+                    <span class="sw-track"><span class="sw-knob"></span></span>
+                    <span class="sw-text">☕ Кофе с собой</span>
+                    <span class="sw-price">−4 500 ₽/мес</span>
+                </label>
+                <label class="ui-switch">
+                    <input type="checkbox" class="habit" data-price="6 000" checked>
+                    <span class="sw-track"><span class="sw-knob"></span></span>
+                    <span class="sw-text">🛵 Доставка еды</span>
+                    <span class="sw-price">−6 000 ₽/мес</span>
+                </label>
+                <label class="ui-switch">
+                    <input type="checkbox" class="habit" data-price="5 000">
+                    <span class="sw-track"><span class="sw-knob"></span></span>
+                    <span class="sw-text">🚕 Такси вместо автобуса</span>
+                    <span class="sw-price">−5 000 ₽/мес</span>
+                </label>
+                <label class="ui-switch">
+                    <input type="checkbox" class="habit" data-price="1 200">
+                    <span class="sw-track"><span class="sw-knob"></span></span>
+                    <span class="sw-text">📺 Подписки, которыми не пользуюсь</span>
+                    <span class="sw-price">−1 200 ₽/мес</span>
+                </label>
+                <label class="ui-switch">
+                    <input type="checkbox" class="habit" data-price="7 000">
+                    <span class="sw-track"><span class="sw-knob"></span></span>
+                    <span class="sw-text">🛍️ Спонтанные покупки с маркетплейсов</span>
+                    <span class="sw-price">−7 000 ₽/мес</span>
+                </label>
+            </div>
+        </section>
+
+        <section class="interactive-block">
+            <h2>🧮 Что получается</h2>
+            <div class="calc-results triples">
+                <div class="result-card">
+                    <span class="result-label">Остаётся в месяц</span>
+                    <span class="result-value" id="outMonth">…</span>
+                </div>
+                <div class="result-card accent">
+                    <span class="result-label">Накопишь за год</span>
+                    <span class="result-value" id="outYear">…</span>
+                </div>
+                <div class="result-card">
+                    <span class="result-label">Подушка (×3) соберётся за</span>
+                    <span class="result-value" id="outCushion">…</span>
+                </div>
+            </div>
+
+            <div class="dist">
+                <div class="dist-row">
+                    <span class="dist-name">✅ Обязательное</span>
+                    <span class="dist-val" id="vMust">…</span>
+                    <span class="dist-track"><span class="dist-fill" id="dMust"></span></span>
+                </div>
+                <div class="dist-row">
+                    <span class="dist-name">⚡ Импульсы</span>
+                    <span class="dist-val" id="vImp">…</span>
+                    <span class="dist-track"><span class="dist-fill fill-violet" id="dImp"></span></span>
+                </div>
+                <div class="dist-row">
+                    <span class="dist-name">💚 Свободно</span>
+                    <span class="dist-val" id="vFree">…</span>
+                    <span class="dist-track"><span class="dist-fill fill-mint" id="dFree"></span></span>
+                </div>
+            </div>
+
+            <div class="hint-chip" id="budgetHint">💡 Совет здесь появится…</div>
+        </section>
+
+        <section class="interactive-block">
+            <h2>🧩 Квиз: проверь себя</h2>
+            <div class="quiz">
+                <div class="quiz-q">
+                    <strong>1. Сколько должна составлять финансовая подушка безопасности?</strong>
+                    <div class="quiz-opts">
+                    <label class="quiz-opt">
+                        <input type="radio" name="q1" data-correct="true">
+                        <span class="r-dot"></span>
+                        <span class="r-text">3–6 месячных расходов</span>
+                    </label>
+                    <label class="quiz-opt">
+                        <input type="radio" name="q1" data-correct="false">
+                        <span class="r-dot"></span>
+                        <span class="r-text">10% от одной зарплаты</span>
+                    </label>
+                    <label class="quiz-opt">
+                        <input type="radio" name="q1" data-correct="false">
+                        <span class="r-dot"></span>
+                        <span class="r-text">Миллион рублей — как у всех</span>
+                    </label>
+                    </div>
+                </div>
+                <div class="quiz-q">
+                    <strong>2. Где лучше всего хранить подушку?</strong>
+                    <div class="quiz-opts">
+                    <label class="quiz-opt">
+                        <input type="radio" name="q2" data-correct="false">
+                        <span class="r-dot"></span>
+                        <span class="r-text">Под матрасом — надёжнее</span>
+                    </label>
+                    <label class="quiz-opt">
+                        <input type="radio" name="q2" data-correct="true">
+                        <span class="r-dot"></span>
+                        <span class="r-text">На накопительном счёте с быстрым снятием</span>
+                    </label>
+                    <label class="quiz-opt">
+                        <input type="radio" name="q2" data-correct="false">
+                        <span class="r-dot"></span>
+                        <span class="r-text">В криптовалюте — она реально растёт</span>
+                    </label>
+                    </div>
+                </div>
+                <div class="quiz-q">
+                    <strong>3. Что сделать с зарплатой в первую очередь?</strong>
+                    <div class="quiz-opts">
+                    <label class="quiz-opt">
+                        <input type="radio" name="q3" data-correct="true">
+                        <span class="r-dot"></span>
+                        <span class="r-text">Сразу отложить часть «на будущее»</span>
+                    </label>
+                    <label class="quiz-opt">
+                        <input type="radio" name="q3" data-correct="false">
+                        <span class="r-dot"></span>
+                        <span class="r-text">Купить то, что давно хочется</span>
+                    </label>
+                    <label class="quiz-opt">
+                        <input type="radio" name="q3" data-correct="false">
+                        <span class="r-dot"></span>
+                        <span class="r-text">Потратить всё: что-то да останется</span>
+                    </label>
+                    </div>
+                </div>
+                <div class="quiz-q">
+                    <strong>4. «Всего 1% в день» по кредиту — это:</strong>
+                    <div class="quiz-opts">
+                    <label class="quiz-opt">
+                        <input type="radio" name="q4" data-correct="false">
+                        <span class="r-dot"></span>
+                        <span class="r-text">Мелочь, легко отдать</span>
+                    </label>
+                    <label class="quiz-opt">
+                        <input type="radio" name="q4" data-correct="true">
+                        <span class="r-dot"></span>
+                        <span class="r-text">Очень дорого: сотни процентов в год</span>
+                    </label>
+                    <label class="quiz-opt">
+                        <input type="radio" name="q4" data-correct="false">
+                        <span class="r-dot"></span>
+                        <span class="r-text">Маркетинговый термин, ничего не значит</span>
+                    </label>
+                    </div>
+                </div>
+                <div class="quiz-actions">
+                    <button class="btn-primary" type="button" id="quizCheck">Проверить ответы</button>
+                    <button class="btn-ghost" type="button" id="quizReset">Сбросить</button>
+                </div>
+                <p class="quiz-score" id="quizScore"></p>
+            </div>
+        </section>
+
+        <section class="interactive-block">
+            <div class="callout callout-green">
+                <strong>🎯 Философия тренажёра:</strong> финансовая грамотность — это не скучная бухгалтерия, а умение направлять свои деньги к целям, мечам и удовольствиям. Именно поэтому даже 500 рублей в неделю — это не мелочь, а привычка. Тренажёр показывает механику: Income − Обязательное − Импульсы = Свободные деньги. Любая из трёх величин — это тумблер, который можешь поправить именно ты.
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- Блок «что почитать ещё» -->
+    <section class="pages-strip" aria-label="Другие страницы FinFocus">
+        <h2>🧭 Что почитать ещё?</h2>
+        <div class="pages-strip-grid">
+            <a href="index.html" class="ps-item"><span class="ps-emoji">🏠</span><span><strong>Главная</strong><p>Все материалы FinFocus на одной странице</p></span><span class="ps-arrow">→</span></a>
+            <a href="budget.html" class="ps-item"><span class="ps-emoji">📊</span><span><strong>Бюджет</strong><p>Куда уходят деньги и правило трёх долей</p></span><span class="ps-arrow">→</span></a>
+            <a href="savings.html" class="ps-item"><span class="ps-emoji">🎯</span><span><strong>Накопления</strong><p>Разбор темы простыми словами с интерактивами</p></span><span class="ps-arrow">→</span></a>
+            <a href="discounts.html" class="ps-item"><span class="ps-emoji">🏷️</span><span><strong>Скидки</strong><p>Разбор темы простыми словами с интерактивами</p></span><span class="ps-arrow">→</span></a>
+            <a href="finlit.html" class="ps-item"><span class="ps-emoji">🎓</span><span><strong>Финграмотность</strong><p>Разбор темы простыми словами с интерактивами</p></span><span class="ps-arrow">→</span></a>
+            <a href="habits.html" class="ps-item"><span class="ps-emoji">🧠</span><span><strong>Привычки</strong><p>Разбор темы простыми словами с интерактивами</p></span><span class="ps-arrow">→</span></a>
+            <a href="loans.html" class="ps-item"><span class="ps-emoji">💳</span><span><strong>Кредиты</strong><p>Разбор темы простыми словами с интерактивами</p></span><span class="ps-arrow">→</span></a>
+            <a href="bicycle.html" class="ps-item"><span class="ps-emoji">🚲</span><span><strong>Велосипед</strong><p>Разбор темы простыми словами с интерактивами</p></span><span class="ps-arrow">→</span></a>
+        </div>
+    </section>
+
+    <footer>
+        <p>FinFocus — проект о деньгах для людей, а не для инвесторов.</p>
+    </footer>
+
+    <!-- Боковое меню -->
+    <div class="drawer-backdrop" data-drawer-close></div>
+    <aside class="drawer" id="side-menu" aria-label="Меню FinFocus" aria-hidden="true">
+        <div class="drawer-head">
+            <span class="drawer-logo">FinFocus</span>
+            <button class="drawer-close" type="button" aria-label="Закрыть меню" data-drawer-close>✕</button>
+        </div>
+        <nav class="drawer-nav" aria-label="Разделы">
+            <a href="index.html">🏠 Главная</a>
+            <a href="budget.html">📊 Бюджет</a>
+            <a href="savings.html">🎯 Накопления</a>
+            <a href="discounts.html">🏷️ Скидки</a>
+            <a href="finlit.html">🎓 Финграмотность</a>
+            <a href="habits.html">🧠 Привычки</a>
+            <a href="loans.html">💳 Кредиты</a>
+            <a href="bicycle.html">🚲 Велосипед</a>
+            <a href="app.html" aria-current="page">🕹️ Тренажёр</a>
+        </nav>
+        <div class="drawer-foot">
+            <p>💡 Тему меняет кнопка ☀️/🌙 в верхней панели</p>
+        </div>
+    </aside>
+
+
+    <script src="main.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1434,3 +1434,9 @@ html[data-theme="light"] .quiz-opt.wrong { border-color: #c9443a; background: rg
 }
 .hint-chip.warn { background: rgba(255, 123, 114, 0.1); color: #ff7b72; }
 html[data-theme="light"] .hint-chip.warn { background: rgba(201, 68, 58, 0.08); color: #c9443a; }
+
+/* --- Тренажёр (app.html): три результата в ряд, чуть компактнее --- */
+.calc-results.triples { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 720px) {
+    .calc-results.triples { grid-template-columns: 1fr; }
+}
