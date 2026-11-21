@@ -770,3 +770,14 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 /* --- Отступ между ползунками калькулятора скидок --- */
 .slider-container.second-slider { margin-top: 0; }
 
+
+/* --- Фиолетовый акцент для FAQ страницы скидок --- */
+.faq-deal .faq-icon::before,
+.faq-deal .faq-icon::after {
+    background-color: var(--violet);
+}
+
+.faq-deal .faq-question:hover {
+    color: var(--violet);
+}
+
