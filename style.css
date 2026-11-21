@@ -943,3 +943,21 @@ input[type=range]:focus-visible {
     .store-btn img { height: 48px; }
 }
 
+
+/* --- Тезисы-чипсы на мобильных: горизонтальная прокрутка без переносов --- */
+@media (max-width: 720px) {
+    .header-top-bar { flex-direction: column; gap: 16px; }
+    .toc-top {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        max-width: 100%;
+        padding: 4px 2px 10px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .toc-top::-webkit-scrollbar { display: none; }
+    .toc-link { white-space: nowrap; flex-shrink: 0; }
+    .toc-title { margin-right: 0; }
+}
+
