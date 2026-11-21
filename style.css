@@ -744,3 +744,29 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
     box-shadow: 0 0 18px rgba(178, 150, 255, 0.18), inset 0 0 18px rgba(178, 150, 255, 0.05);
 }
 
+
+/* --- Карточки-ловушки на странице скидок --- */
+.sale-card.trap .sale-num {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #ff7b72;
+    margin-bottom: 12px;
+}
+
+.sale-card.trap:hover {
+    border-color: #ff7b72;
+    box-shadow: 0 0 18px rgba(255, 123, 114, 0.18), inset 0 0 18px rgba(255, 123, 114, 0.05);
+}
+
+/* --- Фиолетовый callout для страницы скидок --- */
+.callout-violet {
+    background: rgba(178, 150, 255, 0.08);
+    border-left-color: var(--violet);
+}
+.callout-violet strong { color: var(--violet); }
+
+/* --- Отступ между ползунками калькулятора скидок --- */
+.slider-container.second-slider { margin-top: 0; }
+
