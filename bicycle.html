@@ -7,6 +7,7 @@
     <meta name="theme-color" content="#0e1118">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="theme.js"></script>
+    <script src="menu.js" defer></script>
     <title>Велосипед выгоднее автомобиля — FinFocus</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,6 +15,7 @@
 
     <!-- Верхняя навигация между страницами -->
     <nav class="site-nav" aria-label="Навигация по FinFocus">
+        <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="side-menu"><span></span><span></span><span></span></button>
         <div class="site-nav-links">
             <a href="index.html">🏠 Главная</a>
             <a href="budget.html">📊 Бюджет</a>
@@ -127,6 +129,12 @@
     <section class="pages-strip" aria-label="Другие страницы FinFocus">
         <h2>🧭 Что почитать ещё?</h2>
         <div class="pages-strip-grid">
+            <a href="app.html" class="ps-item">
+                <span class="ps-emoji">🕹️</span>
+                <span><strong>Тренажёр финансов</strong><p>Собери бюджет из тумблеров и ползунков</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
+
             <a href="index.html" class="ps-item">
                 <span class="ps-emoji">🏠</span>
                 <span><strong>Главная</strong><p>Все материалы FinFocus на одной странице</p></span>
@@ -171,5 +179,28 @@
     
 	<!-- Подключаем скрипт с эффектами -->
 	 <script src="main.js"></script>
+    <!-- Боковое меню -->
+    <div class="drawer-backdrop" data-drawer-close></div>
+    <aside class="drawer" id="side-menu" aria-label="Меню FinFocus" aria-hidden="true">
+        <div class="drawer-head">
+            <span class="drawer-logo">FinFocus</span>
+            <button class="drawer-close" type="button" aria-label="Закрыть меню" data-drawer-close>✕</button>
+        </div>
+        <nav class="drawer-nav" aria-label="Разделы">
+            <a href="index.html">🏠 Главная</a>
+            <a href="budget.html">📊 Бюджет</a>
+            <a href="savings.html">🎯 Накопления</a>
+            <a href="discounts.html">🏷️ Скидки</a>
+            <a href="finlit.html">🎓 Финграмотность</a>
+            <a href="habits.html">🧠 Привычки</a>
+            <a href="loans.html">💳 Кредиты</a>
+            <a href="bicycle.html">🚲 Велосипед</a>
+            <a href="app.html">🕹️ Тренажёр</a>
+        </nav>
+        <div class="drawer-foot">
+            <p>💡 Тему меняет кнопка ☀️/🌙 в верхней панели</p>
+        </div>
+    </aside>
+
 </body>
 </html>
