@@ -912,3 +912,34 @@ input[type=range]:focus-visible {
     input[type=range]::-moz-range-thumb { height: 24px; width: 24px; }
 }
 
+
+/* ==========================================================================
+   Адаптив: планшеты и телефоны (720px и ниже)
+   ========================================================================== */
+@media (max-width: 720px) {
+    header { padding: 48px 16px 32px; }
+    .grid { gap: 16px; padding: 16px 16px 48px; }
+    .content { padding: 16px 16px 48px; }
+    .budget-layout { padding: 16px 16px 48px; }
+
+    .card { padding: 24px; }
+    .rule-card, .sale-card { padding: 20px; }
+    .slider-container { padding: 20px; border-radius: var(--radius-md); }
+
+    /* Результаты калькуляторов — колонкой, а не в ряд */
+    .calc-results { grid-template-columns: 1fr; gap: 12px; }
+
+    /* Вкладки: вертикальные кнопки-список, удобные под палец */
+    .tab-buttons { flex-direction: column; border-bottom: none; border-right: 1px solid var(--line); }
+    .tab-btn { text-align: left; padding: 14px 16px; }
+    .tab-btn.active { box-shadow: inset 2px 0 0 var(--blue); }
+    .tab-contents { padding: 18px 16px; }
+    .tabs-container { display: flex; flex-direction: column-reverse; }
+    .tab-buttons { border-right: none; border-top: 1px solid var(--line); }
+
+    .faq-section { margin: 40px auto 20px; padding: 32px 16px 20px; }
+    .faq-question { font-size: 1rem; padding: 16px 0; }
+
+    .store-btn img { height: 48px; }
+}
+
