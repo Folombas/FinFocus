@@ -6,10 +6,29 @@
     <meta name="description" content="FinFocus — обучающий сайт о личных финансах: бюджет, накопления, скидки, кредиты и привычки экономии простыми словами.">
     <meta name="theme-color" content="#0e1118">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="theme.js"></script>
     <title>FinFocus — финансовая грамотность без стресса</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Верхняя навигация между страницами -->
+    <nav class="site-nav" aria-label="Навигация по FinFocus">
+        <div class="site-nav-links">
+            <a href="index.html" aria-current="page">🏠 Главная</a>
+            <a href="budget.html">📊 Бюджет</a>
+            <a href="savings.html">🎯 Накопления</a>
+            <a href="discounts.html">🏷️ Скидки</a>
+            <a href="finlit.html">🎓 Финграмотность</a>
+            <a href="habits.html">🧠 Привычки</a>
+            <a href="loans.html">💳 Кредиты</a>
+            <a href="bicycle.html">🚲 Велосипед</a>
+        </div>
+        <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">
+            <span class="tt-icon tt-sun">☀️</span><span class="tt-icon tt-moon">🌙</span>
+        </button>
+    </nav>
+
 
     <header>
         <h1>FinFocus</h1>

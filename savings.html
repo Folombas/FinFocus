@@ -6,10 +6,29 @@
     <meta name="description" content="Стратегии накопления: метод конвертов, автосписание и округление. Калькулятор тихих побед и чек-лист экономии.">
     <meta name="theme-color" content="#0e1118">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="theme.js"></script>
     <title>Накопления — FinFocus</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Верхняя навигация между страницами -->
+    <nav class="site-nav" aria-label="Навигация по FinFocus">
+        <div class="site-nav-links">
+            <a href="index.html">🏠 Главная</a>
+            <a href="budget.html">📊 Бюджет</a>
+            <a href="savings.html" aria-current="page">🎯 Накопления</a>
+            <a href="discounts.html">🏷️ Скидки</a>
+            <a href="finlit.html">🎓 Финграмотность</a>
+            <a href="habits.html">🧠 Привычки</a>
+            <a href="loans.html">💳 Кредиты</a>
+            <a href="bicycle.html">🚲 Велосипед</a>
+        </div>
+        <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">
+            <span class="tt-icon tt-sun">☀️</span><span class="tt-icon tt-moon">🌙</span>
+        </button>
+    </nav>
+
 
     <header>
         <div class="header-top-bar">
@@ -163,6 +182,50 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Блок «что почитать ещё» -->
+    <section class="pages-strip" aria-label="Другие страницы FinFocus">
+        <h2>🧭 Что почитать ещё?</h2>
+        <div class="pages-strip-grid">
+            <a href="index.html" class="ps-item">
+                <span class="ps-emoji">🏠</span>
+                <span><strong>Главная</strong><p>Все материалы FinFocus на одной странице</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
+            <a href="budget.html" class="ps-item">
+                <span class="ps-emoji">📊</span>
+                <span><strong>Бюджет и 50/30/20</strong><p>Куда уходят деньги и правило трёх долей</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
+            <a href="discounts.html" class="ps-item">
+                <span class="ps-emoji">🏷️</span>
+                <span><strong>Скидки и акции</strong><p>Честная скидка против маркетинга</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
+            <a href="finlit.html" class="ps-item">
+                <span class="ps-emoji">🎓</span>
+                <span><strong>Финансовая грамотность</strong><p>Инфляция и подушка безопасности по-человечески</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
+            <a href="habits.html" class="ps-item">
+                <span class="ps-emoji">🧠</span>
+                <span><strong>Привычки экономии</strong><p>Тихие победы над импульсивными тратами</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
+            <a href="loans.html" class="ps-item">
+                <span class="ps-emoji">💳</span>
+                <span><strong>Долги и кредиты</strong><p>Сколько на самом деле стоит кредит</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
+            <a href="bicycle.html" class="ps-item">
+                <span class="ps-emoji">🚲</span>
+                <span><strong>Велосипед vs Авто</strong><p>Почему велосипед выгоднее машины</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
         </div>
     </section>
 
