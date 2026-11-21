@@ -11,184 +11,30 @@
     <header>
         <div class="header-top-bar">
             <a href="index.html" class="back-link">← На главную</a>
+
+            <div class="toc-top">
+                <span class="toc-title">Тезисы:</span>
+                <a href="#price-watch" class="toc-link">Честная цена</a>
+                <a href="#sale-calendar" class="toc-link">Календарь распродаж</a>
+                <a href="#discount-math" class="toc-link">Математика скидки</a>
+                <a href="#discount-traps" class="toc-link">Ловушки скидок</a>
+                <a href="#smart-rules" class="toc-link">Правила покупателя</a>
+            </div>
         </div>
-        <h1>🎫 Скидки и акции</h1>
-        <p>Тот же самый список покупок — но заметно дешевле. Без маркетинговых ловушек.</p>
+
+        <h1>🏷️ Скидки и акции</h1>
+        <p>Как следить за ценами и покупать то же самое, но дешевле.</p>
     </header>
 
     <main class="content">
 
-        <!-- 1. ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР -->
-        <section class="interactive-block">
-            <h2>🧮 Калькулятор выгоды</h2>
-            <p>Подвинь ползунки, чтобы узнать, сколько можно сэкономить, если покупать обычные вещи со скидкой. Никакой магии: ты покупаешь то же самое, просто платишь меньше.</p>
-
-            <div class="slider-container">
-                <div class="slider-labels">
-                    <span>10 000 ₽/мес</span>
-                    <span id="spendAmount">30 000 ₽/мес</span>
-                    <span>100 000 ₽/мес</span>
-                </div>
-                <input type="range" id="spendSlider" min="10000" max="100000" step="5000" value="30000">
-                <p><strong>Сколько тратишь на повседневные покупки в месяц</strong> (продукты, бытовое, одежда)</p>
-            </div>
-
-            <div class="slider-container">
-                <div class="slider-labels">
-                    <span>5%</span>
-                    <span id="discountAmount">20%</span>
-                    <span>50%</span>
-                </div>
-                <input type="range" id="discountSlider" min="5" max="50" step="5" value="20">
-                <p><strong>Средняя скидка</strong>, которую реально ловить (акции, промокоды, кэшбэк)</p>
-            </div>
-
-            <div class="calc-results">
-                <div class="result-card">
-                    <span class="result-label">Экономия за месяц</span>
-                    <span class="result-value" id="resMonth">6 000 ₽</span>
-                </div>
-                <div class="result-card accent">
-                    <span class="result-label">Экономия за год</span>
-                    <span class="result-value" id="resYear">72 000 ₽</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. ВКЛАДКИ (TABS) -->
-        <section class="interactive-block">
-            <h2>🗂️ Правила умного шопинга</h2>
-            <div class="tabs-container">
-                <div class="tab-buttons">
-                    <button class="tab-btn active" data-tab="tab1">Скидка ≠ выгода</button>
-                    <button class="tab-btn" data-tab="tab2">Отслеживание цен</button>
-                    <button class="tab-btn" data-tab="tab3">Кэшбэк и промокоды</button>
-                </div>
-
-                <div class="tab-contents">
-                    <div class="tab-content active" id="tab1">
-                        <h3>Главный принцип</h3>
-                        <p>Скидка 50% на вещь, которая тебе не нужна, — это не экономия, а трата 50% цены. Сначала ответь на вопрос «Купил бы я это за полную цену?», и только потом смотри на ценник со скидкой. Красный стикер «−70%» давит на психику специально: магазины хотят, чтобы ты решал быстро. Правило простое: на раздумья — сутки. Если вещь за ночь перестала быть нужной, значит, она и не была нужной.</p>
-                    </div>
-                    <div class="tab-content" id="tab2">
-                        <h3>Знаешь цены — не ведёшься</h3>
-                        <p>«Скидка» работает только если ты знаешь обычную цену. Запомни (или запиши в заметки) стоимость того, что покупаешь регулярно: гречка, кофе, стиральный порошок, кроссовки. Тогда фальшивую акцию «было 999, стало 799», когда товар всегда стоил 799, ты заметишь сразу. Для техники и крупных покупок полезно смотреть график цен в специальных сервисах — там видно, что «предновогодняя скидка» на самом деле бывает каждый месяц.</p>
-                    </div>
-                    <div class="tab-content" id="tab3">
-                        <h3>Деньги возвращаются</h3>
-                        <p>Кэшбэк — это возврат 1–5% от покупки деньгами или баллами. Подключи его в банковском приложении на категории, где тратишься чаще всего, — обычно это продукты и транспорт. Промокоды перед онлайн-заказом стоит проверить заранее за минуту: часто они дают ещё минус 5–15%. Но помни: кэшбэк — приятный бонус к нужной покупке, а не причина купить лишнее.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. КАСТОМНЫЙ ЧЕК-ЛИСТ -->
-        <section class="interactive-block">
-            <h2>✅ Чек-лист против уловок</h2>
-            <p>Отмечай пункты, которые уже внедрил в жизнь:</p>
-            <div class="custom-checklist">
-                <label class="check-item">
-                    <input type="checkbox">
-                    <span class="check-box"></span>
-                    <span class="check-text">Купил бы это за полную цену? (спрашиваю себя всегда)</span>
-                </label>
-                <label class="check-item">
-                    <input type="checkbox">
-                    <span class="check-box"></span>
-                    <span class="check-text">Знаю обычные цены на то, что покупаю регулярно</span>
-                </label>
-                <label class="check-item">
-                    <input type="checkbox">
-                    <span class="check-box"></span>
-                    <span class="check-text">Иду в магазин со списком и не покупаю лишнее</span>
-                </label>
-                <label class="check-item">
-                    <input type="checkbox">
-                    <span class="check-box"></span>
-                    <span class="check-text">Подключил кэшбэк на частые категории трат</span>
-                </label>
-                <label class="check-item">
-                    <input type="checkbox">
-                    <span class="check-box"></span>
-                    <span class="check-text">Проверяю промокоды перед онлайн-заказом</span>
-                </label>
-            </div>
-        </section>
-
-        <section class="interactive-block">
-            <div class="callout callout-green">
-                <strong>🛡️ Правило безопасности:</strong> «Только сегодня!», «Осталось 2 штуки!», таймер на странице — всё это инструменты, чтобы ты не подумал. На большинство популярных товаров скидки возвращаются регулярно. Сорвавшаяся акция — это не потерянная выгода, а сохранённые деньги, если вещь была не нужна.
-            </div>
-        </section>
-
     </main>
-
-    <!-- 4. FAQ -->
-    <section class="faq-section">
-        <h2 class="faq-title">Частые вопросы про скидки</h2>
-        <div class="faq-list">
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span>Скидка — это всегда выгода?</span>
-                    <span class="faq-icon"></span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p>Нет. Выгода — это когда ты покупаешь нужное дешевле. Если из-за скидки ты приобретаешь лишнее, ты не сэкономил, а потерял деньги. Простая проверка: в конце месяца посмотри, вещами со скидкой ты пользуешься или нет. Каждая неиспользуемая покупка — минус 100% её цены, а не минус 30%.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span>Как понять, что скидка фальшивая?</span>
-                    <span class="faq-icon"></span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p>Магазин сначала поднимает цену, а потом «снижает» её до обычной. Защита — знание цен и история цен: перед крупной покупкой посмотри, сколько товар стоил месяц-два назад. Если «старая цена» видна только на красном стикере, а по факту все продавцы просят столько же — это не скидка, а реклама.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span>Гнаться ли за кэшбэком и бонусными программами?</span>
-                    <span class="faq-icon"></span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p>Использовать — да, гнаться — нет. Кэшбэк на обычные траты возвращает неплохие суммы за год, и это «бесплатные» деньги. Но ради повышенного кэшбэка люди часто покупают то, что не собирался купить: потратил 10 000, вернул 500, а 9 500 ушли навсегда. Кэшбэк идёт последним в цепочке: сначала «нужно ли это?», потом «сколько стоит?», и только затем «сколько вернут?».</p>
-                    </div>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span>Стоит ли покупать «про запас», когда продукт сильно подешевел?</span>
-                    <span class="faq-icon"></span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p>Да, но только для нескоропортящихся продуктов с понятным сроком годности: крупы, макароны, бытовая химия, бумажные полотенца. Если ты и так покупаешь пакет молока каждую неделю, со скидкой на него запас не нужен. А на скоропорт скидка — частый способ распродать то, что вот-вот испортится.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span>Как начать экономить со скидками, если времени на это нет?</span>
-                    <span class="faq-icon"></span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p>Начни с малого: список покупок перед выходом из дома и кэшбэк на категории в банковском приложении. Этого достаточно, чтобы поймать первые 10–15% экономии. Отслеживание цен и промокоды добавишь позже, когда базовые привычки уже закрепятся.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <footer>
         <p>FinFocus — проект о деньгах для людей, а не для инвесторов.</p>
     </footer>
 
+    <!-- Подключаем скрипт с эффектами -->
     <script src="main.js"></script>
 </body>
 </html>
