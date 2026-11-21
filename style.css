@@ -810,3 +810,31 @@ body::before {
         radial-gradient(900px circle at 88% 105%, rgba(178, 150, 255, 0.08), transparent 60%);
 }
 
+
+/* --- Живой типографский масштаб (плавно растёт и сжимается) --- */
+header h1 {
+    font-size: clamp(2.4rem, 1.8rem + 3.2vw, 4rem);
+    line-height: 1.1;
+}
+header p {
+    font-size: clamp(1.05rem, 1rem + 0.4vw, 1.25rem);
+    padding: 0 8px;
+}
+.card h2 {
+    font-size: clamp(1.3rem, 1.1rem + 1vw, 1.5rem);
+}
+.content h2 {
+    font-size: clamp(1.45rem, 1.25rem + 1.2vw, 1.8rem);
+    line-height: 1.25;
+}
+.faq-title {
+    font-size: clamp(1.55rem, 1.3rem + 1.5vw, 2rem);
+    line-height: 1.2;
+}
+.result-value {
+    font-size: clamp(1.65rem, 1.4rem + 1.2vw, 2rem);
+}
+.rule-percent {
+    font-size: clamp(2.1rem, 1.8rem + 1.5vw, 2.5rem);
+}
+
