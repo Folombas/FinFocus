@@ -82,6 +82,41 @@
         </div>
     </section>
 
+    <!-- SECTION:discount-math -->
+    <section id="discount-math" class="interactive-block">
+        <h2>3. Математика скидки</h2>
+        <p>Даже небольшая, но регулярная экономия складывается в крупную сумму. Подвинь ползунки и посмотри, сколько можно сэкономить за месяц и за год, если ловить честные скидки на свои обычные покупки.</p>
+
+        <div class="slider-container">
+            <div class="slider-labels">
+                <span>1 000 ₽</span>
+                <span id="spendAmount">15 000 ₽/мес</span>
+                <span>100 000 ₽</span>
+            </div>
+            <input type="range" id="spendSlider" min="1000" max="100000" step="1000" value="15000">
+        </div>
+
+        <div class="slider-container second-slider">
+            <div class="slider-labels">
+                <span>5%</span>
+                <span id="discountAmount">15%</span>
+                <span>90%</span>
+            </div>
+            <input type="range" id="discountSlider" min="5" max="90" step="5" value="15">
+        </div>
+
+        <div class="calc-results">
+            <div class="result-card">
+                <span class="result-label">Экономия в месяц</span>
+                <span class="result-value" id="resMonth">2 250 ₽</span>
+            </div>
+            <div class="result-card accent">
+                <span class="result-label">Экономия в год</span>
+                <span class="result-value" id="resYear">27 000 ₽</span>
+            </div>
+        </div>
+    </section>
+
     </main>
 
     <footer>
