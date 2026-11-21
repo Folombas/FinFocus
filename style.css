@@ -961,3 +961,22 @@ input[type=range]:focus-visible {
     .toc-title { margin-right: 0; }
 }
 
+
+/* --- Кастомный скроллбар в палитре сайта --- */
+html { scrollbar-width: thin; scrollbar-color: var(--line) var(--background); }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 8px; border: 2px solid var(--background); }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* --- Accessibility: уважаем настройку «меньше движения» --- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+    .reveal-on-scroll { opacity: 1; transform: none; }
+}
+
