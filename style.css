@@ -1162,3 +1162,275 @@ html[data-theme="light"] .tt-moon { display: inline; }
     .theme-toggle { width: 38px; height: 38px; }
     .pages-strip { padding-left: 16px; padding-right: 16px; }
 }
+
+/* --- Гамбургер и боковое выезжающее меню --- */
+.burger {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--line-soft);
+    background: var(--surface);
+    box-shadow: var(--shadow-1);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 0;
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+.burger:hover { transform: scale(1.08); box-shadow: var(--shadow-2); }
+.burger span {
+    display: block;
+    width: 16px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--ink);
+    transition: transform 0.25s var(--ease-out), opacity 0.2s;
+}
+.burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; }
+.burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+.drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    background: rgba(0, 0, 0, 0.55);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s var(--ease-out), visibility 0.25s;
+}
+.drawer-open .drawer-backdrop { opacity: 1; visibility: visible; }
+.drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 160;
+    width: min(320px, 86vw);
+    padding: 18px;
+    background: var(--surface);
+    border-right: 1px solid var(--line-soft);
+    box-shadow: var(--shadow-3);
+    transform: translateX(-110%);
+    transition: transform 0.3s var(--ease-out);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+.drawer-open .drawer { transform: none; }
+body.drawer-open { overflow: hidden; }
+.drawer-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.drawer-logo { font-weight: 800; font-size: 1.2rem; color: var(--blue); letter-spacing: -0.02em; }
+.drawer-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line-soft);
+    background: var(--inset);
+    color: var(--ink);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.15s var(--ease-out);
+}
+.drawer-close:hover { transform: rotate(90deg); }
+.drawer-nav { display: flex; flex-direction: column; gap: 6px; }
+.drawer-nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 14px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.2s var(--ease-out), border-color 0.2s var(--ease-out), transform 0.15s var(--ease-out);
+}
+.drawer-nav a:hover { background: var(--surface-2); transform: translateX(4px); }
+.drawer-nav a[aria-current="page"] { background: var(--inset); border-color: var(--line-soft); color: var(--blue); box-shadow: var(--shadow-1); }
+.drawer-nav a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.drawer-foot { margin-top: auto; padding-top: 18px; color: var(--muted); font-size: 0.85rem; }
+
+/* --- Тумблеры (switch) --- */
+.habit-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+.ui-switch {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    border-radius: 16px;
+    box-shadow: var(--shadow-1);
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), transform 0.15s var(--ease-out);
+}
+.ui-switch:hover { border-color: var(--blue); transform: translateY(-1px); }
+.ui-switch input { position: absolute; opacity: 0; pointer-events: none; }
+.sw-track {
+    flex: 0 0 auto;
+    position: relative;
+    width: 46px;
+    height: 26px;
+    border-radius: 999px;
+    background: var(--inset);
+    border: 1px solid var(--line-soft);
+    transition: background 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+.sw-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--muted);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s var(--ease-out), background 0.2s var(--ease-out);
+}
+.ui-switch input:checked + .sw-track { background: var(--mint); border-color: var(--mint); }
+.ui-switch input:checked + .sw-track .sw-knob { transform: translateX(20px); background: #ffffff; }
+.ui-switch input:focus-visible + .sw-track { outline: 2px solid var(--blue); outline-offset: 2px; }
+.ui-switch.disabled { opacity: 0.5; }
+.sw-text { flex: 1; font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+.sw-price { flex: 0 0 auto; font-size: 0.85rem; font-weight: 700; color: #ff7b72; }
+html[data-theme="light"] .sw-price { color: #c9443a; }
+
+/* --- Сегментный переключатель (радиокнопки-таблетки) --- */
+.seg {
+    display: flex;
+    gap: 6px;
+    background: var(--inset);
+    border: 1px solid var(--line-soft);
+    border-radius: 999px;
+    padding: 5px;
+    flex-wrap: wrap;
+}
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+.seg input:checked + label { background: var(--surface); color: var(--blue); box-shadow: var(--shadow-1); }
+.seg input:focus-visible + label { outline: 2px solid var(--blue); outline-offset: 2px; }
+.seg-hint { font-size: 0.85rem; color: var(--muted); margin-top: 12px; }
+
+/* --- Квиз: радиокнопки-карточки --- */
+.quiz { display: flex; flex-direction: column; gap: 18px; }
+.quiz-q strong { display: block; margin-bottom: 10px; font-size: 1rem; }
+.quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border: 1px solid var(--line-soft);
+    border-radius: 14px;
+    background: var(--surface);
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+}
+.quiz-opt:hover { border-color: var(--blue); }
+.quiz-opt input { position: absolute; opacity: 0; pointer-events: none; }
+.r-dot {
+    flex: 0 0 auto;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    transition: border-color 0.2s var(--ease-out);
+}
+.r-dot::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--blue);
+    opacity: 0;
+    transform: scale(0.4);
+    transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+.quiz-opt input:checked + .r-dot { border-color: var(--blue); }
+.quiz-opt input:checked + .r-dot::after { opacity: 1; transform: scale(1); }
+.quiz-opt input:focus-visible + .r-dot { outline: 2px solid var(--blue); outline-offset: 2px; }
+.r-text { font-size: 0.93rem; color: var(--ink); }
+.quiz-opt.correct { border-color: var(--mint); background: rgba(85, 213, 170, 0.08); }
+.quiz-opt.wrong { border-color: #ff7b72; background: rgba(255, 123, 114, 0.08); }
+html[data-theme="light"] .quiz-opt.wrong { border-color: #c9443a; background: rgba(201, 68, 58, 0.07); }
+.quiz-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.quiz-score { font-weight: 800; font-size: 1.05rem; color: var(--mint); }
+
+/* --- Кнопки --- */
+.btn-primary {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--blue), var(--violet));
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-1);
+    transition: transform 0.15s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+.btn-primary:active { transform: translateY(0) scale(0.97); }
+.btn-primary:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.btn-ghost {
+    padding: 12px 24px;
+    border: 1px solid var(--line-soft);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s var(--ease-out), transform 0.15s var(--ease-out);
+}
+.btn-ghost:hover { background: var(--surface-2); }
+
+/* --- Полоски распределения бюджета --- */
+.dist { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+.dist-row { display: grid; grid-template-columns: 1fr auto; gap: 4px 8px; font-size: 0.88rem; color: var(--muted); }
+.dist-row .dist-name { font-weight: 600; }
+.dist-row .dist-val { font-weight: 700; color: var(--ink); }
+.dist-row .dist-track { grid-column: 1 / -1; height: 12px; border-radius: 999px; background: var(--inset); overflow: hidden; }
+.dist-fill { height: 100%; border-radius: 999px; background: var(--blue); width: 0%; transition: width 0.45s var(--ease-out); }
+.dist-fill.fill-violet { background: var(--violet); }
+.dist-fill.fill-mint { background: var(--mint); }
+
+/* --- Подсказки-чипсы --- */
+.hint-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: rgba(110, 168, 255, 0.1);
+    color: var(--blue);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.hint-chip.warn { background: rgba(255, 123, 114, 0.1); color: #ff7b72; }
+html[data-theme="light"] .hint-chip.warn { background: rgba(201, 68, 58, 0.08); color: #c9443a; }
