@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Страница не найдена. Вернитесь на главную FinFocus — сайт о личных финансах простыми словами.">
+    <meta name="theme-color" content="#0e1118">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="theme.js"></script>
+    <script src="menu.js" defer></script>
+    <script src="effects.js" defer></script>
+    <title>404 — Страница не найдена — FinFocus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <a class="skip-link" href="#main-content">Перейти к содержанию</a>
+
+    <nav class="site-nav" aria-label="Навигация по FinFocus">
+        <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="side-menu"><span></span><span></span><span></span></button>
+                <div class="site-nav-links">
+            <a href="index.html">🏠 Главная</a>
+            <a href="budget.html">📊 Бюджет</a>
+            <a href="savings.html">🎯 Накопления</a>
+            <a href="discounts.html">🏷️ Скидки</a>
+            <a href="finlit.html">🎓 Финграмотность</a>
+            <a href="habits.html">🧠 Привычки</a>
+            <a href="loans.html">💳 Кредиты</a>
+            <a href="bicycle.html">🚲 Велосипед</a>
+            <a href="app.html">🕹️ Тренажёр</a>
+        </div>
+        <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">
+            <span class="tt-icon tt-sun">☀️</span><span class="tt-icon tt-moon">🌙</span>
+        </button>
+    </nav>
+
+    <header>
+        <h1>404</h1>
+        <p>Эта страница ушла копить на подушку безопасности — и не вернулась.</p>
+    </header>
+
+    <main class="content" id="main-content">
+        <section>
+            <p>Такой страницы на FinFocus нет. Может, опечатка в адресе, а может, её никогда и не было — как «акционной» цены перед Чёрной пятницей.</p>
+            <div class="callout">
+                <strong>💡 Что делать:</strong> вернитесь на главную или откройте тренажёр — там ползунки, тумблеры и польза точно в наличии.
+            </div>
+            <p style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
+                <a class="btn-primary" href="index.html">🏠 На главную</a>
+                <a class="btn-ghost" href="app.html">🕹️ В тренажёр</a>
+            </p>
+        </section>
+    </main>
+
+    <nav class="pager" aria-label="Полезные страницы">
+        <a class="pager-link prev" href="index.html"><span class="pager-label">← Главная</span><span class="pager-name">🏠 Все материалы</span></a>
+        <a class="pager-link next" href="savings.html"><span class="pager-label">Популярное →</span><span class="pager-name">🎯 Накопления</span></a>
+    </nav>
+
+    <footer>
+        <nav class="footer-map" aria-label="Карта сайта">
+        <a href="index.html">🏠 Главная</a>
+        <a href="budget.html">📊 Бюджет</a>
+        <a href="savings.html">🎯 Накопления</a>
+        <a href="discounts.html">🏷️ Скидки и акции</a>
+        <a href="finlit.html">🎓 Финграмотность</a>
+        <a href="habits.html">🧠 Привычки экономии</a>
+        <a href="loans.html">💳 Долги и кредиты</a>
+        <a href="bicycle.html">🚲 Велосипед</a>
+        <a href="app.html">🕹️ Тренажёр</a>
+        </nav>
+        <p>FinFocus — проект о деньгах для людей, а не для инвесторов.</p>
+        <p class="footer-meta">© 2026 FinFocus · Сделано с ❤️ и правилом 50/30/20</p>
+    </footer>
+
+    <script src="main.js"></script>
+    <div class="drawer-backdrop" data-drawer-close></div>
+    <aside class="drawer" id="side-menu" aria-label="Меню FinFocus" aria-hidden="true">
+        <div class="drawer-head">
+            <span class="drawer-logo">FinFocus</span>
+            <button class="drawer-close" type="button" aria-label="Закрыть меню" data-drawer-close>✕</button>
+        </div>
+        <nav class="drawer-nav" aria-label="Разделы">
+            <a href="index.html">🏠 Главная</a>
+            <a href="budget.html">📊 Бюджет</a>
+            <a href="savings.html">🎯 Накопления</a>
+            <a href="discounts.html">🏷️ Скидки</a>
+            <a href="finlit.html">🎓 Финграмотность</a>
+            <a href="habits.html">🧠 Привычки</a>
+            <a href="loans.html">💳 Кредиты</a>
+            <a href="bicycle.html">🚲 Велосипед</a>
+            <a href="app.html">🕹️ Тренажёр</a>
+        </nav>
+        <div class="drawer-foot">
+            <p>💡 Тему меняет кнопка ☀️/🌙 в верхней панели</p>
+        </div>
+    </aside>
+
+</body>
+</html>
