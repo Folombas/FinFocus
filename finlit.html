@@ -17,6 +17,8 @@
 </head>
 <body>
 
+    <a class="skip-link" href="#main-content">Перейти к содержанию</a>
+
     <!-- Верхняя навигация между страницами -->
     <nav class="site-nav" aria-label="Навигация по FinFocus">
         <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="side-menu"><span></span><span></span><span></span></button>
@@ -53,7 +55,7 @@
         <p>Инфляция, подушка безопасности и главные ошибки — простыми словами, без заумных терминов.</p>
     </header>
 
-    <main class="content">
+    <main class="content" id="main-content">
 
         <!-- 1. ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР -->
         <section class="interactive-block" id="inflation-calc">
@@ -274,7 +276,19 @@
     </section>
 
     <footer>
+                <nav class="footer-map" aria-label="Карта сайта">
+        <a href="index.html">🏠 Главная</a>
+        <a href="budget.html">📊 Бюджет</a>
+        <a href="savings.html">🎯 Накопления</a>
+        <a href="discounts.html">🏷️ Скидки и акции</a>
+        <a href="finlit.html" aria-current="page">🎓 Финграмотность</a>
+        <a href="habits.html">🧠 Привычки экономии</a>
+        <a href="loans.html">💳 Долги и кредиты</a>
+        <a href="bicycle.html">🚲 Велосипед</a>
+        <a href="app.html">🕹️ Тренажёр</a>
+        </nav>
         <p>FinFocus — проект о деньгах для людей, а не для инвесторов.</p>
+        <p class="footer-meta">© 2026 FinFocus · Сделано с ❤️ и правилом 50/30/20</p>
     </footer>
 
     <script src="main.js"></script>
