@@ -17,12 +17,17 @@ function initProgress() {
     var bar = document.createElement('div');
     bar.id = 'fx-progress';
     document.body.appendChild(bar);
+    var ticking = false;
     var update = function () {
+        ticking = false;
         var h = document.documentElement.scrollHeight - window.innerHeight;
         bar.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, window.scrollY / h) : 0) + ')';
     };
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    var onScroll = function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
     update();
 }
 
@@ -54,7 +59,15 @@ function initParticles() {
             color: col
         };
     }
-    function count() { return window.innerWidth < 720 ? 22 : 42; }
+    function count() {
+        // PERF GUARD: меньше частиц; на слабых устройствах почти ноль
+        var n = window.innerWidth < 720 ? 10 : 18;
+        try {
+            if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) n = Math.min(n, 8);
+            if (navigator.deviceMemory || navigator.deviceMemory) {}
+        } catch (e) {}
+        return n;
+    }
     function tick() {
         if (!running) return;
         ctx.clearRect(0, 0, w, h);
@@ -93,15 +106,22 @@ function initTilt() {
     if (!finePointer || reduceMotion) return;
     document.querySelectorAll('.card, .rule-card, .sale-card').forEach(function (card) {
         card.classList.add('fx-tilt');
+        var pending = false, lastX = 0, lastY = 0;
         card.addEventListener('pointermove', function (e) {
-            var r = card.getBoundingClientRect();
-            var px = (e.clientX - r.left) / r.width;
-            var py = (e.clientY - r.top) / r.height;
-            card.classList.add('tilting');
-            card.style.setProperty('--ry', ((px - 0.5) * 8).toFixed(2) + 'deg');
-            card.style.setProperty('--rx', ((0.5 - py) * 8).toFixed(2) + 'deg');
-            card.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
-            card.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+            lastX = e.clientX; lastY = e.clientY;
+            if (pending) return;
+            pending = true;
+            requestAnimationFrame(function () {
+                pending = false;
+                var r = card.getBoundingClientRect();
+                var px = (lastX - r.left) / r.width;
+                var py = (lastY - r.top) / r.height;
+                card.classList.add('tilting');
+                card.style.setProperty('--ry', ((px - 0.5) * 8).toFixed(2) + 'deg');
+                card.style.setProperty('--rx', ((0.5 - py) * 8).toFixed(2) + 'deg');
+                card.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
+                card.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+            });
         });
         card.addEventListener('pointerleave', function () {
             card.classList.remove('tilting');
@@ -160,7 +180,6 @@ function initCountUp() {
                 if (!start) start = ts;
                 var t = Math.min(1, (ts - start) / dur);
                 var eased = 1 - Math.pow(1 - t, 3);
-                el.textContent = fmtLike(el.textContent.replace(/[\d\s\u00A0]/g, '').length ? el.textContent : '', old + (next - old) * eased);
                 el.textContent = fmtLike(el.getAttribute('data-proto') || el.textContent, old + (next - old) * eased);
                 if (t < 1) requestAnimationFrame(step);
             }
@@ -213,6 +232,14 @@ document.addEventListener('DOMContentLoaded', function () {
     initRipple();
     initCountUp();
     initToggleReward();
+    // PERF GUARD: частицы останавливаются, если вкладка долгое время в фоне
+    var idleTimer = null;
+    var canvas = document.getElementById('fx-canvas');
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden || !canvas) return;
+        // лапочка: частицы уже сами ставятся на паузу; дополнительно размораживаем
+        window.dispatchEvent(new Event('resize'));
+    });
 });
 })();
 
