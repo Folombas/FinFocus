@@ -1653,3 +1653,63 @@ h2 { text-wrap: balance; }
 h2:hover .heading-anchor,
 h2:focus-within .heading-anchor { opacity: 1; }
 .heading-anchor:focus-visible { opacity: 1; outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 6px; }
+
+/* ==========================================================================
+   Компоненты «Финансовая яма» и «Деньги и здоровье»
+   ========================================================================== */
+
+/* --- Нумерованные шаги плана --- */
+.step-list { counter-reset: step; display: flex; flex-direction: column; gap: 14px; margin: 24px 0; padding: 0; list-style: none; }
+.step-list li { counter-increment: step; position: relative; background: var(--surface); border: 1px solid var(--line-soft); border-radius: var(--radius-md); padding: 18px 20px 18px 64px; box-shadow: var(--shadow-1); }
+.step-list li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute; left: 16px; top: 18px;
+    font-family: 'Manrope', 'Inter', sans-serif; font-weight: 800; font-size: 1.15rem;
+    color: #0e1118; background: var(--mint); border-radius: 10px; padding: 3px 8px;
+}
+.step-list dt { font-weight: 700; color: var(--ink); margin-bottom: 4px; font-size: 1.02rem; }
+.step-list dd { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
+
+/* --- Вертикальный «каскад ямы»: стена -&gt; дно --- */
+.pit-cascade { display: flex; flex-direction: column; gap: 8px; margin: 24px 0; }
+.pit-stage {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 14px 20px; border-radius: 14px; border: 1px solid var(--line-soft);
+    background: linear-gradient(90deg, rgba(255, 123, 114, 0.16), rgba(255, 123, 114, 0.02));
+}
+.pit-stage i { font-style: normal; font-weight: 800; color: #ff7b72; flex: 0 0 auto; }
+.pit-stage span { color: var(--ink); font-size: 0.95rem; }
+.pit-stage.deep { margin-left: 12%; }
+.pit-stage.deeper { margin-left: 24%; }
+.pit-stage.bottom { margin-left: 36%; background: linear-gradient(90deg, rgba(255, 123, 114, 0.34), rgba(255, 123, 114, 0.08)); }
+.pit-stage.bottom i { white-space: nowrap; }
+html[data-theme="light"] .pit-stage i { color: #c9443a; }
+
+/* --- Чек-кружки «маленьких шагов» --- */
+.tiny-steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; margin: 20px 0; }
+.tiny-step { display: flex; gap: 10px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow-1); }
+.tiny-step b { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: rgba(85, 213, 170, 0.16); color: var(--mint); display: grid; place-items: center; font-size: 0.85rem; }
+.tiny-step p { margin: 0; font-size: 0.9rem; line-height: 1.45; color: var(--ink); }
+
+/* --- Компонент «время и деньги» (страница здоровья) --- */
+.health-duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 24px 0; }
+.health-card { background: var(--surface); border: 1px solid var(--line-soft); border-radius: var(--radius-md); padding: 22px; box-shadow: var(--shadow-1); position: relative; overflow: hidden; }
+.health-card .hc-emoji { font-size: 1.8rem; line-height: 1; margin-bottom: 10px; display: block; }
+.health-card h4 { margin: 0 0 6px; color: var(--ink); font-size: 1.05rem; }
+.health-card p { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.5; }
+
+/* --- Важное предупреждение (ментальное здоровье) --- */
+.callout-red {
+    background: rgba(255, 123, 114, 0.08);
+    border-left-color: #ff7b72;
+}
+.callout-red strong { color: #ff7b72; }
+html[data-theme="light"] .callout-red { background: rgba(201, 68, 58, 0.07); }
+html[data-theme="light"] .callout-red strong { color: #c9443a; }
+
+@media (max-width: 720px) {
+    .pit-stage.deep { margin-left: 6%; }
+    .pit-stage.deeper { margin-left: 12%; }
+    .pit-stage.bottom { margin-left: 18%; }
+    .tiny-steps { grid-template-columns: 1fr; }
+}
