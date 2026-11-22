@@ -215,3 +215,36 @@ document.addEventListener('DOMContentLoaded', function () {
     initToggleReward();
 });
 })();
+
+// ===== Автоссылки-якоря на заголовках разделов =====
+(function () {
+  if (document.body.dataset.anchorsReady) return;
+  document.body.dataset.anchorsReady = '1';
+  const used = new Set();
+  const slugify = (s) => {
+    let id = s.toLowerCase()
+      .replace(/[^a-zа-яё0-9]+/gi, '-')
+      .replace(/^-+|-+$/g, '');
+    if (!id) id = 'section';
+    let base = id, n = 2;
+    while (used.has(id)) id = base + '-' + n++;
+    used.add(id);
+    return id;
+  };
+  document.querySelectorAll('.content h2, h2.faq-title').forEach((h) => {
+    if (h.querySelector('.heading-anchor')) return;
+    const text = h.textContent || '';
+    const title = text.replace(/\s+#$/, '').trim();
+    h.id = h.id || slugify(title);
+    const a = document.createElement('a');
+    a.className = 'heading-anchor';
+    a.href = '#' + h.id;
+    a.textContent = '#';
+    a.setAttribute('aria-label', 'Ссылка на раздел: ' + title);
+    a.addEventListener('click', () => {
+      if (history.replaceState) history.replaceState(null, '', '#' + h.id);
+    });
+    h.classList.add('anchor-target');
+    h.appendChild(a);
+  });
+})();
