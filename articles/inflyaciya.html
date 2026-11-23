@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Инфляция простыми словами: почему всё дорожает, куда уходит покупательная способность и что делать с накоплениями человеку без инвесторского жаргона.">
+    <link rel="canonical" href="https://folombas.github.io/FinFocus/articles/inflyaciya.html">
+    <meta name="theme-color" content="#0e1118">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <meta property="og:title" content="Инфляция простыми словами — FinFocus">
+    <meta property="og:description" content="Инфляция простыми словами: почему всё дорожает, куда уходит покупательная способность и что делать с накоплениями человеку без инвесторского жаргона.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://folombas.github.io/FinFocus/favicon.svg">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Инфляция простыми словами — FinFocus">
+    <meta name="twitter:description" content="Инфляция простыми словами: почему всё дорожает, куда уходит покупательная способность и что делать с накоплениями человеку без инвесторского жаргона.">
+    <script src="../js/theme.js"></script>
+    <script src="../js/menu.js" defer></script>
+    <script src="../js/effects.js" defer></script>
+    <title>Инфляция простыми словами — FinFocus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <a class="skip-link" href="#main-content">Перейти к содержанию</a>
+
+    <nav class="site-nav" aria-label="Навигация по FinFocus">
+        <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="side-menu"><span></span><span></span><span></span></button>
+        <div class="site-nav-links">
+            <a href="../index.html">🏠 Главная</a>
+            <a href="../budget.html">📊 Бюджет</a>
+            <a href="../savings.html">🎯 Накопления</a>
+            <a href="../discounts.html">🏷️ Скидки</a>
+            <a href="../finlit.html">🎓 Финграмотность</a>
+            <a href="index.html" aria-current="page">📚 Финбаза</a>
+            <a href="../habits.html">🧠 Привычки</a>
+            <a href="../loans.html">💳 Кредиты</a>
+            <a href="../vyhod.html">🕳️ Выход из ямы</a>
+            <a href="../health.html">🩺 Здоровье</a>
+            <a href="../bicycle.html">🚲 Велосипед</a>
+            <a href="../app.html">🕹️ Тренажёр</a>
+        </div>
+        <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">
+            <span class="tt-icon tt-sun">☀️</span><span class="tt-icon tt-moon">🌙</span>
+        </button>
+    </nav>
+
+    <header>
+        <h1>📈 Инфляция простыми словами</h1>
+        <p>Почему деньги на полке «худеют», даже если их никто не трогает, и что с этим делать обычному человеку.</p>
+    </header>
+
+    <main class="content" id="main-content">
+
+        <section class="interactive-block" id="inflation-calc">
+            <h2>🧮 Посчитай свою инфляцию</h2>
+            <p>Подвинь ползунки: узнай, сколько покупательной способности потеряет сумма, если она просто лежит без прироста (при инфляции около 8% в год).</p>
+
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>10 тыс ₽</span>
+                    <span id="sumAmount">200 000 ₽</span>
+                    <span>1 млн ₽</span>
+                </div>
+                <input type="range" id="sumSlider" min="10000" max="1000000" step="10000" value="200000">
+                <p><strong>Сумма, которая лежит без прироста</strong></p>
+            </div>
+
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>1 год</span>
+                    <span id="yearsAmount">5 лет</span>
+                    <span>10 лет</span>
+                </div>
+                <input type="range" id="yearsSlider" min="1" max="10" step="1" value="5">
+                <p><strong>Срок</strong></p>
+            </div>
+
+            <div class="calc-results">
+                <div class="result-card">
+                    <span class="result-label">Съест инфляция</span>
+                    <span class="result-value" id="resLoss">68 184 ₽</span>
+                </div>
+                <div class="result-card accent">
+                    <span class="result-label">Реальная стоимость через срок</span>
+                    <span class="result-value" id="resValue">131 816 ₽</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="what-is">
+            <h2>💡 Что такое инфляция</h2>
+            <p>Инфляция — это рост цен. Не «заговор гипермаркетов» и не «виноват конкретный президент текущего квартала», а системный процесс: товарос и услуг вокруг становятся дороже, и на одну и ту же сумму ты можешь купить меньше, чем раньше.</p>
+            <p>Если цены выросли за год на 8%, то на те же 100 ₽ ты купишь чуть меньше половины того же набора через девять лет. Арифметика простая: каждый год суммы без движения теряют примерно десятую часть силы.</p>
+            <div class="callout callout-blue">
+                <strong>🥖 На пальцах:</strong> батон стоит 50 ₽. Через год при инфляции 8% он стоит 54 ₽. Ты этого почти не заметишь, приходя в магазин каждый день. Но если 50 000 ₽ лежат на тумбочке девять лет, потом на них можно купить батонов столько, сколько раньше на 25 000 ₽. Половина силы суммы тихо испарилась.
+            </div>
+        </section>
+
+        <section id="why">
+            <h2>⚖️ Почему всё дорожает</h2>
+            <p>Причин инфляции несколько, и обычно работают они вместе:</p>
+            <ul>
+                <li><strong>Денег становится больше.</strong> Когда денег в экономике много, а товарос столько же, цены догоняют количество денег — это базовая механика спроса и предложения.</li>
+                <li><strong>Дороже производить.</strong> Рост цен на топливо, логистику, материалы и зарплаты продавливается в цену конечного продукта.</li>
+                <li><strong>Ожидания.</strong> Если фирмы ждут, что завтра всё подорожает, они поднимают цены заранее, а люди покупают впрок. Ожидания занимаются самосбыванием.</li>
+            </ul>
+        </section>
+
+        <section id="rule72">
+            <h2>🧠 Правило семидесяти двух</h2>
+            <p>Чтобы быстро оценить, за сколько лет цены удвоятся, раздели 72 на годовую инфляцию в процентах. При 8% годовых получится 9 лет: через девять лет каждый рубль покупает вдвое меньше. Это правило работает и в обратную сторону: при доходе 12% годовых сумма удвоится примерно через 6 лет.</p>
+            <div class="callout callout-green">
+                <strong>📐 Формула на пальцах:</strong> 72 ÷ 8 инфляции = 9 лет до удвоения цены. 72 ÷ 12 доходности = 6 лет до удвоения капитала. Инфляция и доходность гоняются друг за другом вся жизнь, и твоя задача — чтобы доходность хотя бы не отставала.
+            </div>
+        </section>
+
+        <section id="mattress">
+            <h2>🛏️ Почему матрас хуже вклада</h2>
+            <p>Наличные в тумбочке не просто «не растут» — они каждый год теряют часть силы. Накопительный счёт или вклад не обязаны обгонять инфляцию, но хотя бы частично компенсируют потерю. Разница между «лежит без прироста» и «лежит на вкладе» — это буквально разница между утечкой и её снижением.</p>
+            <p>Правило FinFocus такое: подушка безопасности и любой запас, который тебе реально понадобится, хранятся на вкладе или накопительном счёте с быстрым снятием. Не в инвестициях, не в наличных, не в крипте на удачу. Твоя цель здесь — сохранить силу суммы, а не обогнать рынок.</p>
+        </section>
+
+        <section id="todo">
+            <h2>🪜 Что делать: три шага</h2>
+            <ol class="step-list">
+                <li><dt>Сначала база</dt><dd>Собери подушку безопасности на 3–6 месячных расходов и держи её на вкладе с быстрым снятием. Это твоя защита от следующего пункта списка.</dd></li>
+                <li><dt>Доход вверх</dt><dd>Так же как инфляция съедает накопления, она подталкивает зарплаты вверх. Раз в год-полтора честно сопоставляй свою реальную покупательную способность и при необходимости ищи прибавку, бекграунд в новую сферу или подработку.</dd></li>
+                <li><dt>Не гнаться за «обгонить всё»</dt><dd>Такие обещания («гарантированные 40% годовых») — это почти всегда либо высокорисковая аванойда, либо обман. Сначала база: учёт, подушка, дорогие кредиты. Потом обгон инфляции.</dd></li>
+            </ol>
+        </section>
+
+        <section id="mistakes">
+            <h2>🚫 Типичные ошибки</h2>
+            <p><strong>Держать всё наличными «на всякий случай».</strong> Кажды год эта сумма тихо слабеет, а наличные ещё и легко потратить импульсивно.</p>
+            <p><strong>Инвестировать то, что не переживает инфляцию.</strong> Если весь твой запас — это подушка на 3 месяца, любые рисковые игры с ней против правил.</p>
+            <p><strong>Паниковать из-за «рекордных» цифр.</strong> Инфляция волнуется и падает, а паника нередко заставляет людей принимать худшие решения в худший момент: брать микрозайм, спускать подушку на «сгущёнки и гречку» в трёх мешках.</p>
+        </section>
+
+        <section id="links">
+            <h2>🧭 Что почитать дальше</h2>
+            <p><a href="../finlit.html">🎓 Как защитить деньги от инфляции и прочее про финансовую грамотность</a>, <a href="../savings.html">🎯 Как копить по-человечески</a> и <a href="../vyhod.html">🕳️ Что делать, если денег не хватает</a>. База с нуля живёт в <a href="index.html">📚 Финбазе</a>.</p>
+        </section>
+    </main>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <h2 class="faq-title">Частые вопросы про инфляцию</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Инфляция — это всегда плохо?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Не совсем. Небольшая устойчивая инфляция (около 2–4% в год) — нормально для растущей экономики: она подталкивает людей и фирмы тратить и вкладывать деньги вместо того, чтобы бездействовать. Опасны обе крайности: и двузначная инфляция, которая съедает доходы быстрее, чем их удаётся нарастить, и разрушительная дефляция (падение цен), когда экономика замирает.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Моя зарплата повысилась на 10%, я обогнал инфляцию?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Если инфляция за тот же период была около 8%, то да: твоя реальная покупательная способность выросла примерно на 2%. Но проверяй свои личные цены: если ты снимаешь жильё и аренда выросла на 25%, твоя личная инфляция выше официальной. Это нормальная ситуация: официальная корзина — это средняя температура по больнице.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Стоит ли закупаться впрок, когда цены растут?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Алегрией — нет. Панические закупки — это не защита от инфляции, а способ перевести деньги в нечасто используемые товары и создать лишний стресс. Нормальная защита — подушка на вкладе и план личных финансов, а не мешки гречки.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Что такое дефляция и чем она опасна?</span>
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p>Дефляция — это падение цен. Звучит приятно, но работает против тебя: когда всё дешевеет, люди откладывают покупки («завтра будет ещё дешевле»), фирмы сворачивают производство и сокращают зарплаты, и закручивается замкнутый круг. Поэтому центробанки обычно стараются держать инфляцию небольшой и устойчивой, а не гоняться за нулём.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок «что почитать ещё» -->
+    <section class="pages-strip" aria-label="Другие страницы FinFocus">
+        <h2>🧭 Что почитать ещё?</h2>
+        <div class="pages-strip-grid">
+            <a href="start.html" class="ps-item">
+                <span class="ps-emoji">🌱</span>
+                <span><strong>Первые деньги с нуля</strong><p>Семь шагов финансовой базы для начинающих</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
+            <a href="bezdenezhe.html" class="ps-item">
+                <span class="ps-emoji">🕳️</span>
+                <span><strong>Когда денег нет совсем</strong><p>План на сегодня, неделю и месяц</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
+            <a href="../finlit.html" class="ps-item">
+                <span class="ps-emoji">🎓</span>
+                <span><strong>Финансовая грамотность</strong><p>Калькулятор инфляции и мини-словарь</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
+            <a href="../savings.html" class="ps-item">
+                <span class="ps-emoji">🎯</span>
+                <span><strong>Накопления</strong><p>Метод конвертов, автосписание, округление</p></span>
+                <span class="ps-arrow">→</span>
+            </a>
+        </div>
+    </section>
+
+    <nav class="pager" aria-label="Переходы по Финбазе">
+        <a class="pager-link prev" href="bezdenezhe.html"><span class="pager-label">← Предыдущая</span><span class="pager-name">🕳️ Когда денег нет совсем</span></a>
+        <a class="pager-link next" href="../finlit.html"><span class="pager-label">Следующая →</span><span class="pager-name">🎓 Финграмотность</span></a>
+    </nav>
+
+<footer>
+        <nav class="footer-map" aria-label="Карта сайта">
+        <a href="../index.html">🏠 Главная</a>
+        <a href="../budget.html">📊 Бюджет</a>
+        <a href="../savings.html">🎯 Накопления</a>
+        <a href="../discounts.html">🏷️ Скидки и акции</a>
+        <a href="../finlit.html">🎓 Финграмотность</a>
+        <a href="index.html">📚 Финбаза</a>
+        <a href="../habits.html">🧠 Привычки экономии</a>
+        <a href="../loans.html">💳 Долги и кредиты</a>
+        <a href="../vyhod.html">🕳️ Выход из ямы</a>
+        <a href="../health.html">🩺 Деньги и здоровье</a>
+        <a href="../bicycle.html">🚲 Велосипед</a>
+        <a href="../app.html">🕹️ Тренажёр</a>
+        </nav>
+        <p>FinFocus — проект о деньгах для людей, а не для инвесторов.</p>
+        <p class="footer-meta">© 2026 FinFocus · Сделано с ❤️ и правилом 50/30/20</p>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <!-- Боковое меню -->
+    <div class="drawer-backdrop" data-drawer-close></div>
+    <aside class="drawer" id="side-menu" aria-label="Меню FinFocus" aria-hidden="true">
+        <div class="drawer-head">
+            <span class="drawer-logo">FinFocus</span>
+            <button class="drawer-close" type="button" aria-label="Закрыть меню" data-drawer-close>✕</button>
+        </div>
+        <nav class="drawer-nav" aria-label="Разделы">
+            <a href="../index.html">🏠 Главная</a>
+            <a href="../budget.html">📊 Бюджет</a>
+            <a href="../savings.html">🎯 Накопления</a>
+            <a href="../discounts.html">🏷️ Скидки</a>
+            <a href="../finlit.html">🎓 Финграмотность</a>
+            <a href="index.html" aria-current="page">📚 Финбаза</a>
+            <a href="../habits.html">🧠 Привычки</a>
+            <a href="../loans.html">💳 Кредиты</a>
+            <a href="../vyhod.html">🕳️ Выход из ямы</a>
+            <a href="../health.html">🩺 Здоровье</a>
+            <a href="../bicycle.html">🚲 Велосипед</a>
+            <a href="../app.html">🕹️ Тренажёр</a>
+        </nav>
+        <div class="drawer-foot">
+            <p>💡 Тему меняет кнопка ☀️/🌙 в верхней панели</p>
+        </div>
+    </aside>
+
+</body>
+</html>
