@@ -16,8 +16,11 @@ function fmtRub(num) {
 }
 
 function yearsWord(years) {
-    if (years === 1) return 'год';
-    if (years >= 2 && years <= 4) return 'года';
+    const n = Math.abs(Math.round(Number(years) || 0)) % 100;
+    const last = n % 10;
+    if (n >= 11 && n <= 14) return 'лет';
+    if (last === 1) return 'год';
+    if (last >= 2 && last <= 4) return 'года';
     return 'лет';
 }
 
