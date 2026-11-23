@@ -45,10 +45,15 @@ function initFAQ() {
     const faqItems = document.querySelectorAll('.faq-item');
     if (faqItems.length === 0) return;
 
+    let idSeq = 0;
     faqItems.forEach((item) => {
         const question = item.querySelector('.faq-question');
         const answer = item.querySelector('.faq-answer');
         if (!question || !answer) return;
+
+        if (!answer.id) answer.id = 'faq-answer-' + (++idSeq);
+        question.setAttribute('aria-controls', answer.id);
+        question.setAttribute('aria-expanded', 'false');
 
         question.addEventListener('click', () => {
             const wasActive = item.classList.contains('active');
@@ -56,12 +61,15 @@ function initFAQ() {
             faqItems.forEach((other) => {
                 other.classList.remove('active');
                 const ans = other.querySelector('.faq-answer');
+                const q = other.querySelector('.faq-question');
                 if (ans) ans.style.maxHeight = null;
+                if (q) q.setAttribute('aria-expanded', 'false');
             });
 
             if (!wasActive) {
                 item.classList.add('active');
                 answer.style.maxHeight = answer.scrollHeight + 'px';
+                question.setAttribute('aria-expanded', 'true');
             }
         });
     });
