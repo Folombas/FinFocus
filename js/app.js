@@ -1,7 +1,10 @@
 (function () {
 'use strict';
 
-function fmt(n) { return Math.round(n).toLocaleString('ru-RU') + ' ₽'; }
+/* Единый форматтер: переиспользуем formatNum из main.js, с запасным вариантом */
+var fmt = (typeof window.formatNum === 'function')
+    ? function (n) { return window.formatNum(n) + ' ₽'; }
+    : function (n) { return Math.round(n).toLocaleString('ru-RU') + ' ₽'; };
 
 document.addEventListener('DOMContentLoaded', function () {
 
