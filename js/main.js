@@ -16,8 +16,11 @@ function fmtRub(num) {
 }
 
 function yearsWord(years) {
-    if (years === 1) return 'год';
-    if (years >= 2 && years <= 4) return 'года';
+    const n = Math.abs(Math.round(Number(years) || 0)) % 100;
+    const last = n % 10;
+    if (n >= 11 && n <= 14) return 'лет';
+    if (last === 1) return 'год';
+    if (last >= 2 && last <= 4) return 'года';
     return 'лет';
 }
 
@@ -45,10 +48,15 @@ function initFAQ() {
     const faqItems = document.querySelectorAll('.faq-item');
     if (faqItems.length === 0) return;
 
+    let idSeq = 0;
     faqItems.forEach((item) => {
         const question = item.querySelector('.faq-question');
         const answer = item.querySelector('.faq-answer');
         if (!question || !answer) return;
+
+        if (!answer.id) answer.id = 'faq-answer-' + (++idSeq);
+        question.setAttribute('aria-controls', answer.id);
+        question.setAttribute('aria-expanded', 'false');
 
         question.addEventListener('click', () => {
             const wasActive = item.classList.contains('active');
@@ -56,12 +64,15 @@ function initFAQ() {
             faqItems.forEach((other) => {
                 other.classList.remove('active');
                 const ans = other.querySelector('.faq-answer');
+                const q = other.querySelector('.faq-question');
                 if (ans) ans.style.maxHeight = null;
+                if (q) q.setAttribute('aria-expanded', 'false');
             });
 
             if (!wasActive) {
                 item.classList.add('active');
                 answer.style.maxHeight = answer.scrollHeight + 'px';
+                question.setAttribute('aria-expanded', 'true');
             }
         });
     });
@@ -83,6 +94,7 @@ function initSliderCalc(opts) {
         (out.results || []).forEach((text, i) => { if (results[i]) results[i].textContent = text; });
     }
 
+    results.forEach((el) => el.setAttribute('aria-live', 'polite'));
     inputs.forEach((x) => x.addEventListener('input', update));
     update();
 }

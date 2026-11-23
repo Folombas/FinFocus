@@ -154,40 +154,67 @@ function initRipple() {
 
 /* 5. Анимированный счётчик значений калькуляторов */
 function parseMoney(text) {
-    var m = String(text).replace(/\u00A0| /g, '').match(/-?[\d.,]+/);
-    return m ? parseFloat(m[0].replace(',', '.').replace(/,/g, '')) : null;
+    var s = String(text).replace(/\u00A0|\s|\u20BD/g, '');
+    var m = s.match(/-?[\d.,]+/);
+    if (!m) return null;
+    var t = m[0];
+    var dot = t.lastIndexOf('.'), com = t.lastIndexOf(',');
+    if (dot >= 0 && com >= 0) {
+        t = dot > com ? t.replace(/,/g, '') : t.replace(/\./g, '').replace(',', '.');
+    } else if (com >= 0) {
+        t = /,\d{3}(?!\d)/.test(t) ? t.replace(/,/g, '') : t.replace(',', '.');
+    }
+    var n = parseFloat(t);
+    return isFinite(n) ? n : null;
 }
 function fmtLike(proto, value) {
-    var hasRub = String(proto).indexOf('₽') >= 0;
-    var suffix = (String(proto).match(/(мес.|₽|%)\s*$/) || [''])[0];
-    return Math.round(value).toLocaleString('ru-RU') + (hasRub ? ' ₽' : suffix ? ' ' + suffix : '');
+    var p = String(proto);
+    var hasRub = p.indexOf('\u20BD') >= 0;
+    var suffix = (p.match(/(мес.|%|мес\.)\s*$/) || [''])[0];
+    return Math.round(value).toLocaleString('ru-RU') + (hasRub ? ' \u20BD' : suffix ? ' ' + suffix : '');
 }
 function initCountUp() {
     if (reduceMotion) return;
     var nodes = document.querySelectorAll('.result-value');
-    if (!('MutationObserver' in window)) return;
-    var prev = new WeakMap();
+    if (!('MutationObserver' in window) || nodes.length === 0) return;
+    var target = new WeakMap();  // к чему анимируем
+    var echo = new WeakMap();    // защита от эха: текст, записанный нами самими
+    var raf = new WeakMap();     // активный rAF на элемент
     var observer = new MutationObserver(function (records) {
         records.forEach(function (rec) {
             var el = rec.target;
-            var next = parseMoney(el.textContent);
+            if (!el.isConnected) return;
+            var raw = el.textContent;
+            if (echo.get(el) === raw) { echo.delete(el); return; } // эхо своей же записи — пропускаем
+            var next = parseMoney(raw);
             if (next === null) return;
-            var old = prev.has(el) ? prev.get(el) : 0;
-            prev.set(el, next);
-            if (old === next) return;
+            target.set(el, next);
+            if (!el.getAttribute('data-proto')) el.setAttribute('data-proto', raw);
+            if (raf.get(el)) cancelAnimationFrame(raf.get(el));
+            var from = parseMoney(el.getAttribute('data-proto') || '0');
+            if (from === null) from = 0;
+            var cur = pmap.get(el) != null ? pmap.get(el) : from;
+            if (cur === next) return;
             var start = null, dur = 450;
             function step(ts) {
                 if (!start) start = ts;
                 var t = Math.min(1, (ts - start) / dur);
                 var eased = 1 - Math.pow(1 - t, 3);
-                el.textContent = fmtLike(el.getAttribute('data-proto') || el.textContent, old + (next - old) * eased);
-                if (t < 1) requestAnimationFrame(step);
+                var text = fmtLike(el.getAttribute('data-proto') || '', cur + (next - cur) * eased);
+                echo.set(el, text);
+                el.textContent = text;
+                if (t < 1) raf.set(el, requestAnimationFrame(step));
+                else raf.delete(el);
             }
-            if (!el.getAttribute('data-proto')) el.setAttribute('data-proto', el.textContent);
-            requestAnimationFrame(step);
+            pmap.set(el, next);
+            raf.set(el, requestAnimationFrame(step));
         });
     });
-    nodes.forEach(function (el) { observer.observe(el, { childList: true }); });
+    var pmap = new WeakMap();
+    nodes.forEach(function (el) {
+        observer.observe(el, { childList: true });
+        pmap.set(el, 0);
+    });
 }
 
 /* 6. Конфетти из эмодзи */
@@ -233,7 +260,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initCountUp();
     initToggleReward();
     // PERF GUARD: частицы ставятся на паузу сами, когда вкладка скрыта (см. initParticles).
-    });
 });
 })();
 
