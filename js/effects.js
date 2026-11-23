@@ -233,7 +233,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initCountUp();
     initToggleReward();
     // PERF GUARD: частицы ставятся на паузу сами, когда вкладка скрыта (см. initParticles).
-    });
 });
 })();
 
