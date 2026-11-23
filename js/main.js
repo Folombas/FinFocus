@@ -91,6 +91,7 @@ function initSliderCalc(opts) {
         (out.results || []).forEach((text, i) => { if (results[i]) results[i].textContent = text; });
     }
 
+    results.forEach((el) => el.setAttribute('aria-live', 'polite'));
     inputs.forEach((x) => x.addEventListener('input', update));
     update();
 }
