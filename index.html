@@ -27,6 +27,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">    <link rel="stylesheet" href="css/modern.css">
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "FinFocus",
+          "url": "https://folombas.github.io/FinFocus/",
+          "inLanguage": "ru",
+          "description": "Обучающий сайт о личных финансах: бюджет, накопления, скидки, кредиты и привычки экономии простыми словами."
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Финансовый тренажёр FinFocus",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "any",
+          "url": "https://folombas.github.io/FinFocus/app.html",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RUB" }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
 
@@ -63,6 +85,10 @@
     </header>
 
        <main class="grid" id="main-content">
+        <a href="search.html" class="card">
+            <h2>🔍 Поиск</h2>
+            <p>Найти тему по слову: подушка, донаты, инфляция и другие</p>
+        </a>
         <a href="budget.html" class="card">
             <h2>📊 Бюджет</h2>
             <p>Куда уходят деньги и как перестать жить «от зарплаты до зарплаты»</p>
