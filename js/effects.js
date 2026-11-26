@@ -1,3 +1,4 @@
+// @ts-check
 /* FinFocus — спецэффекты: частицы, tilt, ripple, прогресс скролла, счётчики, конфетти.
    Всё отключается автоматически при prefers-reduced-motion и на тач-экранах где уместно. */
 (function () {
@@ -6,6 +7,10 @@
 var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var finePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
 
+/** Значение CSS-переменной с элемента html или запасной вариант
+ * @param {string} name
+ * @param {string} fallback
+ * @returns {string} */
 function cssVar(name, fallback) {
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
     return v || fallback;
@@ -64,7 +69,7 @@ function initParticles() {
         var n = window.innerWidth < 720 ? 10 : 18;
         try {
             if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) n = Math.min(n, 8);
-            if (navigator.deviceMemory && navigator.deviceMemory <= 2) n = Math.min(n, 6);
+            if (navigator['deviceMemory'] && navigator['deviceMemory'] <= 2) n = Math.min(n, 6);
         } catch (e) {}
         return n;
     }
@@ -153,6 +158,9 @@ function initRipple() {
 }
 
 /* 5. Анимированный счётчик значений калькуляторов */
+/** Парсит «12 345,67 ₽» -> число
+ * @param {string|null} text
+ * @returns {number|null} */
 function parseMoney(text) {
     var s = String(text).replace(/\u00A0|\s|\u20BD/g, '');
     var m = s.match(/-?[\d.,]+/);
@@ -167,6 +175,10 @@ function parseMoney(text) {
     var n = parseFloat(t);
     return isFinite(n) ? n : null;
 }
+/** Форматирует «как образец»: рубль/суффикс сохраняются
+ * @param {string} proto
+ * @param {number} value
+ * @returns {string} */
 function fmtLike(proto, value) {
     var p = String(proto);
     var hasRub = p.indexOf('\u20BD') >= 0;
@@ -219,6 +231,10 @@ function initCountUp() {
 
 /* 6. Конфетти из эмодзи */
 var CONFETTI = ['🪙', '💵', '✨', '🎉', '💰'];
+/** Выброс конфетти в точке (x, y): amount частей, по умолчанию 24
+ * @param {number} x
+ * @param {number} y
+ * @param {number=} amount */
 function burst(x, y, amount) {
     if (reduceMotion) return;
     var n = amount || 24;
@@ -238,7 +254,7 @@ function burst(x, y, amount) {
         s.addEventListener('animationend', function () { this.remove(); });
     }
 }
-window.finfocusBurst = burst;
+window['finfocusBurst'] = burst;
 
 /* 7. Микро-подарок: выключил тумблер — конфетти экономии */
 function initToggleReward() {
