@@ -1,12 +1,17 @@
+// @ts-check
 (function () {
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
+    /** @type {HTMLElement|null} */
     var burger = document.querySelector('.burger');
+    /** @type {HTMLElement|null} */
     var drawer = document.querySelector('.drawer');
+    /** @type {HTMLElement|null} */
     var backdrop = document.querySelector('.drawer-backdrop');
     if (!burger || !drawer || !backdrop) return;
 
+    /** @returns {boolean} открыто ли боковое меню прямо сейчас */
     var isOpen = function () { return document.body.classList.contains('drawer-open'); };
 
     function openDrawer() {

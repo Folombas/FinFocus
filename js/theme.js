@@ -1,15 +1,20 @@
+// @ts-check
 (function () {
 'use strict';
 
-var KEY = 'finfocus-theme';
-var root = document.documentElement;
+/** @type {string} */ var KEY = 'finfocus-theme';
+/** @type {HTMLElement} */ var root = document.documentElement;
 
+/** @returns {'light'|'dark'} текущая системная тема */
 function systemTheme() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 }
+/** @returns {'light'|'dark'} тема, применённая к документу сейчас */
 function current() {
     return root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
 }
+/** Применяет тему к html, meta theme-color и всем кнопкам .theme-toggle
+ * @param {'light'|'dark'} theme */
 function apply(theme) {
     root.setAttribute('data-theme', theme);
     var meta = document.querySelector('meta[name="theme-color"]');
@@ -23,7 +28,7 @@ function apply(theme) {
 }
 
 // Тема применяется сразу, до первой отрисовки (скрипт подключён в <head>)
-var stored = null;
+/** @type {string|null} */ var stored = null;
 try { stored = localStorage.getItem(KEY); } catch (e) {}
 apply(stored === 'light' || stored === 'dark' ? stored : systemTheme());
 
