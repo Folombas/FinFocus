@@ -11,7 +11,7 @@
 function urlBase() {
     var script = /** @type {HTMLScriptElement | null} */ (document.currentScript);
     if (script && script.src) {
-        var m = String(script.src).match(/^(.*\/)js\//i);
+        var m = String(script.src).match(/^(.*\\/)js\\//i);
         if (m) return m[1];
     }
     return '';
@@ -97,34 +97,60 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /* PWA: офлайн-режим через Service Worker.
  * Регистрируем только на проде Pages (http(s)), в локальных file:// тихо пропускаем. */
+
+/* База сайта для SW. Вычисляется на этапе выполнения скрипта: внутри
+ * load-обработчика document.currentScript уже равен null, и база
+ * ошибочно схлопнулась бы в '/'. */
+var pwaBase = (function () {
+    var sc = /** @type {HTMLScriptElement | null} */ (document.currentScript);
+    if (sc && sc.src) {
+        var mm = String(sc.src).match(/^(.*\\/)js\\//i);
+        if (mm) return mm[1];
+    }
+    return '/';
+})();
+
+/* Был ли контролирующий SW на момент загрузки страницы: отличаем первый
+ * перехват управления (claim, без перезагрузки) от смены версии (нужен reload). */
+var hadController = 'serviceWorker' in navigator && !!navigator.serviceWorker.controller;
+
 if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
     window.addEventListener('load', function () {
-        var base = '/';
-        var sc = /** @type {HTMLScriptElement | null} */ (document.currentScript);
-        if (sc && sc.src) {
-            var mm = String(sc.src).match(/^(.*\/)js\//i);
-            if (mm) base = mm[1];
-        }
-        navigator.serviceWorker.register(base + 'sw.js').then(function (reg) {
-            if (reg.waiting && navigator.serviceWorker.controller) {
-                reg.waiting.postMessage('skipWaiting');
-            }
+        navigator.serviceWorker.register(pwaBase + 'sw.js').then(function (reg) {
+            /* Обновление только по действию пользователя: не перезагружаем
+             * страницу молча посреди ввода данных (трекер, калькуляторы). */
+            if (reg.waiting && hadController) showUpdateToast(reg.waiting);
             reg.addEventListener('updatefound', function () {
                 var nw = reg.installing;
                 if (!nw) return;
                 nw.addEventListener('statechange', function () {
-                    if (nw.state === 'installed' && navigator.serviceWorker.controller) {
-                        nw.postMessage('skipWaiting');
-                    }
+                    if (nw.state === 'installed' && hadController) showUpdateToast(nw);
                 });
             });
         }).catch(function () { /* офлайн-режим не критичен */ });
     });
 }
+
+/** Кнопка «доступно обновление»: применяет новую версию SW по клику.
+ * @param {ServiceWorker} worker */
+function showUpdateToast(worker) {
+    if (document.getElementById('sw-update')) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'sw-update';
+    btn.textContent = '🔄 Доступно обновление сайта. Нажмите, чтобы применить';
+    btn.setAttribute('aria-label', 'Применить обновление сайта и перезагрузить страницу');
+    btn.style.cssText = 'position:fixed;left:16px;bottom:16px;z-index:9999;cursor:pointer;'
+        + 'padding:10px 14px;border-radius:10px;border:1px solid rgba(127,127,127,.4);'
+        + 'font:inherit;font-size:14px;background:#1f6feb;color:#fff;';
+    btn.addEventListener('click', function () { worker.postMessage('skipWaiting'); });
+    document.body.appendChild(btn);
+}
+
 var swRefreshing = false;
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('controllerchange', function () {
-        if (!navigator.serviceWorker.controller || swRefreshing) return;
+        if (!hadController || swRefreshing) return;
         swRefreshing = true;
         window.location.reload();
     });
