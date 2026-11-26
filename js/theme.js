@@ -5,22 +5,42 @@
 /** @type {string} */ var KEY = 'finfocus-theme';
 /** @type {HTMLElement} */ var root = document.documentElement;
 
-/** Подключает css/modern.css с корректным префиксом пути для вложенных страниц:
- *  url скрипта js/theme.js разбирается на базу сайта (/FinFocus/ или /).
- *  Страница полностью рабоча и без этого слоя. */
-function injectModernCss() {
+/** База URL сайта, вычисленная из адреса текущего скрипта (js/theme.js):
+ *  «/FinFocus/» на проектной странице Pages или «/» на пользовательском домене.
+ *  @returns {string} */
+function urlBase() {
     var script = document.currentScript;
-    var prefix = '';
     if (script && script.src) {
         var m = String(script.src).match(/^(.*\/)js\//i);
-        if (m) prefix = m[1];
+        if (m) return m[1];
     }
+    return '';
+}
+
+/** Подключает css/modern.css: страница полностью рабоча и без этого слоя. */
+function injectModernCss() {
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = prefix + 'css/modern.css';
+    link.href = urlBase() + 'css/modern.css';
     document.head.appendChild(link);
 }
+
+/** Добавляет Speculation Rules: лёгкий prefetch внутренних страниц списка,
+ *  чтобы навигация по сайту ощущалась мгновенной.
+ *  Браузеры без поддержки просто игнорируют тег. */
+function injectSpeculationRules() {
+    var pages = ['index.html', 'budget.html', 'savings.html', 'discounts.html', 'finlit.html',
+        'habits.html', 'loans.html', 'vyhod.html', 'health.html', 'streaming.html',
+        'streaming-platforms.html', 'streaming-law.html', 'bicycle.html', 'app.html', 'articles/index.html'];
+    var urls = pages.map(function (p) { return urlBase() + p; });
+    var rules = { prefetch: [{ source: 'list', eagerness: 'conservative', urls: urls }] };
+    var el = document.createElement('script');
+    el.type = 'speculationrules';
+    el.textContent = JSON.stringify(rules);
+    document.head.appendChild(el);
+}
 injectModernCss();
+injectSpeculationRules();
 
 /** @returns {'light'|'dark'} текущая системная тема */
 function systemTheme() {
