@@ -11,7 +11,7 @@
     /* Калькулятор донатов: N зрителей -> доход в месяц и за эфир. */
     document.addEventListener('DOMContentLoaded', function () {
         var viewers = document.getElementById('viewersSlider');
-        var service = document.getElementById('serviceSelect');
+        var service = /** @type {HTMLSelectElement|null} */ (document.getElementById('serviceSelect'));
         if (!viewers || !service) return; // не наша страница - тихо выходим
 
         /* Комиссии как доля: актуально на 26.11.2026, значения в select#serviceSelect. */

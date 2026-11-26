@@ -9,7 +9,7 @@
  *  «/FinFocus/» на проектной странице Pages или «/» на пользовательском домене.
  *  @returns {string} */
 function urlBase() {
-    var script = document.currentScript;
+    var script = /** @type {HTMLScriptElement | null} */ (document.currentScript);
     if (script && script.src) {
         var m = String(script.src).match(/^(.*\/)js\//i);
         if (m) return m[1];

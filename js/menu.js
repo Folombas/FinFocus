@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         burger.classList.add('open');
         burger.setAttribute('aria-expanded', 'true');
         drawer.setAttribute('aria-hidden', 'false');
-        var closeBtn = drawer.querySelector('.drawer-close');
+        var closeBtn = /** @type {HTMLElement|null} */ (drawer.querySelector('.drawer-close'));
         if (closeBtn) closeBtn.focus();
     }
     function closeDrawer() {
