@@ -99,7 +99,12 @@ document.addEventListener('DOMContentLoaded', function () {
  * Регистрируем только на проде Pages (http(s)), в локальных file:// тихо пропускаем. */
 if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
     window.addEventListener('load', function () {
-        var base = urlBase() || '/';
+        var base = '/';
+        var sc = document.currentScript;
+        if (sc && sc.src) {
+            var mm = String(sc.src).match(/^(.*\/)js\//i);
+            if (mm) base = mm[1];
+        }
         navigator.serviceWorker.register(base + 'sw.js').then(function (reg) {
             if (reg.waiting && navigator.serviceWorker.controller) {
                 reg.waiting.postMessage('skipWaiting');
