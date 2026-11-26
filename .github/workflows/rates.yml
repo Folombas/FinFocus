@@ -23,20 +23,7 @@ jobs:
       - name: Build compact data/rates.json
         run: |
           mkdir -p data
-          node -e '
-            const fs = require("fs");
-            const d = JSON.parse(fs.readFileSync("/tmp/daily.json", "utf8"));
-            const pick = (v) => v ? { value: v.Value, prev: v.Previous } : null;
-            const out = {
-              source: "https://www.cbr-xml-daily.ru/ (public CBR feed, no keys)",
-              date: d.Date,
-              usd: pick(d.Valute.USD),
-              eur: pick(d.Valute.EUR),
-              cny: pick(d.Valute.CNY)
-            };
-            fs.writeFileSync("data/rates.json", JSON.stringify(out, null, 2) + "
-");
-          '
+          node .github/scripts/build-rates.js
 
       - name: Commit refreshed rates
         run: |
@@ -47,5 +34,6 @@ jobs:
             echo "Rates unchanged, nothing to commit"
           else
             git commit -m "data: refresh rates from CBR public feed"
+            git pull --rebase origin main
             git push
           fi

@@ -5,16 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex">
     <title>Нет сети — FinFocus</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/modern.css">
+    <style>
+        /* Самодостаточная страница: без внешних css/js/svg. SW отдаёт её
+         * на URL любого раздела, относительные пути резолвились бы от
+         * запрошенного адреса и дали бы 404. */
+        body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+               font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+               background: #0e1118; color: #e8ecf5; text-align: center; padding: 24px; box-sizing: border-box; }
+        .card { max-width: 420px; }
+        h1 { font-size: 1.6em; margin: 0 0 .5em; }
+        p { line-height: 1.5; color: #b8c2d9; }
+        .btn { display: inline-block; margin-top: 8px; padding: 10px 18px; border-radius: 10px;
+               background: #1f6feb; color: #fff; text-decoration: none; font-weight: 600; }
+        @media (prefers-color-scheme: light) {
+            body { background: #eef2fa; color: #17202e; }
+            p { color: #45506a; }
+        }
+    </style>
 </head>
 <body>
-    <main class="offline-main" id="main-content">
+    <main class="card" id="main-content">
         <h1>📡 Нет сети</h1>
         <p>Страница не загрузилась: нет интернета. Уже открытые страницы сайта работают офлайн.</p>
-        <p><a class="btn" href="index.html">На главную</a></p>
+        <p><a class="btn" id="homeLink" href="/">На главную</a></p>
         <p>Как только связь вернётся, обновите страницу.</p>
     </main>
+    <script>
+        /* Абсолютная ссылка: база вычисляется из адреса страницы
+         * («/FinFocus/» на проектном Pages, «/» на своём домене). */
+        (function () {
+            var base = location.pathname.indexOf('/FinFocus/') === 0 ? '/FinFocus/' : '/';
+            var link = document.getElementById('homeLink');
+            if (link) link.setAttribute('href', base + 'index.html');
+        })();
+    </script>
 </body>
 </html>
