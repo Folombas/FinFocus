@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Как FinFocus работает на бесплатном хостинге GitHub Pages: PWA и офлайн-режим, проверка типов в CI, трекер на IndexedDB и честный ответ на вопрос «а где тут бэкенд».">
+    <link rel="canonical" href="https://folombas.github.io/FinFocus/articles/github-pages.html">
+    <meta name="theme-color" content="#0e1118">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <meta property="og:title" content="Про создание сайта на бесплатном хостинге GitHub Pages — FinFocus">
+    <meta property="og:description" content="PWA, офлайн-режим, CI-конвейер и честный ответ про бэкенд: как устроен FinFocus на GitHub Pages.">
+    <script src="../js/theme.js"></script>
+    <script src="../js/menu.js" defer></script>
+    <script src="../js/effects.js" defer></script>
+    <title>Про создание сайта на бесплатном хостинге GitHub Pages — FinFocus</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/modern.css">
+</head>
+<body>
+
+    <a class="skip-link" href="#main-content">Перейти к содержанию</a>
+
+    <nav class="site-nav" aria-label="Навигация по FinFocus">
+        <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="side-menu"><span></span><span></span><span></span></button>
+        <div class="site-nav-links">
+            <a href="../index.html">🏠 Главная</a>
+            <a href="../budget.html">📊 Бюджет</a>
+            <a href="../savings.html">🎯 Накопления</a>
+            <a href="../discounts.html">🏷️ Скидки</a>
+            <a href="../finlit.html">🎓 Финграмотность</a>
+            <a href="index.html" aria-current="page">📚 Финбаза</a>
+            <a href="../habits.html">🧠 Привычки</a>
+            <a href="../loans.html">💳 Кредиты</a>
+            <a href="../vyhod.html">🕳️ Выход из ямы</a>
+            <a href="../health.html">🩺 Здоровье</a>
+            <a href="../streaming.html">🎥 Стриминг</a>
+            <a href="../bicycle.html">🚲 Велосипед</a>
+            <a href="../app.html">🕹️ Тренажёр</a>
+            <a href="../search.html">🔍 Поиск</a>
+        </div>
+        <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">
+            <span class="tt-icon tt-sun">☀️</span><span class="tt-icon tt-moon">🌙</span>
+        </button>
+    </nav>
+
+    <header>
+        <a href="index.html" class="back-link">← Финбаза</a>
+        <h1>🛠️ Про создание сайта на бесплатном хостинге GitHub Pages</h1>
+        <p>Как FinFocus живёт без серверов, за какие деньги (спойлер: за ноль) и почему без бэкенда тут не то что можно, а нужно.</p>
+    </header>
+
+    <main class="content" id="main-content">
+
+        <section id="chto-eto">
+            <h2>Что такое GitHub Pages и почему это бесплатно</h2>
+            <p>GitHub Pages — это статический хостинг, встроенный прямо в репозиторий: кладёшь HTML, CSS и JS в ветку, включаешь Pages в настройках, и сайт доступен по адресу вида <strong>folombas.github.io/FinFocus</strong>. Платить не нужно, сервера администрировать не нужно, HTTPS включается галочкой.</p>
+            <p>Слово «статический» здесь ключевое: хостинг отдаёт файлы ровно в том виде, в каком они лежат в репозитории. Никакого кода на сервере не выполняется, и это не ограничение, а контракт: он заставляет сайт быть быстрым, простым и предсказуемым.</p>
+        </section>
+
+        <section id="mosh-platformy">
+            <h2>Вся мощь платформы, которую мы используем</h2>
+            <ol class="step-list">
+                <li><strong>PWA и офлайн-режим.</strong> Манифест приложения плюс Service Worker с версионируемым кэшем: сайт устанавливается как приложение и открывается без интернета. При обрыве сети посетитель видит аккуратную страницу offline.html, а не ошибку браузера.</li>
+                <li><strong>Мгновенная навигация.</strong> Speculation Rules prefetch: браузер заранее скачивает страницы, на которые вы, скорее всего, нажмёте. Переход ощущается мгновенным.</li>
+                <li><strong>CI-конвейер на GitHub Actions.</strong> Каждый пуш проходит гейты: проверку синтаксиса, строгую проверку типов (tsc с DOM-библиотекой) и структурные проверки HTML. Сломать сайт неосторожным коммитом нельзя.</li>
+                <li><strong>Данные по расписанию.</strong> Отдельный workflow каждый день забирает курсы ЦБ из публичного фида и коммитит свежий JSON. Без ключей, без сервера, без платежей.</li>
+                <li><strong>Локальное хранение данных.</strong> Трекер накоплений в тренажёре работает на IndexedDB: записи живут прямо в браузере посетителя, с экспортом и импортом в JSON.</li>
+                <li><strong>Поиск без сервера.</strong> Поиск по сайту работает поверх статического JSON-индекса: страница поиска и файл данных, Elasticsearch не нужен.</li>
+                <li><strong>SEO-разметка.</strong> JSON-LD (schema.org) на главной, корректные canonical и Open Graph на каждой странице.</li>
+            </ol>
+        </section>
+
+        <section id="typescript-ili-net">
+            <h2>Переписали ли мы всё на TypeScript и фреймворки?</h2>
+            <p>Нет, и это осознанное решение, а не недоделка. Код сайта остался нативным JavaScript без сборки и зависимостей, но мы добавили главное от TypeScript: строгую проверку типов. В проекте лежит tsconfig с DOM-библиотекой, типы описаны JSDoc-аннотациями, а CI запускает tsc --noEmit на каждый коммит. Получается «TypeScript без переписывания»: типы ловят ошибки, но билд-степа нет, и любую страницу можно править руками.</p>
+            <p>Фреймворки вроде React для сайта такого формата дали бы только минусы: обязательная сборка, тяжёлый бандл, хуже SEO и длиннее загрузка на слабых устройствах. Все современные возможности платформы (View Transitions, Speculation Rules, Service Worker, IndexedDB) доступны и без фреймворка.</p>
+        </section>
+
+        <section id="backend">
+            <h2>А бэкенд? Честный ответ</h2>
+            <p>Классический бэкенд на GitHub Pages прикрутить нельзя: серверный код (Node, PHP, Python) там не выполняется, баз данных и файлов на запись тоже нет. Но почти каждая задача бэкенда для такого сайта решается бесплатно и без него:</p>
+            <ul>
+                <li><strong>Хранение данных пользователя</strong> — IndexedDB и localStorage в браузере (так работает наш трекер накоплений).</li>
+                <li><strong>Актуальные данные</strong> — GitHub Actions генерирует JSON по расписанию и коммитит его в репозиторий.</li>
+                <li><strong>Формы и обратная связь</strong> — внешние бесплатные сервисы форм или GitHub Issues как комментарии.</li>
+                <li><strong>Полноценный бэкенд с базой и авторизацией</strong> — внешний бесплатный тариф BaaS (Supabase, Firebase и подобные), с которых сайт обращается к API прямо из браузера.</li>
+            </ul>
+            <p>Формула такая: всё, что можно посчитать и хранить на клиенте, живёт на клиенте; всё, что требует сервера, выносится на бесплатный внешний сервис; всё, что требует свежести, делает Actions. Для образовательного сайта этого хватает с запасом.</p>
+        </section>
+
+        <section id="kak-povtorit">
+            <h2>Как повторить в пяти шагах</h2>
+            <ol class="step-list">
+                <li>Создай публичный репозиторий и положи туда HTML с CSS и JS.</li>
+                <li>Включи Pages в настройках: ветка main, корень. Сайт жив через минуту.</li>
+                <li>Добавь веб-манифест и простой Service Worker: получишь установку и офлайн-режим.</li>
+                <li>Положи tsconfig.json и включи tsc --noEmit в Actions: типы будут проверяться на каждый коммит.</li>
+                <li>Добавь cron-workflow для данных и JSON-индекс для поиска. Бэкенд так и не понадобится.</li>
+            </ol>
+            <div class="callout callout-green"><strong>Итог:</strong> бесплатный хостинг, установка на телефон, работа офлайн, автопроверки кода и свежие данные по расписанию. Статический контракт не урезает возможности, он дисциплинирует архитектуру.</div>
+        </section>
+
+    </main>
+
+    <nav class="pager" aria-label="Переходы по Финбазе">
+        <a class="pager-link prev" href="inflyaciya.html"><span class="pager-label">← Предыдущая</span><span class="pager-name">📈 Инфляция простыми словами</span></a>
+        <a class="pager-link next" href="index.html"><span class="pager-label">Следующая →</span><span class="pager-name">📚 Финбаза</span></a>
+    </nav>
+
+    <footer>
+        <nav class="footer-map" aria-label="Карта сайта">
+        <a href="../index.html">🏠 Главная</a>
+        <a href="../budget.html">📊 Бюджет</a>
+        <a href="../savings.html">🎯 Накопления</a>
+        <a href="../discounts.html">🏷️ Скидки</a>
+        <a href="../finlit.html">🎓 Финграмотность</a>
+        <a href="index.html" aria-current="page">📚 Финбаза</a>
+        <a href="../habits.html">🧠 Привычки</a>
+        <a href="../loans.html">💳 Кредиты</a>
+        <a href="../vyhod.html">🕳️ Выход из ямы</a>
+        <a href="../health.html">🩺 Здоровье</a>
+        <a href="../streaming.html">🎥 Стриминг</a>
+        <a href="../bicycle.html">🚲 Велосипед</a>
+        <a href="../app.html">🕹️ Тренажёр</a>
+        <a href="../search.html">🔍 Поиск</a>
+        </nav>
+        <p>FinFocus — проект о деньгах для людей, а не для инвесторов.</p>
+        <p class="footer-meta">© 2026 FinFocus · Сделано с ❤️ и правилом 50/30/20</p>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <div class="drawer-backdrop" data-drawer-close></div>
+    <aside class="drawer" id="side-menu" aria-label="Меню FinFocus" aria-hidden="true">
+        <div class="drawer-head">
+            <span class="drawer-logo">FinFocus</span>
+            <button class="drawer-close" type="button" aria-label="Закрыть меню" data-drawer-close>✕</button>
+        </div>
+        <nav class="drawer-nav" aria-label="Разделы">
+            <a href="../index.html">🏠 Главная</a>
+            <a href="../budget.html">📊 Бюджет</a>
+            <a href="../savings.html">🎯 Накопления</a>
+            <a href="../discounts.html">🏷️ Скидки</a>
+            <a href="../finlit.html">🎓 Финграмотность</a>
+            <a href="index.html" aria-current="page">📚 Финбаза</a>
+            <a href="../habits.html">🧠 Привычки</a>
+            <a href="../loans.html">💳 Кредиты</a>
+            <a href="../vyhod.html">🕳️ Выход из ямы</a>
+            <a href="../health.html">🩺 Здоровье</a>
+            <a href="../bicycle.html">🚲 Велосипед</a>
+            <a href="../app.html">🕹️ Тренажёр</a>
+            <a href="../search.html">🔍 Поиск</a>
+        </nav>
+        <div class="drawer-foot">
+            <p>💡 Тему меняет кнопка ☀️/🌙 в верхней панели</p>
+        </div>
+    </aside>
+
+</body>
+</html>
