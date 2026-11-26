@@ -85,6 +85,7 @@ done
 | 24.11.2026 | Конвейер принят; базы: FinFocus `c158d3a`, web-games `8a3de85` | Гоша + Qwen |
 | 26.11.2026 | Раздел «Стриминг 2026»: PR #5 смержен досрочно (не весь ТЗ); fix-forward: streaming-2026-dod -> PR #6 (закон, nav, sitemap, cross-links, ремонт транспортных артефактов). Отклонение от ТЗ: утилиты в css/streaming.css вместо style.css (лимит ~32KB на чтение файла в среде Vibe) | Vibe + Qwen (QA) |
 | 26.11.2026 | Модернизация «Выжать максимум из Pages»: ветка pages-max-2026 от main @ 48dcaae, план docs/pages-modernization-plan.md. MPA сохраняется, SPA отклонён; css/modern.css аддитивно (style.css не читается транспортом) | Vibe |
+| 26.11.2026 | PR #7: закрыты находки QA F1-F6 (CI-триггеры, tsconfig+checkJs, тип-фиксы, modern.css через link, ремонт 404). Из плана Pages: PWA (manifest+SW+offline), поиск по статическому индексу, трекер на IndexedDB, JSON-LD, cron курсов ЦБ без ключей. Статья «Про создание сайта на GitHub Pages» + §11 | Vibe |
 _Снапшоты состояния репо здесь НЕ хранить — устаревают; состояние проверять заново._
 
 ## 9. Как обновлять этот файл
