@@ -3,37 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Сравнение площадок для стрима в РФ (VK Видео Live, Twitch, YouTube) и сервисов донатов: комиссии, вывод, донат vs подписка.">
+    <meta name="description" content="Сравнение площадок для стрима в России (VK Видео Live, Twitch, YouTube, Telegram и нишевые), комиссии донат-сервисов и калькулятор дохода стримера.">
     <link rel="canonical" href="https://folombas.github.io/FinFocus/streaming-platforms.html">
     <meta name="theme-color" content="#0e1118">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta property="og:title" content="Площадки и донаты для стримера — FinFocus">
     <meta property="og:site_name" content="FinFocus">
     <meta property="og:locale" content="ru_RU">
-    <meta property="og:description" content="Сравнение площадок для стрима в РФ (VK Видео Live, Twitch, YouTube) и сервисов донатов: комиссии, вывод, донат vs подписка.">
+    <meta property="og:description" content="Сравнение площадок для стрима в России, комиссии донат-сервисов и калькулятор дохода стримера.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://folombas.github.io/FinFocus/streaming-platforms.html">
     <meta property="og:image" content="https://folombas.github.io/FinFocus/favicon.svg">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Площадки и донаты для стримера — FinFocus">
-    <meta name="twitter:description" content="Сравнение площадок для стрима в РФ (VK Видео Live, Twitch, YouTube) и сервисов донатов: комиссии, вывод, донат vs подписка.">
-    
-    
-    
+    <meta name="twitter:description" content="Сравнение площадок для стрима в России, комиссии донат-сервисов и калькулятор дохода стримера.">
+    <script src="js/theme.js"></script>
+    <script src="js/menu.js" defer></script>
+    <script src="js/effects.js" defer></script>
     <title>Площадки и донаты для стримера — FinFocus</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/streaming.css">
-</head
-
->
+</head>
 <body>
 
     <a class="skip-link" href="#main-content">Перейти к содержанию</a>
 
-    <!-- Верхняя навигация между страницами -->
     <nav class="site-nav" aria-label="Навигация по FinFocus">
         <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="side-menu"><span></span><span></span><span></span></button>
         <div class="site-nav-links">
@@ -57,204 +54,176 @@
     </nav>
 
     <header>
-        <a href="index.html" class="back-link">← На главную</a>
-
+        <a href="streaming.html" class="back-link">← Стриминг</a>
         <h1>🎛️ Площадки и донаты</h1>
-        <p>Где стримить, где принимать донаты и сколько это приносит.</p>
+        <p>Где стримить, где принимать донаты и сколько это реально приносит.</p>
     </header>
 
     <main id="main-content">
         <article class="content">
 
-            <h2 id="platforms">Площадки: где стримить в 2026</h2>
-            <p>Коротко: монетизация из РФ напрямую работает только на российских площадках. Twitch и YouTube — самые большие охваты, но выплачивать деньги напрямую в РФ они не могут. Это не приговор: донаты через сторонние сервисы работают везде, но учитывать ограничение нужно заранее.</p>
-
+            <h2 id="compare">Сравнение площадок</h2>
+            <p>Данные актуальны на 26.11.2026 и быстро меняются, поэтому перед выбором сверься с условиями площадки и с реестром источников в <a href="docs/streaming-sources.md">docs/streaming-sources.md</a>.</p>
             <div class="compare-wrap">
                 <table class="compare-table">
+                    <caption>Площадки для стриминга: монетизация, аудитория и кому подходит</caption>
                     <thead>
-                      
-  <tr>
-                            <th>Площадка</th>
-                            <th>Для новичка</th>
-                            <th>Монетизация из РФ</th>
-                            <th>Особенности</th>
+                        <tr>
+                            <th scope="col">Площадка</th>
+                            <th scope="col">Монетизация из РФ</th>
+                            <th scope="col">Аудитория</th>
+                            <th scope="col">Кому подходит</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>VK Видео Live</strong> (бывший VK Play Live)</td>
-                            <td>Лучшая точка входа</td>
-                            <td><span class="fee-badge">Доступна</span></td>
-                            <td>Российская аудитория, поддержка клипов VK, донаты и подписки платформы; новичкам проще попасть в рекомендации стримов.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Telegram</strong> (эфир в канале)</td>
-                            <td>Для тех, у кого уже есть чат</td>
-                            <td><span class="fee-badge">Через сервисы</span></td>
-                            <td>Прямой эфир в канале или группе; монетизация своя (Stars, донат-сервисы); зрители приходят из твоего же чата, а не из рекомендаций.</td>
+                            <td><span class="fee-badge low">доступна</span> донаты, подписки, цели</td>
+                            <td>Активно растёт в РФ</td>
+                            <td>Игры и любые ниши под русскоязычную аудиторию</td>
                         </tr>
                         <tr>
                             <td><strong>Twitch</strong></td>
-                            <td>Геймерские ниши</td>
-                            <td><span class="fee-badge high">Выплаты в РФ приостановлены</span></td>
-                            <td>Крупнейшая геймерская аудитория и стрим-культура; подписки и реклама напрямую из РФ недоступны — подключай донат-сервисы поверх.</td>
+                            <td><span class="fee-badge high">выплаты paused</span> официально недоступны</td>
+                            <td>Крупнейшая игровая</td>
+                            <td>Донаты через сторонние сервисы, официальная монетизация не работает</td>
                         </tr>
                         <tr>
                             <td><strong>YouTube Live</strong></td>
-                            <td>Обучение и длинные форматы</td>
-                            <td><span class="fee-badge high">Выплаты в РФ приостановлены</span></td>
-                            <td>Сильная связка с Shorts и архивом записей; монетизация для РФ отключена — добавляй донаты сторонними сервисами.</td>
+                            <td><span class="fee-badge high">недоступна</span> в РФ</td>
+                            <td>Самая большая база записей</td>
+                            <td>Клипы и записи как витрина, эфир как архив</td>
                         </tr>
                         <tr>
-                            <td><strong>GoodGame / Rutube</strong></td>
-                            <td>Нишевые</td>
-                            <td><span class="fee-badge">Доступна</span></td>
-                            <td>Меньше конкуренции и живое комьюнити в «малых» игровых нишах; аудитория заметно меньше, чем у лидеров.</td>
+                            <td><strong>Telegram</strong> (эфир в канале)</td>
+                            <td><span class="fee-badge low">доступна</span> Stars и платные подписки</td>
+                            <td>Растёт, но без рекомендаций алгоритма</td>
+                            <td>Уже собранный канал плюс эфиры для ядра аудитории</td>
+                        </tr>
+                        <tr>
+                            <td><strong>GoodGame и Rutube</strong></td>
+                            <td><span class="fee-badge low">доступна</span> нишевые форматы</td>
+                            <td>Малые сообщества</td>
+                            <td>Нишевые темы, где меньше конкуренция</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p class="verify-note">Актуально на 26.11.2026 — доступность монетизации сверяй на справочных страницах площадок. Источники — в реестре источников раздела.</p>
 
-            <h2 id="donates">Сервисы донатов: комиссия и вывод</h2>
-            <p>Сервис донатов — прослойка между зрителем и твоей картой: он принимает платёж, удерживает комиссию и переводит деньги тебе. Комиссии меняются — сверяй перед подключением.</p>
-
+            <h2 id="donate">Донат-сервисы: комиссии и условия</h2>
+            <p>Комиссии указаны по состоянию на 26.11.2026 (см. <a href="docs/streaming-sources.md">реестр источников</a>) и могут меняться: у многих сервисов есть платные тарифы, которые снижают процент.</p>
             <div class="compare-wrap">
                 <table class="compare-table">
+                    <caption>Комиссии донат-сервисов и сроки вывода</caption>
                     <thead>
                         <tr>
-                            <th>Сервис</th>
-                            <th>Удержания</th>
-                            <th>Вывод</th>
-                            <th>Когда выбрать</th>
+                            <th scope="col">Сервис</th>
+                            <th scope="col">Комиссия</th>
+                            <th scope="col">Что учесть</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>Donatty</strong></td>
-                            <td><span class="fee-badge">≈0% сервис, платёжный метод отдельно</span></td>
-                            <td>на карту, СБП</td>
-                            <td>Прозрачная итоговая комиссия: по сути платишь только платёжной системе. Простой виджет для эфира.</td>
+                            <td><span class="fee-badge low">~0%</span> сервис + комиссия платёжного метода</td>
+                            <td>Просто для старта, оплата картой РФ</td>
                         </tr>
                         <tr>
                             <td><strong>DonationAlerts</strong></td>
-                            <td><span class="fee-badge mid">≈7–15%, на платных тарифах ниже</span></td>
-        
-                    <td>1–3 рабочих дня</td>
-                            <td>Классика стримдонатов: алерты, виджеты, интеграции с площадками. На бесплатном тарифе удержания заметные.</td>
+                            <td><span class="fee-badge mid">7–15%</span> на Free-тарифе</td>
+                            <td>Платные тарифы снижают ставку, вывод 1–3 рабочих дня</td>
                         </tr>
                         <tr>
                             <td><strong>Boosty</strong></td>
-                            <td><span class="fee-badge mid">≈11,7% единая ставка</span></td>
-                            <td>по заявке, накопительно</td>
-                            <td>Не только донаты, но и платные подписки с закрытыми постами — удобно, если есть контент вне эфира.</td>
+                            <td><span class="fee-badge mid">~11,7%</span> единая ставка</td>
+                            <td>Подписки и разовые поддержки в одном месте</td>
                         </tr>
                         <tr>
                             <td><strong>Telegram Stars</strong></td>
-                            <td><span class="fee-badge high">потери на конвертациях</span></td>
-                            <td>внутренний баланс</td>
-                            <td>Донаты прямо в Telegram-канале без внешних сервисов. Реальные потери зависят от способа покупки звёзд (в мобильном приложении — до 30% наценка App Store/Google Play) и курса вывода.</td>
+                            <td><span class="fee-badge high">до ~30%</span> совокупные потери</td>
+                            <td>Наценка при покупке Stars через сторе + курс вывода</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p class="verify-note">Актуально на 26.11.2026 — тарифы меняются, сверяй перед подключением. Источники — в реестре источников раздела.</p>
 
-            <h2 id="calc">Калькулятор: сколько приносят донаты</h2>
-            <p>Это грубая прикидка «верхней планки», а не обещание дохода: зависит от ниши, регулярности и того, сколько зрителей вообще донатит.</p>
-
-            <div class="interactive-block">
+            <h2 id="calc">Калькулятор дохода от донатов</h2>
+            <p>Модель упрощённая: она показывает не заработок, а связь между зрителями, конверсией и комиссией сервиса. Заметь, как сильно итог зависит от сервиса: переключи селект на Telegram Stars — и результат заметно просядет.</p>
+            <section class="interactive-block" aria-label="Калькулятор дохода от донатов">
                 <div class="slider-container">
-                    <label for="viewersSlider">Средний онлайн за эфир: <span id="viewersLabel">150 зрителей</span></label>
-                    <input type="range" id="viewersSlider" min="10" max="5000" step="10" value="150">
+                    <label for="viewersSlider">Зрителей в эфире: <span id="viewersLabel">100 зрителей</span></label>
+                    <div class="slider-labels"><span>10</span><span>5 000</span></div>
+                    <input type="range" id="viewersSlider" min="10" max="5000" step="10" value="100">
                 </div>
                 <div class="slider-container">
-                    <label for="convSlider">
-Доля донатящих: <span id="convLabel">3%</span></label>
+                    <label for="convSlider">Конверсия в донат, %: <span id="convLabel">3% донатят</span></label>
+                    <div class="slider-labels"><span>1%</span><span>10%</span></div>
                     <input type="range" id="convSlider" min="1" max="10" step="1" value="3">
                 </div>
                 <div class="slider-container">
-                    <label for="donateSlider">Средний донат: <span id="donateLabel">200 ₽</span></label>
-                    <input type="range" id="donateSlider" min="50" max="1000" step="10" value="200">
+                    <label for="donateSlider">Средний донат, ₽: <span id="donateLabel">150 ₽ средний донат</span></label>
+                    <div class="slider-labels"><span>50 ₽</span><span>1 000 ₽</span></div>
+                    <input type="range" id="donateSlider" min="50" max="1000" step="50" value="150">
                 </div>
                 <div class="slider-container">
-                    <label for="streamsSlider">Эфиров в месяц: <span id="streamsLabel">8</span></label>
+                    <label for="streamsSlider">Эфиров в месяц: <span id="streamsLabel">8 эфиров в месяц</span></label>
+                    <div class="slider-labels"><span>4</span><span>30</span></div>
                     <input type="range" id="streamsSlider" min="4" max="30" step="1" value="8">
                 </div>
                 <div class="donate-select-wrap">
                     <label for="serviceSelect">Сервис донатов</label>
                     <select id="serviceSelect">
-                        <option value="0" selected>Donatty (≈0% за сервис + платёжный метод)</option>
-                        <option value="0.10">DonationAlerts (≈10% на бесплатном тарифе)</option>
-                        <option value="0.117">Boosty (≈11,7%)</option>
-                        <option value="0.30">Telegram Stars (до 30% с наценкой на покупку)</option>
+                        <option value="0">Donatty (0%)</option>
+                        <option value="0.10" selected>DonationAlerts (10%)</option>
+                        <option value="0.117">Boosty (11,7%)</option>
+                        <option value="0.30">Telegram Stars (30%)</option>
                     </select>
                 </div>
-                <div class="calc-results">
-                    <div class="result-card"><span class="result-value" id="calcGross">0 ₽</span><span class="result-label">в месяц до удержаний</span></div>
-                    <div class="result-card"><span class="result-value" id="calcNet">0 ₽</span><span class="result-label">в месяц на руки</span></div>
-                    <div class="result-card"><span class="result-value" id="calcPerStream">0 ₽</span><span class="result-label">в среднем за эфир</span></div>
+                <div class="calc-results" aria-live="polite">
+                    <div class="result-card"><span class="result-label">Сумма донатов за месяц</span><strong id="calcGross">3 600 ₽</strong></div>
+                    <div class="result-card"><span class="result-label">К тебе на руки</span><strong id="calcNet">3 240 ₽</strong></div>
+                    <div class="result-card"><span class="result-label">С одного эфира</span><strong id="calcPerStream">405 ₽</strong></div>
                 </div>
-                <p class="verify-note">Комиссии сервисов — актуально на 26.11.2026. Это до налогов: что с ними — на странице закона.</p>
-            </div>
+            </section>
 
-  
-          <h2 id="donate-vs-sub">Донат или подписка: что подключать новичку</h2>
-            <p>Одноразовый донат — это «спасибо», а подписка — «я с тобой надолго». У них разная психология и разная математика.</p>
-            <ul>
-                <li><strong>Донаты</strong> (DonationAlerts, Donatty, Stars): разовый платёж ради сообщения на экране или реакции на событие эфира. Не создают обязательств для зрителя, но и не дают прогнозируемого дохода.</li>
-                <li><strong>Подписки</strong> (Boosty, закрытые каналы и чаты): регулярный платёж за что-то за оградой — закрытый контент, ранние версии, закрытый чат, роль в сообществе. Дают небольшие, зато предсказуемые суммы каждый месяц.</li>
-            </ul>
-            <p>Порядок ввода: начни с донатов — они не требуют ежемесячных бонусов. Подписки подключай, когда есть что закрыть от посторонних глаз: уникальный контент, регулярные разборы, комьюнити.</p>
-            <div class="callout callout-blue"><strong>Математика:</strong> одна подписка за 200 ₽ в месяц — стабильная база, а десять донатов по 20 ₽ — лотерея. Прогнозируемая база ценнее пиков.</div>
+            <h2 id="vs">Донат против подписки</h2>
+            <p>Донат — разовая благодарность Dzięki: зритель платит, когда ему понравился момент или контент. Подписка — регулярная оплата за бонус: ранний доступ, закрытый чат, звук в алертах на эфире.</p>
+            <p>На старте начинай с донатов: их проще подключить, они не требуют обещаний и не обязывают к графику бонусов. Как только соберётся ядро из постоянных зрителей (обычно к 20–30 эфирам), добавляй подписку как второй уровень поддержки, не отменяя донаты. Разовый донат легче для зрителя, подписка предсказуемее для тебя; работают оба, но вместе, а не вместо.</p>
 
-            <h2 id="choose">Выбрать площадку: плюсы и минусы</h2>
-            <p>Нажми на площадку, чтобы увидеть плюсы, минусы и что с монетизацией из РФ. Переключается и с клавиатуры: стрелки, Home, End.</p>
-
-            <div class="plat-tabs" role="tablist" aria-label="Площадки для стрима">
-                <button class="plat-tab" role="tab" id="tab-vk" data-target="panel-vk" aria-selected="true" aria-controls="panel-vk" type="button">VK Видео Live</button>
+            <h2 id="switcher">Плюсы и минусы по площадкам</h2>
+            <p>Переключай табы мышкой или стрелками клавиатуры.</p>
+            <div class="plat-tabs" role="tablist" aria-label="Плюсы и минусы площадок">
+                <button class="plat-tab" role="tab" id="tab-vk" data-target="panel-vk" aria-selected="true" aria-controls="panel-vk" tabindex="0" type="button">VK</button>
                 <button class="plat-tab" role="tab" id="tab-twitch" data-target="panel-twitch" aria-selected="false" aria-controls="panel-twitch" tabindex="-1" type="button">Twitch</button>
                 <button class="plat-tab" role="tab" id="tab-youtube" data-target="panel-youtube" aria-selected="false" aria-controls="panel-youtube" tabindex="-1" type="button">YouTube</button>
-                <button
- class="plat-tab" role="tab" id="tab-niche" data-target="panel-niche" aria-selected="false" aria-controls="panel-niche" tabindex="-1" type="button">Нишевые</button>
+                <button class="plat-tab" role="tab" id="tab-niche" data-target="panel-niche" aria-selected="false" aria-controls="panel-niche" tabindex="-1" type="button">Нишевые</button>
             </div>
             <div class="plat-panel" role="tabpanel" id="panel-vk" aria-labelledby="tab-vk">
-                <h3>VK Видео Live: домашняя площадка</h3>
-                <ul>
-                    <li><strong>Плюсы:</strong> рекомендации для стримов, аудитория из VK, донаты и подписки платформы из РФ, клипы и записи в экосистеме VK.</li>
-                    <li><strong>Минусы:</strong> в основном русскоязычная аудитория; конкуренция за рекомендации; меньше «стрим-культуры», чем на Twitch.</li>
-                    <li><strong>Монетизация:</strong> донаты платформы и подписки доступны из РФ, сторонние сервисы донатов подключаются поверх.</li>
-                </ul>
+                <p><strong>Плюсы:</strong> монетизация работает из РФ (донаты, подписки, цель), живые рекомендации новичкам, привычная русскоязычная аудитория.</p>
+                <p><strong>Минусы:</strong> аудитория и культура эфиров ещё формируются, меньше «соседей» по нише, чем у монстров индустрии.</p>
+                <p><strong>Совет:</strong> базовый эфир держи здесь, а клипы раскидывай по всем площадкам.</p>
             </div>
             <div class="plat-panel" role="tabpanel" id="panel-twitch" aria-labelledby="tab-twitch" hidden>
-                <h3>Twitch: геймерская столица</h3>
-                <ul>
-                    <li><strong>Плюсы:</strong> самая живая стрим-культура, чат и клипы, легко найти сообщество по игре.</li>
-                    <li><strong>Минусы:</strong> без партнёрства почти не видно в рекомендациях; медленный старт; интерфейс и аудитория англо-центричные.</li>
-                    <li><strong>Монетизация:</strong> выплаты и подписки в РФ приостановлены — работай через донат-сервисы.</li>
-                </ul>
+                <p><strong>Плюсы:</strong> самая развитая культура стриминга, чаты и сообщества по каждой игре, много коллабораций.</p>
+                <p><strong>Минусы:</strong> выплаты в РФ приостановлены, официальная партнерка недостижима, донаты только через сторонние сервисы.</p>
+                <p><strong>Совет:</strong> стримить можно, денег Прими через Donatty или Boosty поверх канала.</p>
             </div>
             <div class="plat-panel" role="tabpanel" id="panel-youtube" aria-labelledby="tab-youtube" hidden>
-                <h3>YouTube Live: длинный формат</h3>
-                <ul>
-                    <li><strong>Плюсы:</strong> эфиры превращаются в архив: записи находят через поиск годами; сильная связка с Shorts.</li>
-                    <li><strong>Минусы:</strong> эфир без канала-базы стартует почти с нуля; конкуренция с готовым видеоконтентом.</li>
-                    <li><strong>Монетизация:</strong> для РФ выключена — донаты сторонними сервисами.</li>
-                </ul>
+                <p><strong>Плюсы:</strong> записи эфиров живут в архиве годами и работают как бесконечная витрина, Shorts приводят трафик без вложений.</p>
+                <p><strong>Минусы:</strong> монетизация в РФ недоступна, требования партнерки для новичка высоки.</p>
+                <p><strong>Совет:</strong> используй как витрину и воронку, деньги собирай на доступной площадке.</p>
             </div>
             <div class="plat-panel" role="tabpanel" id="panel-niche" aria-labelledby="tab-niche" hidden>
-                <h3>Нишевые: GoodGame, Rutube, Telegram</h3>
-                <ul>
-                    <li><strong>Плюсы:</strong> меньше конкуренции, живое комьюнити, лояльность к «своим» стримерам.</li>
-                    <li><strong>Минусы:</strong> маленькие охваты, меньше инструментов роста.</li>
-                    <li><strong>Монетизация:</strong> на российских площадках доступна; Telegram — через Stars и донат-сервисы.</li>
-                </ul>
+                <p><strong>Плюсы:</strong> мало конкуренции, лояльные ядра сообществ, кураторы в тематических подборках видят новичков.</p>
+                <p><strong>Минусы:</strong> предел аудитории упирается в размер сообщества платформы.</p>
+                <p><strong>Совет:</strong> GoodGame или Telegram-канал с эфирами — честный первый шаг для узкой ниши.</p>
             </div>
 
+            <div class="callout callout-law"><strong>Не для юрсоветов:</strong> страницы раздела — образовательный материал, а не юридическая или налоговая консультация. Юридические блоки разбираются отдельно на странице <a href="streaming-law.html">⚖️ Стриминг и закон</a>.</div>
+
+            <p>Осталось разобраться с правилами: <a href="streaming-law.html">⚖️ Стриминг и закон</a> — маркировка рекламы, налоги и реестр блогеров. Или вернись к обзору раздела на странице <a href="streaming.html">🎥 Стриминг</a>.</p>
             <!--STREAM:INSERT-->
-
         </article>
-
     </main>
 
     <footer>
@@ -262,13 +231,13 @@
         <a href="index.html">🏠 Главная</a>
         <a href="budget.html">📊 Бюджет</a>
         <a href="savings.html">🎯 Накопления</a>
-        <a href="discounts.html">🏷️ Скидки и акции</a>
+        <a href="discounts.html">🏷️ Скидки</a>
         <a href="finlit.html">🎓 Финграмотность</a>
         <a href="articles/index.html">📚 Финбаза</a>
-        <a href="habits.html">🧠 Привычки экономии</a>
-        <a href="loans.html">💳 Долги и кредиты</a>
+        <a href="habits.html">🧠 Привычки</a>
+        <a href="loans.html">💳 Кредиты</a>
         <a href="vyhod.html">🕳️ Выход из ямы</a>
-        <a href="health.html">🩺 Деньги и здоровье</a>
+        <a href="health.html">🩺 Здоровье</a>
         <a href="streaming.html">🎥 Стриминг</a>
         <a href="bicycle.html">🚲 Велосипед</a>
         <a href="app.html">🕹️ Тренажёр</a>
@@ -277,16 +246,16 @@
         <p class="footer-meta">© 2026 FinFocus · Сделано с ❤️ и правилом 50/30/20</p>
     </footer>
 
-	<!-- Подключаем скрипт с эффектами -->
-	
-	
+    <!-- Подключаем скрипт с эффектами -->
+    <script src="js/main.js"></script>
+    <script src="js/streaming.js" defer></script>
     <!-- Боковое меню -->
+
     <div class="drawer-backdrop" data-drawer-close></div>
     <aside class="drawer" id="side-menu" aria-label="Меню FinFocus" aria-hidden="true">
         <div class="drawer-head">
             <span class="drawer-logo">FinFocus</span>
-   
-         <button class="drawer-close" type="button" aria-label="Закрыть меню" data-drawer-close>✕</button>
+            <button class="drawer-close" type="button" aria-label="Закрыть меню" data-drawer-close>✕</button>
         </div>
         <nav class="drawer-nav" aria-label="Разделы">
             <a href="index.html">🏠 Главная</a>
