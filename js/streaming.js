@@ -1,10 +1,23 @@
 // @ts-check
 /* js/streaming.js — интерактив раздела «Стриминг».
    Переиспользует глобальные initSliderCalc / formatNum / fmtRub из js/main.js.
-   Доступ к глобалам — через строковую нотацию window[...] чтобы tsc --checkJs
-   не требовал типов Window, известных только основному файлу. */
+   С проектным tsconfig (lib DOM) доступ к ним — обычный, через window.*;
+   состав Window дополнен JSDoc-типом ниже вместо строковых обходов. */
+
+/**
+ * Глобалы FinFocus, объявленные в main.js.
+ * @typedef {Window & {
+ *   initSliderCalc: (opts: import("./main.js").SliderCalcOptions) => void,
+ *   formatNum: (num: number) => string,
+ *   fmtRub: (num: number) => string
+ * }} FinFocusWindow
+ */
+
 (function () {
     'use strict';
+
+    /** @type {FinFocusWindow} */
+    var w = window;
 
     /* Калькулятор донатов: N зрителей -> доход в месяц и за эфир. */
     document.addEventListener('DOMContentLoaded', function () {
@@ -20,20 +33,20 @@
             var perStream = values[3] > 0 ? net / values[3] : 0;
             return {
                 labels: [
-                    window['formatNum'](values[0]) + ' зрителей',
+                    w.formatNum(values[0]) + ' зрителей',
                     values[1] + '% донатят',
-                    window['fmtRub'](values[2]) + ' средний донат',
+                    w.fmtRub(values[2]) + ' средний донат',
                     values[3] + ' эфиров в месяц'
                 ],
                 results: [
-                    window['fmtRub'](gross),
-                    window['fmtRub'](net),
-                    window['fmtRub'](perStream)
+                    w.fmtRub(gross),
+                    w.fmtRub(net),
+                    w.fmtRub(perStream)
                 ]
             };
         }
 
-        window['initSliderCalc']({
+        w.initSliderCalc({
             inputs: ['viewersSlider', 'convSlider', 'donateSlider', 'streamsSlider'],
             labels: ['viewersLabel', 'convLabel', 'donateLabel', 'streamsLabel'],
             results: ['calcGross', 'calcNet', 'calcPerStream'],

@@ -1,6 +1,15 @@
 // @ts-check
 /* FinFocus — спецэффекты: частицы, tilt, ripple, прогресс скролла, счётчики, конфетти.
    Всё отключается автоматически при prefers-reduced-motion и на тач-экранах где уместно. */
+
+/**
+ * Состав Window, который effects.js экспортирует наружу (burst вызывается
+ * из других модулей через window.finfocusBurst).
+ * @typedef {Window & {
+ *   finfocusBurst?: (x: number, y: number, amount?: number) => void
+ * }} FinFocusWindow
+ */
+
 (function () {
 'use strict';
 
@@ -65,7 +74,9 @@ function initParticles() {
         };
     }
     function count() {
-        // PERF GUARD: меньше частиц; на слабых устройствах почти ноль
+        // PERF GUARD: меньше частиц; на слабых устройствах почти ноль.
+        // navigator.deviceMemory — нестандартное поле TS-библиотеки DOM,
+        // поэтому читаем через строковый доступ (это легальная фича-детекция).
         var n = window.innerWidth < 720 ? 10 : 18;
         try {
             if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) n = Math.min(n, 8);
@@ -192,6 +203,7 @@ function initCountUp() {
     var target = new WeakMap();  // к чему анимируем
     var echo = new WeakMap();    // защита от эха: текст, записанный нами самими
     var raf = new WeakMap();     // активный rAF на элемент
+    var pmap = new WeakMap();    // последнее установленное значение на элемент
     var observer = new MutationObserver(function (records) {
         records.forEach(function (rec) {
             var el = rec.target;
@@ -222,7 +234,6 @@ function initCountUp() {
             raf.set(el, requestAnimationFrame(step));
         });
     });
-    var pmap = new WeakMap();
     nodes.forEach(function (el) {
         observer.observe(el, { childList: true });
         pmap.set(el, 0);
@@ -254,7 +265,7 @@ function burst(x, y, amount) {
         s.addEventListener('animationend', function () { this.remove(); });
     }
 }
-window['finfocusBurst'] = burst;
+/** Экспорт наружу: @type {FinFocusWindow} */ (window).finfocusBurst = burst;
 
 /* 7. Микро-подарок: выключил тумблер — конфетти экономии */
 function initToggleReward() {

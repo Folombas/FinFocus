@@ -33,7 +33,7 @@ jobs:
           exit $status
 
   type-check:
-    name: Type check (JSDoc, tsc --checkJs)
+    name: Type check (JSDoc, tsconfig)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,13 +44,5 @@ jobs:
         with:
           node-version: 20
 
-      - name: tsc --allowJs --checkJs (no emit)
-        run: |
-          status=0
-          for f in js/*.js; do
-            echo "type-checking $f"
-            npx -y -p typescript@5.5 tsc --allowJs --checkJs --noEmit \
-              --target es2022 --module es2022 --moduleResolution bundler \
-              --lib es2022,dom --strict false "$f" || status=1
-          done
-          exit $status
+      - name: tsc --noEmit (tsconfig.json, DOM lib)
+        run: npx -y -p typescript@5.5 tsc -p tsconfig.json
