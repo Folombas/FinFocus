@@ -155,6 +155,43 @@
             </div>
             <p class="verify-note">Актуально на 26.11.2026 — тарифы меняются, сверяй перед подключением. Источники — в реестре источников раздела.</p>
 
+            <h2 id="calc">Калькулятор: сколько приносят донаты</h2>
+            <p>Это грубая прикидка «верхней планки», а не обещание дохода: зависит от ниши, регулярности и того, сколько зрителей вообще донатит.</p>
+
+            <div class="interactive-block">
+                <div class="slider-container">
+                    <label for="viewersSlider">Средний онлайн за эфир: <span id="viewersLabel">150 зрителей</span></label>
+                    <input type="range" id="viewersSlider" min="10" max="5000" step="10" value="150">
+                </div>
+                <div class="slider-container">
+                    <label for="convSlider">Доля донатящих: <span id="convLabel">3%</span></label>
+                    <input type="range" id="convSlider" min="1" max="10" step="1" value="3">
+                </div>
+                <div class="slider-container">
+                    <label for="donateSlider">Средний донат: <span id="donateLabel">200 ₽</span></label>
+                    <input type="range" id="donateSlider" min="50" max="1000" step="10" value="200">
+                </div>
+                <div class="slider-container">
+                    <label for="streamsSlider">Эфиров в месяц: <span id="streamsLabel">8</span></label>
+                    <input type="range" id="streamsSlider" min="4" max="30" step="1" value="8">
+                </div>
+                <div class="donate-select-wrap">
+                    <label for="serviceSelect">Сервис донатов</label>
+                    <select id="serviceSelect">
+                        <option value="0" selected>Donatty (≈0% за сервис + платёжный метод)</option>
+                        <option value="0.10">DonationAlerts (≈10% на бесплатном тарифе)</option>
+                        <option value="0.117">Boosty (≈11,7%)</option>
+                        <option value="0.30">Telegram Stars (до 30% с наценкой на покупку)</option>
+                    </select>
+                </div>
+                <div class="calc-results">
+                    <div class="result-card"><span class="result-value" id="calcGross">0 ₽</span><span class="result-label">в месяц до удержаний</span></div>
+                    <div class="result-card"><span class="result-value" id="calcNet">0 ₽</span><span class="result-label">в месяц на руки</span></div>
+                    <div class="result-card"><span class="result-value" id="calcPerStream">0 ₽</span><span class="result-label">в среднем за эфир</span></div>
+                </div>
+                <p class="verify-note">Комиссии сервисов — актуально на 26.11.2026. Это до налогов: что с ними — на странице закона.</p>
+            </div>
+
             <h2 id="donate-vs-sub">Донат или подписка: что подключать новичку</h2>
             <p>Одноразовый донат — это «спасибо», а подписка — «я с тобой надолго». У них разная психология и разная математика.</p>
             <ul>
@@ -191,6 +228,7 @@
 
 	<!-- Подключаем скрипт с эффектами -->
 	<script src="js/main.js"></script>
+	<script src="js/streaming.js" defer></script>
     <!-- Боковое меню -->
     <div class="drawer-backdrop" data-drawer-close></div>
     <aside class="drawer" id="side-menu" aria-label="Меню FinFocus" aria-hidden="true">
