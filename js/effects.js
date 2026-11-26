@@ -197,7 +197,7 @@ function initCountUp() {
     var pmap = new WeakMap();    // последнее установленное значение на элемент
     var observer = new MutationObserver(function (records) {
         records.forEach(function (rec) {
-            var el = rec.target;
+            var el = /** @type {HTMLElement} */ (rec.target);
             if (!el.isConnected) return;
             var raw = el.textContent;
             if (echo.get(el) === raw) { echo.delete(el); return; } // эхо своей же записи - пропускаем

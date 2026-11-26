@@ -71,7 +71,7 @@ function initFAQ() {
     let idSeq = 0;
     faqItems.forEach((item) => {
         const question = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
+        const answer = /** @type {HTMLElement|null} */ (item.querySelector('.faq-answer'));
         if (!question || !answer) return;
 
         if (!answer.id) answer.id = 'faq-answer-' + (++idSeq);
@@ -83,7 +83,7 @@ function initFAQ() {
 
             faqItems.forEach((other) => {
                 other.classList.remove('active');
-                const ans = other.querySelector('.faq-answer');
+                const ans = /** @type {HTMLElement|null} */ (other.querySelector('.faq-answer'));
                 const q = other.querySelector('.faq-question');
                 if (ans) ans.style.maxHeight = null;
                 if (q) q.setAttribute('aria-expanded', 'false');
