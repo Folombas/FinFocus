@@ -32,3 +32,26 @@ jobs:
             if [ "$header" -gt 1 ]; then echo "ERROR: $f must have at most one <header>"; status=1; fi
           done
           exit $status
+
+  type-check:
+    name: Type check (JSDoc, tsc --checkJs)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: tsc --allowJs --checkJs (no emit)
+        run: |
+          status=0
+          for f in js/*.js; do
+            echo "type-checking $f"
+            npx -y -p typescript@5.5 tsc --allowJs --checkJs --noEmit \
+              --target es2022 --module es2022 --moduleResolution bundler \
+              --lib es2022,dom --strict false "$f" || status=1
+          done
+          exit $status
