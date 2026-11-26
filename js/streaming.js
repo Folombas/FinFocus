@@ -43,3 +43,40 @@
         });
     });
 })();
+
+/* Переключатель площадок: табы с клавиатурой (стрелки/Home/End). */
+(function () {
+    'use strict';
+    document.addEventListener('DOMContentLoaded', function () {
+        var tabs = Array.prototype.slice.call(document.querySelectorAll('.plat-tab'));
+        if (!tabs.length) return;
+
+        function selectTab(tab) {
+            tabs.forEach(function (t) {
+                var on = t === tab;
+                t.setAttribute('aria-selected', on ? 'true' : 'false');
+                t.tabIndex = on ? 0 : -1;
+                var panel = document.getElementById(t.getAttribute('data-target'));
+                if (panel) panel.hidden = !on;
+            });
+            tab.focus();
+        }
+
+        tabs.forEach(function (tab, idx) {
+            tab.addEventListener('click', function () { selectTab(tab); });
+            tab.addEventListener('keydown', function (e) {
+                var next = null;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    next = tabs[(idx + 1) % tabs.length];
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    next = tabs[(idx - 1 + tabs.length) % tabs.length];
+                } else if (e.key === 'Home') {
+                    next = tabs[0];
+                } else if (e.key === 'End') {
+                    next = tabs[tabs.length - 1];
+                }
+                if (next) { e.preventDefault(); selectTab(next); }
+            });
+        });
+    });
+})();

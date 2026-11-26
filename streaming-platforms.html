@@ -201,6 +201,48 @@
             <p>Порядок ввода: начни с донатов — они не требуют ежемесячных бонусов. Подписки подключай, когда есть что закрыть от посторонних глаз: уникальный контент, регулярные разборы, комьюнити.</p>
             <div class="callout callout-blue"><strong>Математика:</strong> одна подписка за 200 ₽ в месяц — стабильная база, а десять донатов по 20 ₽ — лотерея. Прогнозируемая база ценнее пиков.</div>
 
+            <h2 id="choose">Выбрать площадку: плюсы и минусы</h2>
+            <p>Нажми на площадку, чтобы увидеть плюсы, минусы и что с монетизацией из РФ. Переключается и с клавиатуры: стрелки, Home, End.</p>
+
+            <div class="plat-tabs" role="tablist" aria-label="Площадки для стрима">
+                <button class="plat-tab" role="tab" id="tab-vk" data-target="panel-vk" aria-selected="true" aria-controls="panel-vk" type="button">VK Видео Live</button>
+                <button class="plat-tab" role="tab" id="tab-twitch" data-target="panel-twitch" aria-selected="false" aria-controls="panel-twitch" tabindex="-1" type="button">Twitch</button>
+                <button class="plat-tab" role="tab" id="tab-youtube" data-target="panel-youtube" aria-selected="false" aria-controls="panel-youtube" tabindex="-1" type="button">YouTube</button>
+                <button class="plat-tab" role="tab" id="tab-niche" data-target="panel-niche" aria-selected="false" aria-controls="panel-niche" tabindex="-1" type="button">Нишевые</button>
+            </div>
+            <div class="plat-panel" role="tabpanel" id="panel-vk" aria-labelledby="tab-vk">
+                <h3>VK Видео Live: домашняя площадка</h3>
+                <ul>
+                    <li><strong>Плюсы:</strong> рекомендации для стримов, аудитория из VK, донаты и подписки платформы из РФ, клипы и записи в экосистеме VK.</li>
+                    <li><strong>Минусы:</strong> в основном русскоязычная аудитория; конкуренция за рекомендации; меньше «стрим-культуры», чем на Twitch.</li>
+                    <li><strong>Монетизация:</strong> донаты платформы и подписки доступны из РФ, сторонние сервисы донатов подключаются поверх.</li>
+                </ul>
+            </div>
+            <div class="plat-panel" role="tabpanel" id="panel-twitch" aria-labelledby="tab-twitch" hidden>
+                <h3>Twitch: геймерская столица</h3>
+                <ul>
+                    <li><strong>Плюсы:</strong> самая живая стрим-культура, чат и клипы, легко найти сообщество по игре.</li>
+                    <li><strong>Минусы:</strong> без партнёрства почти не видно в рекомендациях; медленный старт; интерфейс и аудитория англо-центричные.</li>
+                    <li><strong>Монетизация:</strong> выплаты и подписки в РФ приостановлены — работай через донат-сервисы.</li>
+                </ul>
+            </div>
+            <div class="plat-panel" role="tabpanel" id="panel-youtube" aria-labelledby="tab-youtube" hidden>
+                <h3>YouTube Live: длинный формат</h3>
+                <ul>
+                    <li><strong>Плюсы:</strong> эфиры превращаются в архив: записи находят через поиск годами; сильная связка с Shorts.</li>
+                    <li><strong>Минусы:</strong> эфир без канала-базы стартует почти с нуля; конкуренция с готовым видеоконтентом.</li>
+                    <li><strong>Монетизация:</strong> для РФ выключена — донаты сторонними сервисами.</li>
+                </ul>
+            </div>
+            <div class="plat-panel" role="tabpanel" id="panel-niche" aria-labelledby="tab-niche" hidden>
+                <h3>Нишевые: GoodGame, Rutube, Telegram</h3>
+                <ul>
+                    <li><strong>Плюсы:</strong> меньше конкуренции, живое комьюнити, лояльность к «своим» стримерам.</li>
+                    <li><strong>Минусы:</strong> маленькие охваты, меньше инструментов роста.</li>
+                    <li><strong>Монетизация:</strong> на российских площадках доступна; Telegram — через Stars и донат-сервисы.</li>
+                </ul>
+            </div>
+
             <!--STREAM:INSERT-->
 
         </article>
