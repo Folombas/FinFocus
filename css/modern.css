@@ -1,13 +1,14 @@
 /* ==========================================================================
    FinFocus — modern.css: современный слой поверх style.css (аддитивный).
-   Подключается из js/theme.js (prefix выводится из currentScript),
+   Подключается из js/theme.js (база URL выводится из currentScript),
    поэтому страница полностью рабоча и без этого файла.
-  _OK: @view-transition деградирует в обычную навигацию, color-scheme/text-wrap —
-   безвредные прогрессивные улучшения.
+   Деградация мягкая: без поддержки @view-transition навигация обычная,
+   color-scheme, scrollbar-color, accent-color и text-wrap — безвредные
+   прогрессивные улучшения.
    ========================================================================== */
 
 /* Кросс-документные View Transitions между страницами (MPA, бесплатно).
-   Браузеры без поддержки просто не зашли в блок. */
+   Браузеры без поддержки блок не применяют. */
 @view-transition {
     navigation: auto;
 }
@@ -25,13 +26,18 @@ html {
     scrollbar-color: color-mix(in oklch, var(--blue, #6ea8ff) 70%, transparent) transparent;
 }
 
-/* Нативные чекбоксы/радио/ползунки — фирменный синий. */
+/* Нативные чекбоксы/радио/ползунки — фирменный синий (в светлой теме oklch-микс темнее). */
 input[type="checkbox"], input[type="radio"], input[type="range"] {
     accent-color: var(--blue, #6ea8ff);
 }
+html[data-theme="light"] input[type="checkbox"],
+html[data-theme="light"] input[type="radio"],
+html[data-theme="light"] input[type="range"] {
+    accent-color: color-mix(in oklch, var(--blue, #3a6fd8) 85%, #1c3f8f);
+}
 
-/* Заголовки не оставляют «висячих» слов; абзацы балансируются по строкам
-   (только там, где не страдает перф: никаких JS). */
+/* Заголовки не оставляют «висячих» слов; абзацы балансируются по строкам.
+   Только CSS, никакого JS. */
 @media (prefers-reduced-motion: no-preference) {
     .content h2,
     .content h3,
@@ -43,8 +49,8 @@ input[type="checkbox"], input[type="radio"], input[type="range"] {
     }
 }
 
-/* Light-dark() parity для юридических сносок и прочих маркеров,
-   чтобы new tokens сайта по желанию можно было использовать в будущих правках. */
+/* light-dark() для служебных подписей: один и тот же цвет переменной в обеих темах,
+   заготовка для будущих переделок палитры. */
 .verify-note,
 .footer-meta {
     color: light-dark(var(--muted, #9aa3b5), var(--muted, #9aa3b5));
