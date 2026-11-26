@@ -16,7 +16,7 @@ var GOAL_KEY = 'finfocus-goal';
 /** @type {HTMLInputElement|null} */ var amountEl = /** @type {HTMLInputElement|null} */ (document.getElementById('trackAmount'));
 
 function fmtNum(num) {
-    return String(Math.round(num)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return String(Math.round(num)).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ' ');
 }
 
 function openDb() {
@@ -128,9 +128,13 @@ document.addEventListener('DOMContentLoaded', function () {
         var amount = Math.round(parseFloat(amountEl.value) || 0);
         if (amount <= 0) { flash('⚠️ Введите сумму больше нуля.'); return; }
         try { localStorage.setItem(GOAL_KEY, String(goalEl.value)); } catch (e) {}
-        dbPromiseCache.then(function (db) { return addDeposit(db, amount); })
-            .then(function (db) { return render(db); })
-            .then(function () { amountEl.value = '1000'; });
+        /* addDeposit резолвит true, поэтому db передаём в замыкании:
+         * следующий then в цепочке получает не db, а результат записи. */
+        dbPromiseCache.then(function (db) {
+            return addDeposit(db, amount).then(function () { return render(db); });
+        })
+            .then(function () { amountEl.value = '1000'; })
+            .catch(function () { flash('⚠️ Не удалось сохранить пополнение.'); });
     });
 
     goalEl.addEventListener('change', function () {
@@ -165,19 +169,27 @@ document.addEventListener('DOMContentLoaded', function () {
                     var rows = Array.isArray(parsed && parsed.deposits) ? parsed.deposits : [];
                     if (parsed && parsed.goal && goalEl) goalEl.value = String(parsed.goal);
                     dbPromiseCache.then(function (db) {
-                        var store = db.transaction(STORE, 'readwrite').objectStore(STORE);
-                        var chain = Promise.resolve(true);
+                        var added = 0;
+                        var chain = Promise.resolve();
                         rows.forEach(function (r) {
                             chain = chain.then(function () {
                                 return new Promise(function (resolve) {
+                                    /* Своя readwrite-транзакция на каждую запись:
+                                     * транзакция авто-коммитится, как только цепочка
+                                     * промисов уступает очередь, поэтому один store
+                                     * на все записи использовать нельзя. */
+                                    var store = db.transaction(STORE, 'readwrite').objectStore(STORE);
                                     var req = store.add({ amount: Number(r.amount) || 0, at: String(r.at || new Date().toISOString()) });
-                                    req.onsuccess = function () { resolve(true); };
+                                    req.onsuccess = function () { added += 1; resolve(true); };
                                     req.onerror = function () { resolve(true); };
                                 });
                             });
                         });
-                        return chain.then(function () { return render(db); });
-                    }).then(function () { flash('✅ Импорт завершён.'); });
+                        return chain.then(function () { return render(db).then(function () { return added; }); });
+                    }).then(function (added) {
+                        if (added === rows.length) flash('✅ Импорт завершён: ' + added + ' записей.');
+                        else flash('⚠️ Импортировано ' + added + ' из ' + rows.length + ' записей.');
+                    });
                 } catch (e) { flash('⚠️ Не удалось прочитать файл.'); }
             };
             reader.readAsText(file);
