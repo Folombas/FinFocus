@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
 if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
     window.addEventListener('load', function () {
         var base = '/';
-        var sc = document.currentScript;
+        var sc = /** @type {HTMLScriptElement | null} */ (document.currentScript);
         if (sc && sc.src) {
             var mm = String(sc.src).match(/^(.*\/)js\//i);
             if (mm) base = mm[1];
