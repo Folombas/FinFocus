@@ -1,0 +1,156 @@
+/* ==========================================================================
+   FinFocus — раздел «Стриминг 2026»: таблицы, бейджи комиссий, права, вкладки.
+   Использует глобальные переменные темы из css/style.css и переопределяет
+   только свои классы — на страницы раздела подключается вместе со style.css.
+   ========================================================================== */
+
+/* --- Сравнительная таблица: адаптив со скроллом по горизонтали на мобильных --- */
+.compare-wrap {
+    margin: 24px 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-1);
+}
+.compare-table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+}
+.compare-table caption {
+    caption-side: top;
+    text-align: left;
+    padding: 0 4px 10px;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+.compare-table th,
+.compare-table td {
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    border-top: 1px solid var(--line-soft);
+}
+.compare-table th { color: var(--ink); }
+.compare-table thead th {
+    background: var(--inset);
+    font-weight: 700;
+    border-top: none;
+}
+.compare-table tbody td { color: var(--muted); }
+.compare-table tbody td strong { color: var(--ink); }
+.compare-table tbody tr:hover td { background: var(--surface-2); }
+
+/* --- Бейдж комиссии: зелёный/синий/красный по «дороговизне» --- */
+.fee-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(85, 213, 170, 0.14);
+    color: var(--mint);
+    font-weight: 700;
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+.fee-badge.mid { background: rgba(110, 168, 255, 0.12); color: var(--blue); }
+.fee-badge.high { background: rgba(255, 123, 114, 0.12); color: #ff7b72; }
+
+/* --- Юридический callout: фиолетовое правое поле --- */
+.callout-law {
+    background: rgba(178, 150, 255, 0.08);
+    border-left-color: var(--violet);
+}
+.callout-law strong { color: var(--violet); }
+.verify-note {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+
+/* --- Переключатель площадок (вкладки-таблетки) --- */
+.plat-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    background: var(--inset);
+    border: 1px solid var(--line-soft);
+    border-radius: 999px;
+    padding: 5px;
+}
+.plat-tab {
+    flex: 1 1 auto;
+    padding: 9px 16px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+.plat-tab:hover { color: var(--ink); }
+.plat-tab.active {
+    background: var(--surface);
+    color: var(--blue);
+    box-shadow: var(--shadow-1);
+}
+.plat-tab:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.plat-panel {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-md);
+    padding: 20px 22px;
+    margin-top: 12px;
+    box-shadow: var(--shadow-1);
+}
+.plat-panel.active { display: block; }
+.plat-panel h3 { margin: 0 0 10px; color: var(--ink); font-size: 1.1rem; }
+.plat-panel p { color: var(--muted); font-size: 0.95rem; line-height: 1.55; margin: 0 0 8px; }
+.plat-panel ul { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: 0.95rem; }
+.plat-panel li { margin-bottom: 6px; }
+.plat-panel li b { color: var(--ink); }
+
+/* --- Селект сервиса донатов в калькуляторе --- */
+.donate-select-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 14px 0 6px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+.donate-select-wrap select {
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line-soft);
+    background: var(--inset);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.donate-select-wrap select:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* --- Карточки-ссылки на другие страницы раздела --- */
+.stream-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 26px 0;
+}
+.stream-links .card { padding: 24px; }
+
+@media (max-width: 720px) {
+    .plat-tab { padding: 9px 12px; font-size: 0.85rem; }
+    .plat-panel { padding: 16px; }
+}
