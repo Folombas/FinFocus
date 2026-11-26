@@ -154,3 +154,18 @@
     .plat-tab { padding: 9px 12px; font-size: 0.85rem; }
     .plat-panel { padding: 16px; }
 }
+
+/* --- ARIA-режим переключателя: js/streaming.js управляет hidden и aria-selected,
+   поэтому панель видима без .active-класса, а активная таблетка подсвечена атрибутом --- */
+.plat-panel:not([hidden]) { display: block; }
+.plat-tab[aria-selected="true"] {
+    background: var(--surface);
+    color: var(--blue);
+    box-shadow: var(--shadow-1);
+}
+
+/* --- Светлая тема: паритет контраста для бейджей и юридических сносок --- */
+html[data-theme="light"] .fee-badge { background: rgba(19, 140, 100, 0.12); }
+html[data-theme="light"] .fee-badge.mid { background: rgba(42, 91, 215, 0.10); }
+html[data-theme="light"] .fee-badge.high { background: rgba(201, 68, 58, 0.10); color: #c9443a; }
+html[data-theme="light"] .plat-tab[aria-selected="true"] { color: #1c5fbd; }
