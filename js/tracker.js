@@ -180,8 +180,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                      * на все записи использовать нельзя. */
                                     var store = db.transaction(STORE, 'readwrite').objectStore(STORE);
                                     var req = store.add({ amount: Number(r.amount) || 0, at: String(r.at || new Date().toISOString()) });
-                                    req.onsuccess = function () { added += 1; resolve(true); };
-                                    req.onerror = function () { resolve(true); };
+                                    req.onsuccess = function () { added += 1; resolve(); };
+                                    req.onerror = function () { resolve(); };
                                 });
                             });
                         });
