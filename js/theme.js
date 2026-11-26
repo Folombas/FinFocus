@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
     for (var i = 0; i < buttons.length; i++) {
         (function (btn) {
             btn.addEventListener('click', function () {
-                var next = current() === 'light' ? 'dark' : 'light';
+                /** @type {'light'|'dark'} */ var next = current() === 'light' ? 'dark' : 'light';
                 try { localStorage.setItem(KEY, next); } catch (e) {}
                 apply(next);
             });
