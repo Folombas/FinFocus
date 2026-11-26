@@ -11,7 +11,7 @@
 function urlBase() {
     var script = /** @type {HTMLScriptElement | null} */ (document.currentScript);
     if (script && script.src) {
-        var m = String(script.src).match(/^(.*\\/)js\\//i);
+        var m = String(script.src).match(/^(.*\/)js\//i);
         if (m) return m[1];
     }
     return '';
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
 var pwaBase = (function () {
     var sc = /** @type {HTMLScriptElement | null} */ (document.currentScript);
     if (sc && sc.src) {
-        var mm = String(sc.src).match(/^(.*\\/)js\\//i);
+        var mm = String(sc.src).match(/^(.*\/)js\//i);
         if (mm) return mm[1];
     }
     return '/';
