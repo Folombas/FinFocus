@@ -5,6 +5,23 @@
 /** @type {string} */ var KEY = 'finfocus-theme';
 /** @type {HTMLElement} */ var root = document.documentElement;
 
+/** Подключает css/modern.css с корректным префиксом пути для вложенных страниц:
+ *  url скрипта js/theme.js разбирается на базу сайта (/FinFocus/ или /).
+ *  Страница полностью рабоча и без этого слоя. */
+function injectModernCss() {
+    var script = document.currentScript;
+    var prefix = '';
+    if (script && script.src) {
+        var m = String(script.src).match(/^(.*\/)js\//i);
+        if (m) prefix = m[1];
+    }
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = prefix + 'css/modern.css';
+    document.head.appendChild(link);
+}
+injectModernCss();
+
 /** @returns {'light'|'dark'} текущая системная тема */
 function systemTheme() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
