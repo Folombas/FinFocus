@@ -112,10 +112,7 @@ function render(db) {
 }
 
 function flash(text) {
-    if (!msgEl) return;
-    var prev = msgEl.textContent;
-    msgEl.textContent = text;
-    window.setTimeout(function () { render(dbPromiseCache); }, 1600);
+    if (msgEl) msgEl.textContent = text;
 }
 
 /** @type {IDBDatabase|null} */ var dbCache = null;
@@ -132,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (amount <= 0) { flash('⚠️ Введите сумму больше нуля.'); return; }
         try { localStorage.setItem(GOAL_KEY, String(goalEl.value)); } catch (e) {}
         dbPromiseCache.then(function (db) { return addDeposit(db, amount); })
-            .then(function () { return render(dbPromiseCache); })
+            .then(function (db) { return render(db); })
             .then(function () { amountEl.value = '1000'; });
     });
 
