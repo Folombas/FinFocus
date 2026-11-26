@@ -1,29 +1,18 @@
 // @ts-check
-/* js/streaming.js — интерактив раздела «Стриминг».
-   Переиспользует глобальные initSliderCalc / formatNum / fmtRub из js/main.js.
-   С проектным tsconfig (lib DOM) доступ к ним — обычный, через window.*;
-   состав Window дополнен JSDoc-типом ниже вместо строковых обходов. */
-
-/**
- * Глобалы FinFocus, объявленные в main.js.
- * @typedef {Window & {
- *   initSliderCalc: (opts: import("./main.js").SliderCalcOptions) => void,
- *   formatNum: (num: number) => string,
- *   fmtRub: (num: number) => string
- * }} FinFocusWindow
- */
-
+/* js/streaming.js - интерактив раздела 'Стриминг'.
+   Переиспользует глобальные initSliderCalc / formatNum / fmtRub из js/main.js
+   через обычный window.*-доступ; состав window - FinFocusWindow из main.js. */
 (function () {
     'use strict';
 
     /** @type {FinFocusWindow} */
-    var w = window;
+    var w = /** @type {FinFocusWindow} */ (window);
 
     /* Калькулятор донатов: N зрителей -> доход в месяц и за эфир. */
     document.addEventListener('DOMContentLoaded', function () {
         var viewers = document.getElementById('viewersSlider');
         var service = document.getElementById('serviceSelect');
-        if (!viewers || !service) return; // не наша страница — тихо выходим
+        if (!viewers || !service) return; // не наша страница - тихо выходим
 
         /* Комиссии как доля: актуально на 26.11.2026, значения в select#serviceSelect. */
         function computeFn(values) {
@@ -53,7 +42,7 @@
             compute: computeFn
         });
 
-        /* Смена сервиса меняет комиссию — перезапускаем пересчёт слайдером. */
+        /* Смена сервиса меняет комиссию - перезапускаем пересчёт слайдером. */
         service.addEventListener('change', function () {
             viewers.dispatchEvent(new Event('input'));
         });

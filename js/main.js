@@ -2,11 +2,23 @@
 'use strict';
 
 /* ============================================================
-   FinFocus — main.js: интерактив калькуляторов, FAQ, reveal.
+   FinFocus - main.js: интерактив калькуляторов, FAQ, reveal.
    Раньше здесь жили три копии форматтера чисел и две
    конфликтующие системы анимаций. Теперь: один форматтер,
-   одна схема «ползунки -> подписи -> результаты».
+   одна схема 'ползунки -> подписи -> результаты'.
    ============================================================ */
+
+/**
+ * Состав window для всех классических скриптов проекта (файлы немодульные,
+ * поэтому typedef из main.js виден остальным как глобальный тип).
+ * finfocusBurst назначается эффектами динамически, остальные объявлены ниже.
+ * @typedef {Window & {
+ *   finfocusBurst?: (x: number, y: number, amount?: number) => void,
+ *   initSliderCalc: (opts: SliderCalcOptions) => void,
+ *   formatNum: (num: number) => string,
+ *   fmtRub: (num: number) => string
+ * }} FinFocusWindow
+ */
 
 /** Единственный форматтер на весь сайт: 12345 -> "12 345"
  * @param {number} num
@@ -20,8 +32,7 @@ function formatNum(num) {
 function fmtRub(num) {
     return formatNum(num) + ' ₽';
 }
-
-/** Слово «год/года/лет», согласованное с числом
+/** Слово 'год/года/лет', согласованное с числом
  * @param {number} years
  * @returns {string} */
 function yearsWord(years) {
@@ -87,7 +98,8 @@ function initFAQ() {
     });
 }
 
-/** Схема «ползунки -> подписи -> результаты».
+/**
+ * Схема 'ползунки -> подписи -> результаты'.
  * @typedef {Object} SliderCalcOutput
  * @property {string[]=} labels  новые тексты подписей (по id из opts.labels)
  * @property {string[]=} results новые тексты результатов (по id из opts.results)
@@ -100,8 +112,8 @@ function initFAQ() {
  * opts = { inputs: [id...], labels: [id...], results: [id...], compute(values) }
  * @param {SliderCalcOptions} opts */
 function initSliderCalc(opts) {
-    const inputs = opts.inputs.map((id) => document.getElementById(id));
-    if (inputs.some((x) => !x)) return; // не наша страница — тихо выходим
+    const inputs = opts.inputs.map((id) => /** @type {HTMLInputElement|null} */ (document.getElementById(id)));
+    if (inputs.some((x) => !x)) return; // не наша страница - тихо выходим
 
     const labels = (opts.labels || []).map((id) => document.getElementById(id));
     const results = (opts.results || []).map((id) => document.getElementById(id));
@@ -118,7 +130,7 @@ function initSliderCalc(opts) {
     update();
 }
 
-/** 1. Накопления: ₽/день -> месяц и год */
+/** 1. Накопления: руб/день -> месяц и год */
 function initSavingsCalc() {
     initSliderCalc({
         inputs: ['savingsSlider'],
