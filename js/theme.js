@@ -94,3 +94,33 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 })();
+
+/* PWA: офлайн-режим через Service Worker.
+ * Регистрируем только на проде Pages (http(s)), в локальных file:// тихо пропускаем. */
+if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+    window.addEventListener('load', function () {
+        var base = urlBase() || '/';
+        navigator.serviceWorker.register(base + 'sw.js').then(function (reg) {
+            if (reg.waiting && navigator.serviceWorker.controller) {
+                reg.waiting.postMessage('skipWaiting');
+            }
+            reg.addEventListener('updatefound', function () {
+                var nw = reg.installing;
+                if (!nw) return;
+                nw.addEventListener('statechange', function () {
+                    if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+                        nw.postMessage('skipWaiting');
+                    }
+                });
+            });
+        }).catch(function () { /* офлайн-режим не критичен */ });
+    });
+}
+var swRefreshing = false;
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (!navigator.serviceWorker.controller || swRefreshing) return;
+        swRefreshing = true;
+        window.location.reload();
+    });
+}

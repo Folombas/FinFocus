@@ -1,0 +1,16 @@
+{
+  "name": "FinFocus — финансовая грамотность без стресса",
+  "short_name": "FinFocus",
+  "description": "Обучающий сайт о личных финансах: бюджет, накопления, скидки, кредиты и привычки экономии.",
+  "lang": "ru",
+  "start_url": "/FinFocus/",
+  "scope": "/FinFocus/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e1118",
+  "theme_color": "#0e1118",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
