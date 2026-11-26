@@ -1,15 +1,48 @@
+// @ts-check
 (function () {
 'use strict';
 
-var KEY = 'finfocus-theme';
-var root = document.documentElement;
+/** @type {string} */ var KEY = 'finfocus-theme';
+/** @type {HTMLElement} */ var root = document.documentElement;
 
+/** База URL сайта, вычисленная из адреса текущего скрипта (js/theme.js):
+ *  «/FinFocus/» на проектной странице Pages или «/» на пользовательском домене.
+ *  @returns {string} */
+function urlBase() {
+    var script = /** @type {HTMLScriptElement | null} */ (document.currentScript);
+    if (script && script.src) {
+        var m = String(script.src).match(/^(.*\/)js\//i);
+        if (m) return m[1];
+    }
+    return '';
+}
+
+/** Добавляет Speculation Rules: лёгкий prefetch внутренних страниц списка,
+ *  чтобы навигация по сайту ощущалась мгновенной.
+ *  Браузеры без поддержки просто игнорируют тег. */
+function injectSpeculationRules() {
+    var pages = ['index.html', 'budget.html', 'savings.html', 'discounts.html', 'finlit.html',
+        'habits.html', 'loans.html', 'vyhod.html', 'health.html', 'streaming.html',
+        'streaming-platforms.html', 'streaming-law.html', 'bicycle.html', 'app.html', 'articles/index.html'];
+    var urls = pages.map(function (p) { return urlBase() + p; });
+    var rules = { prefetch: [{ source: 'list', eagerness: 'conservative', urls: urls }] };
+    var el = document.createElement('script');
+    el.type = 'speculationrules';
+    el.textContent = JSON.stringify(rules);
+    document.head.appendChild(el);
+}
+injectSpeculationRules();
+
+/** @returns {'light'|'dark'} текущая системная тема */
 function systemTheme() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 }
+/** @returns {'light'|'dark'} тема, применённая к документу сейчас */
 function current() {
     return root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
 }
+/** Применяет тему к html, meta theme-color и всем кнопкам .theme-toggle
+ * @param {'light'|'dark'} theme */
 function apply(theme) {
     root.setAttribute('data-theme', theme);
     var meta = document.querySelector('meta[name="theme-color"]');
@@ -23,7 +56,7 @@ function apply(theme) {
 }
 
 // Тема применяется сразу, до первой отрисовки (скрипт подключён в <head>)
-var stored = null;
+/** @type {string|null} */ var stored = null;
 try { stored = localStorage.getItem(KEY); } catch (e) {}
 apply(stored === 'light' || stored === 'dark' ? stored : systemTheme());
 
@@ -33,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
     for (var i = 0; i < buttons.length; i++) {
         (function (btn) {
             btn.addEventListener('click', function () {
-                var next = current() === 'light' ? 'dark' : 'light';
+                /** @type {'light'|'dark'} */ var next = current() === 'light' ? 'dark' : 'light';
                 try { localStorage.setItem(KEY, next); } catch (e) {}
                 apply(next);
             });
@@ -61,3 +94,38 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 })();
+
+/* PWA: офлайн-режим через Service Worker.
+ * Регистрируем только на проде Pages (http(s)), в локальных file:// тихо пропускаем. */
+if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+    window.addEventListener('load', function () {
+        var base = '/';
+        var sc = /** @type {HTMLScriptElement | null} */ (document.currentScript);
+        if (sc && sc.src) {
+            var mm = String(sc.src).match(/^(.*\/)js\//i);
+            if (mm) base = mm[1];
+        }
+        navigator.serviceWorker.register(base + 'sw.js').then(function (reg) {
+            if (reg.waiting && navigator.serviceWorker.controller) {
+                reg.waiting.postMessage('skipWaiting');
+            }
+            reg.addEventListener('updatefound', function () {
+                var nw = reg.installing;
+                if (!nw) return;
+                nw.addEventListener('statechange', function () {
+                    if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+                        nw.postMessage('skipWaiting');
+                    }
+                });
+            });
+        }).catch(function () { /* офлайн-режим не критичен */ });
+    });
+}
+var swRefreshing = false;
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (!navigator.serviceWorker.controller || swRefreshing) return;
+        swRefreshing = true;
+        window.location.reload();
+    });
+}

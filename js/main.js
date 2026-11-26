@@ -1,20 +1,40 @@
+// @ts-check
 'use strict';
 
 /* ============================================================
-   FinFocus — main.js: интерактив калькуляторов, FAQ, reveal.
+   FinFocus - main.js: интерактив калькуляторов, FAQ, reveal.
    Раньше здесь жили три копии форматтера чисел и две
    конфликтующие системы анимаций. Теперь: один форматтер,
-   одна схема «ползунки -> подписи -> результаты».
+   одна схема 'ползунки -> подписи -> результаты'.
    ============================================================ */
 
-// Единственный форматтер на весь сайт: 12345 -> "12 345"
+/**
+ * Состав window для всех классических скриптов проекта (файлы немодульные,
+ * поэтому typedef из main.js виден остальным как глобальный тип).
+ * finfocusBurst назначается эффектами динамически, остальные объявлены ниже.
+ * @typedef {Window & {
+ *   finfocusBurst?: (x: number, y: number, amount?: number) => void,
+ *   initSliderCalc: (opts: SliderCalcOptions) => void,
+ *   formatNum: (num: number) => string,
+ *   fmtRub: (num: number) => string
+ * }} FinFocusWindow
+ */
+
+/** Единственный форматтер на весь сайт: 12345 -> "12 345"
+ * @param {number} num
+ * @returns {string} */
 function formatNum(num) {
     return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
+/** Деньги в строку с символом рубля
+ * @param {number} num
+ * @returns {string} */
 function fmtRub(num) {
     return formatNum(num) + ' ₽';
 }
-
+/** Слово 'год/года/лет', согласованное с числом
+ * @param {number} years
+ * @returns {string} */
 function yearsWord(years) {
     const n = Math.abs(Math.round(Number(years) || 0)) % 100;
     const last = n % 10;
@@ -24,7 +44,7 @@ function yearsWord(years) {
     return 'лет';
 }
 
-/* Появление блоков при прокрутке (IntersectionObserver) */
+/** Появление блоков при прокрутке (IntersectionObserver) */
 function initScrollReveals() {
     if (!('IntersectionObserver' in window)) return;
 
@@ -43,7 +63,7 @@ function initScrollReveals() {
     });
 }
 
-/* FAQ-аккордеон: открыт максимум один вопрос за раз */
+/** FAQ-аккордеон: открыт максимум один вопрос за раз */
 function initFAQ() {
     const faqItems = document.querySelectorAll('.faq-item');
     if (faqItems.length === 0) return;
@@ -51,7 +71,7 @@ function initFAQ() {
     let idSeq = 0;
     faqItems.forEach((item) => {
         const question = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
+        const answer = /** @type {HTMLElement|null} */ (item.querySelector('.faq-answer'));
         if (!question || !answer) return;
 
         if (!answer.id) answer.id = 'faq-answer-' + (++idSeq);
@@ -63,7 +83,7 @@ function initFAQ() {
 
             faqItems.forEach((other) => {
                 other.classList.remove('active');
-                const ans = other.querySelector('.faq-answer');
+                const ans = /** @type {HTMLElement|null} */ (other.querySelector('.faq-answer'));
                 const q = other.querySelector('.faq-question');
                 if (ans) ans.style.maxHeight = null;
                 if (q) q.setAttribute('aria-expanded', 'false');
@@ -78,11 +98,22 @@ function initFAQ() {
     });
 }
 
-/* Единая схема калькулятора: ползунки -> подписи -> результаты.
-   opts = { inputs: [id...], labels: [id...], results: [id...], compute(values) } */
+/**
+ * Схема 'ползунки -> подписи -> результаты'.
+ * @typedef {Object} SliderCalcOutput
+ * @property {string[]=} labels  новые тексты подписей (по id из opts.labels)
+ * @property {string[]=} results новые тексты результатов (по id из opts.results)
+ * @typedef {Object} SliderCalcOptions
+ * @property {string[]} inputs   id ползунков
+ * @property {string[]=} labels  id элементов подписей
+ * @property {string[]=} results id элементов результатов
+ * @property {(values: number[]) => SliderCalcOutput} compute пересчёт по значениям ползунков */
+/** Единая схема калькулятора: ползунки -> подписи -> результаты.
+ * opts = { inputs: [id...], labels: [id...], results: [id...], compute(values) }
+ * @param {SliderCalcOptions} opts */
 function initSliderCalc(opts) {
-    const inputs = opts.inputs.map((id) => document.getElementById(id));
-    if (inputs.some((x) => !x)) return; // не наша страница — тихо выходим
+    const inputs = opts.inputs.map((id) => /** @type {HTMLInputElement|null} */ (document.getElementById(id)));
+    if (inputs.some((x) => !x)) return; // не наша страница - тихо выходим
 
     const labels = (opts.labels || []).map((id) => document.getElementById(id));
     const results = (opts.results || []).map((id) => document.getElementById(id));
@@ -99,7 +130,7 @@ function initSliderCalc(opts) {
     update();
 }
 
-/* 1. Накопления: ₽/день -> месяц и год */
+/** 1. Накопления: руб/день -> месяц и год */
 function initSavingsCalc() {
     initSliderCalc({
         inputs: ['savingsSlider'],
@@ -112,7 +143,7 @@ function initSavingsCalc() {
     });
 }
 
-/* 2. Скидки: траты и процент -> экономия в месяц и год */
+/** 2. Скидки: траты и процент -> экономия в месяц и год */
 function initDiscountsCalc() {
     initSliderCalc({
         inputs: ['spendSlider', 'discountSlider'],
@@ -128,9 +159,9 @@ function initDiscountsCalc() {
     });
 }
 
-/* 3. Инфляция: сумма и срок -> будущая стоимость и потери */
+/** 3. Инфляция: сумма и срок -> будущая стоимость и потери */
 function initInflationCalc() {
-    const RATE = 0.08;
+    /** @type {number} годовой темп инфляции (доля) */ const RATE = 0.08;
     initSliderCalc({
         inputs: ['sumSlider', 'yearsSlider'],
         labels: ['sumAmount', 'yearsAmount'],
@@ -145,9 +176,9 @@ function initInflationCalc() {
     });
 }
 
-/* 4. Кредит: сумма и срок -> платёж и переплата (аннуитет) */
+/** 4. Кредит: сумма и срок -> платёж и переплата (аннуитет) */
 function initLoanCalc() {
-    const RATE = 0.25;
+    /** @type {number} годовая ставка (доля) */ const RATE = 0.25;
     initSliderCalc({
         inputs: ['amountSlider', 'termSlider'],
         labels: ['amountLabel', 'termLabel'],
@@ -163,7 +194,7 @@ function initLoanCalc() {
     });
 }
 
-/* Вкладки (страница накоплений) */
+/** Вкладки (страница накоплений) */
 function initTabs() {
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');

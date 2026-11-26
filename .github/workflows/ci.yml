@@ -2,7 +2,6 @@ name: CI
 
 on:
   push:
-    branches: [main]
   pull_request:
 
 jobs:
@@ -32,3 +31,18 @@ jobs:
             if [ "$header" -gt 1 ]; then echo "ERROR: $f must have at most one <header>"; status=1; fi
           done
           exit $status
+
+  type-check:
+    name: Type check (JSDoc, tsconfig)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: tsc --noEmit (tsconfig.json, DOM lib)
+        run: npx -y -p typescript@5.5 tsc -p tsconfig.json

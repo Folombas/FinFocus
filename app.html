@@ -7,6 +7,7 @@
     <link rel="canonical" href="https://folombas.github.io/FinFocus/app.html">
     <meta name="theme-color" content="#0e1118">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.webmanifest">
     <meta property="og:title" content="Финансовый тренажёр — FinFocus">
     <meta property="og:description" content="Интерактивный тренажёр финансовой грамотности: собери свой бюджет из ползунков, тумблеров и радиокнопок и узнай, сколько реально можешь откладывать.">
     <meta property="og:type" content="website">
@@ -25,7 +26,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">    <link rel="stylesheet" href="css/modern.css">
+
 </head>
 <body>
 
@@ -164,6 +166,32 @@
             </div>
 
             <div class="hint-chip" id="budgetHint">💡 Совет здесь появится…</div>
+        </section>
+
+        <section class="interactive-block" id="tracker">
+            <h2>🎯 Трекер накоплений: цель и пополнения</h2>
+            <p>Поставь цель, записывай пополнения и смотри прогресс. Данные живут только в твоём браузере (IndexedDB): у сайта нет бэкенда и некуда ничего отправлять. Экспорт и импорт — файлом JSON.</p>
+            <div class="tracker-controls">
+                <label for="trackGoal">Цель, ₽</label>
+                <input type="number" id="trackGoal" min="1000" step="500" value="100000">
+                <label for="trackAmount">Пополнение, ₽</label>
+                <input type="number" id="trackAmount" min="50" step="50" value="1000">
+                <button class="btn-primary" type="button" id="trackAdd">Добавить</button>
+            </div>
+            <div class="dist">
+                <div class="dist-row">
+                    <span class="dist-name">🎯 Накоплено</span>
+                    <span class="dist-val" id="trackSaved">…</span>
+                    <span class="dist-track"><span class="dist-fill fill-mint" id="trackBar"></span></span>
+                </div>
+            </div>
+            <p class="quiz-score" id="trackMsg"></p>
+            <ul class="track-list" id="trackList"></ul>
+            <div class="quiz-actions">
+                <button class="btn-ghost" type="button" id="trackExport">⬇️ Экспорт JSON</button>
+                <label class="btn-ghost" for="trackImportFile">⬆️ Импорт JSON</label>
+                <input type="file" id="trackImportFile" accept="application/json,.json" hidden>
+            </div>
         </section>
 
         <section class="interactive-block">
@@ -318,6 +346,7 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/tracker.js" defer></script>
     <!-- Боковое меню -->
     <div class="drawer-backdrop" data-drawer-close></div>
     <aside class="drawer" id="side-menu" aria-label="Меню FinFocus" aria-hidden="true">

@@ -1,11 +1,17 @@
-/* FinFocus — спецэффекты: частицы, tilt, ripple, прогресс скролла, счётчики, конфетти.
-   Всё отключается автоматически при prefers-reduced-motion и на тач-экранах где уместно. */
+// @ts-check
+/* FinFocus - спецэффекты: частицы, tilt, ripple, прогресс скролла, счётчики, конфетти.
+   Всё отключается автоматически при prefers-reduced-motion и на тач-экранах где уместно.
+   Глобальный тип window - FinFocusWindow из main.js. */
 (function () {
 'use strict';
 
 var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var finePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
 
+/** Значение CSS-переменной с элемента html или запасной вариант
+ * @param {string} name
+ * @param {string} fallback
+ * @returns {string} */
 function cssVar(name, fallback) {
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
     return v || fallback;
@@ -39,7 +45,7 @@ function initParticles() {
     document.body.appendChild(c);
     var ctx = c.getContext('2d');
     if (!ctx) return;
-    var w, h, parts, raf, running = true;
+    var w = 0, h = 0, parts = [], raf = 0, running = true;
     var COLORS = ['blue', 'mint', 'violet'];
     function resize() {
         w = c.width = window.innerWidth;
@@ -60,13 +66,14 @@ function initParticles() {
         };
     }
     function count() {
-        // PERF GUARD: меньше частиц; на слабых устройствах почти ноль
-        var n = window.innerWidth < 720 ? 10 : 18;
-        try {
-            if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) n = Math.min(n, 8);
-            if (navigator.deviceMemory && navigator.deviceMemory <= 2) n = Math.min(n, 6);
-        } catch (e) {}
-        return n;
+    /* navigator.deviceMemory - нестандартное поле DOM, поэтому узкое сужение типа. */
+    var nav = /** @type {Navigator & { deviceMemory?: number }} */ (navigator);
+    var n = window.innerWidth < 720 ? 10 : 18;
+    try {
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) n = Math.min(n, 8);
+        if (nav.deviceMemory && nav.deviceMemory <= 2) n = Math.min(n, 6);
+    } catch (e) {}
+    return n;
     }
     function tick() {
         if (!running) return;
@@ -76,7 +83,7 @@ function initParticles() {
             p.y -= p.speed;
             p.sway += p.swaySpeed * 16;
             p.x += Math.sin(p.sway) * 0.3;
-            if (p.y < -20) parts[i] = spawn(), parts[i].y = h + 20;
+            if (p.y < -20) { parts[i] = spawn(); parts[i].y = h + 20; }
             ctx.globalAlpha = p.alpha * (0.6 + 0.4 * Math.sin(p.sway * 2));
             ctx.fillStyle = p.color;
             ctx.beginPath();
@@ -104,10 +111,10 @@ function initParticles() {
 /* 3. 3D-tilt карточек с бликом за курсором */
 function initTilt() {
     if (!finePointer || reduceMotion) return;
-    document.querySelectorAll('.card, .rule-card, .sale-card').forEach(function (card) {
+    document.querySelectorAll('.card, .rule-card, .sale-card').forEach(/** @param {HTMLElement} card */ function (card) {
         card.classList.add('fx-tilt');
         var pending = false, lastX = 0, lastY = 0;
-        card.addEventListener('pointermove', function (e) {
+        card.addEventListener('pointermove', /** @param {PointerEvent} e */ function (e) {
             lastX = e.clientX; lastY = e.clientY;
             if (pending) return;
             pending = true;
@@ -134,10 +141,10 @@ function initTilt() {
 /* 4. Ripple-волна на кнопках */
 function initRipple() {
     var selector = '.btn-primary, .btn-ghost, .ps-item, .theme-toggle, .burger, .to-top, .tab-btn, .drawer-close';
-    document.querySelectorAll(selector).forEach(function (el) {
+    document.querySelectorAll(selector).forEach(/** @param {HTMLElement} el */ function (el) {
         if (el.classList.contains('fx-host')) return;
         el.classList.add('fx-host');
-        el.addEventListener('pointerdown', function (e) {
+        el.addEventListener('pointerdown', /** @param {PointerEvent} e */ function (e) {
             if (reduceMotion) return;
             var r = el.getBoundingClientRect();
             var d = Math.max(r.width, r.height) * 1.2;
@@ -153,6 +160,9 @@ function initRipple() {
 }
 
 /* 5. Анимированный счётчик значений калькуляторов */
+/** Парсит '12 345,67 руб' -> число
+ * @param {string|null} text
+ * @returns {number|null} */
 function parseMoney(text) {
     var s = String(text).replace(/\u00A0|\s|\u20BD/g, '');
     var m = s.match(/-?[\d.,]+/);
@@ -167,11 +177,15 @@ function parseMoney(text) {
     var n = parseFloat(t);
     return isFinite(n) ? n : null;
 }
+/** Форматирует 'как образец': рубль/суффикс сохраняются
+ * @param {string} proto
+ * @param {number} value
+ * @returns {string} */
 function fmtLike(proto, value) {
     var p = String(proto);
-    var hasRub = p.indexOf('\u20BD') >= 0;
+    var hasRub = p.indexOf('₽') >= 0;
     var suffix = (p.match(/(мес.|%|мес\.)\s*$/) || [''])[0];
-    return Math.round(value).toLocaleString('ru-RU') + (hasRub ? ' \u20BD' : suffix ? ' ' + suffix : '');
+    return Math.round(value).toLocaleString('ru-RU') + (hasRub ? ' ₽' : suffix ? ' ' + suffix : '');
 }
 function initCountUp() {
     if (reduceMotion) return;
@@ -180,17 +194,18 @@ function initCountUp() {
     var target = new WeakMap();  // к чему анимируем
     var echo = new WeakMap();    // защита от эха: текст, записанный нами самими
     var raf = new WeakMap();     // активный rAF на элемент
+    var pmap = new WeakMap();    // последнее установленное значение на элемент
     var observer = new MutationObserver(function (records) {
         records.forEach(function (rec) {
-            var el = rec.target;
+            var el = /** @type {HTMLElement} */ (rec.target);
             if (!el.isConnected) return;
             var raw = el.textContent;
-            if (echo.get(el) === raw) { echo.delete(el); return; } // эхо своей же записи — пропускаем
+            if (echo.get(el) === raw) { echo.delete(el); return; } // эхо своей же записи - пропускаем
             var next = parseMoney(raw);
             if (next === null) return;
             target.set(el, next);
             if (!el.getAttribute('data-proto')) el.setAttribute('data-proto', raw);
-            if (raf.get(el)) cancelAnimationFrame(raf.get(el));
+            if (raf.get(el)) cancelAnimationFrame(/** @type {number} */ (raf.get(el)));
             var from = parseMoney(el.getAttribute('data-proto') || '0');
             if (from === null) from = 0;
             var cur = pmap.get(el) != null ? pmap.get(el) : from;
@@ -210,7 +225,6 @@ function initCountUp() {
             raf.set(el, requestAnimationFrame(step));
         });
     });
-    var pmap = new WeakMap();
     nodes.forEach(function (el) {
         observer.observe(el, { childList: true });
         pmap.set(el, 0);
@@ -219,6 +233,10 @@ function initCountUp() {
 
 /* 6. Конфетти из эмодзи */
 var CONFETTI = ['🪙', '💵', '✨', '🎉', '💰'];
+/** Выброс конфетти в точке (x, y): amount частей, по умолчанию 24
+ * @param {number} x
+ * @param {number} y
+ * @param {number=} amount */
 function burst(x, y, amount) {
     if (reduceMotion) return;
     var n = amount || 24;
@@ -238,14 +256,15 @@ function burst(x, y, amount) {
         s.addEventListener('animationend', function () { this.remove(); });
     }
 }
-window.finfocusBurst = burst;
+/** @type {FinFocusWindow} */ (window).finfocusBurst = burst;
 
-/* 7. Микро-подарок: выключил тумблер — конфетти экономии */
+/* 7. Микро-подарок: выключил тумблер - конфетти экономии */
 function initToggleReward() {
-    document.querySelectorAll('.habit').forEach(function (h) {
+    document.querySelectorAll('.habit').forEach(/** @param {HTMLInputElement} h */ function (h) {
         h.addEventListener('change', function () {
             if (!h.checked) {
-                var r = h.closest('.ui-switch').getBoundingClientRect();
+                var sw = /** @type {HTMLElement} */ (h.closest('.ui-switch'));
+                var r = sw.getBoundingClientRect();
                 burst(r.right - 30, r.top + r.height / 2, 10);
             }
         });
@@ -280,8 +299,7 @@ document.addEventListener('DOMContentLoaded', function () {
   };
   document.querySelectorAll('.content h2, h2.faq-title').forEach((h) => {
     if (h.querySelector('.heading-anchor')) return;
-    const text = h.textContent || '';
-    const title = text.replace(/\s+#$/, '').trim();
+    const title = (h.textContent || '').replace(/\s+#$/, '').trim();
     h.id = h.id || slugify(title);
     const a = document.createElement('a');
     a.className = 'heading-anchor';

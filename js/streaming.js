@@ -1,13 +1,18 @@
-/* js/streaming.js — интерактив раздела «Стриминг».
-   Переиспользует глобальные initSliderCalc / formatNum / fmtRub из js/main.js. */
+// @ts-check
+/* js/streaming.js - интерактив раздела 'Стриминг'.
+   Переиспользует глобальные initSliderCalc / formatNum / fmtRub из js/main.js
+   через обычный window.*-доступ; состав window - FinFocusWindow из main.js. */
 (function () {
     'use strict';
+
+    /** @type {FinFocusWindow} */
+    var w = /** @type {FinFocusWindow} */ (window);
 
     /* Калькулятор донатов: N зрителей -> доход в месяц и за эфир. */
     document.addEventListener('DOMContentLoaded', function () {
         var viewers = document.getElementById('viewersSlider');
-        var service = document.getElementById('serviceSelect');
-        if (!viewers || !service) return; // не наша страница — тихо выходим
+        var service = /** @type {HTMLSelectElement|null} */ (document.getElementById('serviceSelect'));
+        if (!viewers || !service) return; // не наша страница - тихо выходим
 
         /* Комиссии как доля: актуально на 26.11.2026, значения в select#serviceSelect. */
         function computeFn(values) {
@@ -17,27 +22,27 @@
             var perStream = values[3] > 0 ? net / values[3] : 0;
             return {
                 labels: [
-                    window.formatNum(values[0]) + ' зрителей',
+                    w.formatNum(values[0]) + ' зрителей',
                     values[1] + '% донатят',
-                    window.fmtRub(values[2]) + ' средний донат',
+                    w.fmtRub(values[2]) + ' средний донат',
                     values[3] + ' эфиров в месяц'
                 ],
                 results: [
-                    window.fmtRub(gross),
-                    window.fmtRub(net),
-                    window.fmtRub(perStream)
+                    w.fmtRub(gross),
+                    w.fmtRub(net),
+                    w.fmtRub(perStream)
                 ]
             };
         }
 
-        window.initSliderCalc({
+        w.initSliderCalc({
             inputs: ['viewersSlider', 'convSlider', 'donateSlider', 'streamsSlider'],
             labels: ['viewersLabel', 'convLabel', 'donateLabel', 'streamsLabel'],
             results: ['calcGross', 'calcNet', 'calcPerStream'],
             compute: computeFn
         });
 
-        /* Смена сервиса меняет комиссию — перезапускаем пересчёт слайдером. */
+        /* Смена сервиса меняет комиссию - перезапускаем пересчёт слайдером. */
         service.addEventListener('change', function () {
             viewers.dispatchEvent(new Event('input'));
         });
@@ -51,6 +56,7 @@
         var tabs = Array.prototype.slice.call(document.querySelectorAll('.plat-tab'));
         if (!tabs.length) return;
 
+        /** @param {HTMLElement} tab активирует вкладку и её панель */
         function selectTab(tab) {
             tabs.forEach(function (t) {
                 var on = t === tab;

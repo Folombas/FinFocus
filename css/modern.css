@@ -1,0 +1,57 @@
+/* ==========================================================================
+   FinFocus — modern.css: современный слой поверх style.css (аддитивный).
+   Подключается из js/theme.js (база URL выводится из currentScript),
+   поэтому страница полностью рабоча и без этого файла.
+   Деградация мягкая: без поддержки @view-transition навигация обычная,
+   color-scheme, scrollbar-color, accent-color и text-wrap — безвредные
+   прогрессивные улучшения.
+   ========================================================================== */
+
+/* Кросс-документные View Transitions между страницами (MPA, бесплатно).
+   Браузеры без поддержки блок не применяют. */
+@view-transition {
+    navigation: auto;
+}
+
+/* Явный color-scheme: нативные элементы (скроллбары, inputs) в палитре темы. */
+html {
+    color-scheme: dark;
+}
+html[data-theme="light"] {
+    color-scheme: light;
+}
+
+/* Свой скроллбар в палитре сайта (Firefox/Chrome). */
+html {
+    scrollbar-color: color-mix(in oklch, var(--blue, #6ea8ff) 70%, transparent) transparent;
+}
+
+/* Нативные чекбоксы/радио/ползунки — фирменный синий (в светлой теме oklch-микс темнее). */
+input[type="checkbox"], input[type="radio"], input[type="range"] {
+    accent-color: var(--blue, #6ea8ff);
+}
+html[data-theme="light"] input[type="checkbox"],
+html[data-theme="light"] input[type="radio"],
+html[data-theme="light"] input[type="range"] {
+    accent-color: color-mix(in oklch, var(--blue, #3a6fd8) 85%, #1c3f8f);
+}
+
+/* Заголовки не оставляют «висячих» слов; абзацы балансируются по строкам.
+   Только CSS, никакого JS. */
+@media (prefers-reduced-motion: no-preference) {
+    .content h2,
+    .content h3,
+    h1 {
+        text-wrap: balance;
+    }
+    .content p {
+        text-wrap: pretty;
+    }
+}
+
+/* light-dark() для служебных подписей: один и тот же цвет переменной в обеих темах,
+   заготовка для будущих переделок палитры. */
+.verify-note,
+.footer-meta {
+    color: light-dark(var(--muted, #9aa3b5), var(--muted, #9aa3b5));
+}
