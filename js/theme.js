@@ -17,14 +17,6 @@ function urlBase() {
     return '';
 }
 
-/** Подключает css/modern.css: страница полностью рабоча и без этого слоя. */
-function injectModernCss() {
-    var link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = urlBase() + 'css/modern.css';
-    document.head.appendChild(link);
-}
-
 /** Добавляет Speculation Rules: лёгкий prefetch внутренних страниц списка,
  *  чтобы навигация по сайту ощущалась мгновенной.
  *  Браузеры без поддержки просто игнорируют тег. */
@@ -39,7 +31,6 @@ function injectSpeculationRules() {
     el.textContent = JSON.stringify(rules);
     document.head.appendChild(el);
 }
-injectModernCss();
 injectSpeculationRules();
 
 /** @returns {'light'|'dark'} текущая системная тема */
