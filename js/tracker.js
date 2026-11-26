@@ -16,7 +16,7 @@ var GOAL_KEY = 'finfocus-goal';
 /** @type {HTMLInputElement|null} */ var amountEl = /** @type {HTMLInputElement|null} */ (document.getElementById('trackAmount'));
 
 function fmtNum(num) {
-    return String(Math.round(num)).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ' ');
+    return String(Math.round(num)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
 
 function openDb() {
