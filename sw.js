@@ -2,6 +2,7 @@
  * Версия кэша: при изменении набора файлов поднимите VERS, старый кэш удалится сам. */
 var VERS = 'v2';
 var CACHE = 'finfocus-' + VERS;
+var CACHES = [CACHE];
 var CORE = [
     'offline.html',
     'index.html',
@@ -57,7 +58,7 @@ self.addEventListener('activate', function (e) {
         /* Удаляем только свои кэши: на общем origin (folombas.github.io)
          * живут кэши соседних проектов (web-games и других), их трогать нельзя. */
         return Promise.all(keys.map(function (k) {
-            return (k.indexOf('finfocus-') === 0 && k !== CACHE) ? caches.delete(k) : null;
+            return (k.indexOf('finfocus-') === 0 && CACHES.indexOf(k) === -1) ? caches.delete(k) : null;
         }));
     }).then(function () { return self.clients.claim(); }));
 });
