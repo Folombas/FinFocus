@@ -3,7 +3,8 @@
 var VERS = 'v2';
 var SHELL_CACHE = 'finfocus-' + VERS + '-shell';
 var PAGES_CACHE = 'finfocus-' + VERS + '-pages';
-var CACHES = [SHELL_CACHE, PAGES_CACHE];
+var DATA_CACHE = 'finfocus-' + VERS + '-data';
+var CACHES = [SHELL_CACHE, PAGES_CACHE, DATA_CACHE];
 
 /* Оболочка: то, без чего страница не выглядит и не работает сайтом */
 var SHELL = [
@@ -72,14 +73,18 @@ self.addEventListener('fetch', function (e) {
      * не «залипал» в cache-first навсегда; при обрыве отдаём последний
      * успешный снимок из кэша. */
     if (url.pathname.indexOf('/data/') !== -1) {
-        e.respondWith(fetch(req).then(function (res) {
-            if (res && res.ok) {
-                var copy = res.clone();
-                caches.open(SHELL_CACHE).then(function (c) { c.put(req, copy); });
-            }
-            return res;
-        }).catch(function () {
-            return caches.match(req);
+        e.respondWith(caches.match(req).then(function (hit) {
+            /* stale-while-revalidate: снимок из кэша отдаём мгновенно,
+             * сеть параллельно обновляет data-кэш (курсы ЦБ не «залипают») */
+            var net = fetch(req).then(function (res) {
+                if (res && res.ok) {
+                    var copy = res.clone();
+                    caches.open(DATA_CACHE).then(function (c) { c.put(req, copy); });
+                }
+                return res;
+            });
+            if (hit) { net.catch(function () { /* снимок остаётся актуальным */ }); return hit; }
+            return net;
         }));
         return;
     }
