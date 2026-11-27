@@ -32,6 +32,9 @@ jobs:
           done
           exit $status
 
+      - name: Structural gates (SW base, cache scope, offline paths, res.ok)
+        run: node .github/scripts/structural-gates.js
+
   type-check:
     name: Type check (JSDoc, tsconfig)
     runs-on: ubuntu-latest
