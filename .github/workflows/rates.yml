@@ -6,10 +6,6 @@ on:
     # для workflow-файла на основной ветке (main).
     - cron: '0 6 * * *'
   workflow_dispatch:
-  # Временный живой прогон для ветки ТЗ (убрать перед мержем)
-  push:
-    branches: ['tz-2026-11-27']
-    paths: ['.github/workflows/rates.yml']
 
 permissions:
   contents: write
