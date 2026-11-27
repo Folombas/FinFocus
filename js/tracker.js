@@ -108,6 +108,7 @@ function render(db) {
             else if (pct > 0) msgEl.textContent = 'До цели осталось ' + fmtNum(goal - total) + ' ₽.';
             else msgEl.textContent = '';
         }
+        renderExtras(rows);
     });
 }
 
@@ -115,12 +116,111 @@ function flash(text) {
     if (msgEl) msgEl.textContent = text;
 }
 
+/* --- Пресеты целей, месячный спарклайн и стрик --- */
+
+var EXP_KEY = 'finfocus-expenses';
+
+/** Суммы пополнений по месяцам, последние 6 месяцев (старые -> новые) */
+function monthlySums(rows) {
+    var now = new Date();
+    var buckets = [];
+    for (var i = 5; i >= 0; i--) {
+        var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        buckets.push({ key: d.getFullYear() + '-' + d.getMonth(), label: d.toLocaleDateString('ru-RU', { month: 'short' }), sum: 0 });
+    }
+    rows.forEach(function (r) {
+        var d = new Date(r.at);
+        var key = d.getFullYear() + '-' + d.getMonth();
+        for (var i = 0; i < buckets.length; i++) {
+            if (buckets[i].key === key) { buckets[i].sum += Number(r.amount) || 0; return; }
+        }
+    });
+    return buckets;
+}
+
+/** Сколько дней подряд с пополнениями, считая от сегодня (или вчера) */
+function streakDays(rows) {
+    var days = {};
+    rows.forEach(function (r) {
+        var d = new Date(r.at);
+        days[d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate()] = true;
+    });
+    var cur = new Date();
+    if (!days[cur.getFullYear() + '-' + cur.getMonth() + '-' + cur.getDate()]) {
+        cur.setDate(cur.getDate() - 1);
+        if (!days[cur.getFullYear() + '-' + cur.getMonth() + '-' + cur.getDate()]) return 0;
+    }
+    var streak = 0;
+    while (days[cur.getFullYear() + '-' + cur.getMonth() + '-' + cur.getDate()]) {
+        streak += 1;
+        cur.setDate(cur.getDate() - 1);
+    }
+    return streak;
+}
+
+/** Достраивает блок пресетов и спарклайна после списка (разметка в js, чтобы не дублировать HTML) */
+function buildExtras() {
+    if (!listEl || document.getElementById('trackExtras')) return;
+    var wrap = document.createElement('div');
+    wrap.id = 'trackExtras';
+    wrap.innerHTML = '<div class="track-presets">'
+        + '<label>Расходы в месяц: <input type="number" id="trackExpenses" min="0" step="1000" placeholder="40000"></label> '
+        + '<button type="button" class="track-preset" id="trackP3">🎯 Подушка ×3</button> '
+        + '<button type="button" class="track-preset" id="trackP6">🛡️ Подушка ×6</button>'
+        + '</div>'
+        + '<p id="trackStreak" class="track-streak" role="status"></p>'
+        + '<div id="trackSpark" class="track-spark" role="img" aria-label="Пополнения по месяцам"></div>';
+    listEl.parentNode.insertBefore(wrap, listEl.nextSibling);
+
+    var exp = /** @type {HTMLInputElement|null} */ (document.getElementById('trackExpenses'));
+    var saved = null;
+    try { saved = localStorage.getItem(EXP_KEY); } catch (e) {}
+    if (saved && exp) exp.value = saved;
+
+    function preset(mult) {
+        if (!exp || !goalEl) return;
+        var v = parseFloat(exp.value) || 0;
+        if (v <= 0) { flash('⚠️ Сначала укажи расходы в месяц.'); return; }
+        try { localStorage.setItem(EXP_KEY, String(v)); } catch (e) {}
+        goalEl.value = String(Math.round(v * mult));
+        try { localStorage.setItem(GOAL_KEY, String(goalEl.value)); } catch (e) {}
+        dbPromiseCache.then(function (db) { return render(db); });
+    }
+    var p3 = document.getElementById('trackP3');
+    var p6 = document.getElementById('trackP6');
+    if (p3) p3.addEventListener('click', function () { preset(3); });
+    if (p6) p6.addEventListener('click', function () { preset(6); });
+}
+
+function renderExtras(rows) {
+    var spark = document.getElementById('trackSpark');
+    var streakEl = document.getElementById('trackStreak');
+    if (streakEl) {
+        var s = streakDays(rows);
+        streakEl.textContent = s > 0 ? '🔥 Дней подряд с пополнениями: ' + s : 'Стрик ждёт первого пополнения: сделай одно сегодня.';
+    }
+    if (spark) {
+        var buckets = monthlySums(rows);
+        var max = 1;
+        buckets.forEach(function (b) { if (b.sum > max) max = b.sum; });
+        var bars = buckets.map(function (b, i) {
+            var h = Math.max(2, Math.round(b.sum / max * 60));
+            var x = i * 44 + 6;
+            var cap = b.sum >= 1000000 ? (b.sum / 1000000).toFixed(1) + 'М' : (b.sum >= 1000 ? Math.round(b.sum / 1000) + 'К' : String(b.sum));
+            return '<rect x="' + x + '" y="' + (70 - h) + '" width="32" height="' + h + '" rx="4" fill="#1f6feb"></rect>'
+                + '<text x="' + (x + 16) + '" y="84" text-anchor="middle" font-size="10" fill="currentColor">' + b.label + '</text>'
+                + (b.sum > 0 ? '<text x="' + (x + 16) + '" y="' + (64 - h) + '" text-anchor="middle" font-size="10" fill="currentColor">' + cap + '</text>' : '');
+        }).join('');
+        spark.innerHTML = '<svg viewBox="0 0 272 88" width="100%" height="88" xmlns="http://www.w3.org/2000/svg">' + bars + '</svg>';
+    }
+}
+
 /** @type {IDBDatabase|null} */ var dbCache = null;
 var dbPromiseCache = openDb().then(function (db) { dbCache = db; return db; });
 
 document.addEventListener('DOMContentLoaded', function () {
     if (!goalEl || !amountEl || !listEl) return;
-    dbPromiseCache.then(function (db) { return render(db); }).catch(function () {
+    dbPromiseCache.then(function (db) { return render(db); }).then(function () { buildExtras(); }).catch(function () {
         if (msgEl) msgEl.textContent = 'IndexedDB недоступен в этом браузере.';
     });
 
