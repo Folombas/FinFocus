@@ -93,7 +93,7 @@ self.addEventListener('fetch', function (e) {
      * Кэшируем только успешные ответы: 404/500 в кэш не попадают. */
     if (req.mode === 'navigate') {
         e.respondWith(fetch(req).then(function (res) {
-            if (res && res.ok) {
+            if (res && res.ok && !res.redirected) {
                 var copy = res.clone();
                 caches.open(CACHE).then(function (c) { c.put(req, copy); });
             }
