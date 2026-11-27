@@ -46,7 +46,7 @@ function addDeposit(db, amount) {
     return new Promise(function (resolve, reject) {
         var store = db.transaction(STORE, 'readwrite').objectStore(STORE);
         var req = store.add({ amount: amount, at: new Date().toISOString() });
-        req.onsuccess = function () { resolve(true); };
+        req.onsuccess = function () { resolve(db); };
         req.onerror = function () { reject(req.error); };
     });
 }
@@ -55,7 +55,7 @@ function deleteDeposit(db, id) {
     return new Promise(function (resolve, reject) {
         var store = db.transaction(STORE, 'readwrite').objectStore(STORE);
         var req = store.delete(id);
-        req.onsuccess = function () { resolve(true); };
+        req.onsuccess = function () { resolve(db); };
         req.onerror = function () { reject(req.error); };
     });
 }
@@ -90,7 +90,7 @@ function render(db) {
                 del.setAttribute('aria-label', 'Удалить запись');
                 del.textContent = '✕';
                 del.addEventListener('click', function () {
-                    deleteDeposit(db, r.id).then(function () { return render(db); });
+                    deleteDeposit(db, r.id).then(function (d) { return render(d); });
                 });
                 li.appendChild(txt);
                 li.appendChild(del);
@@ -128,11 +128,9 @@ document.addEventListener('DOMContentLoaded', function () {
         var amount = Math.round(parseFloat(amountEl.value) || 0);
         if (amount <= 0) { flash('⚠️ Введите сумму больше нуля.'); return; }
         try { localStorage.setItem(GOAL_KEY, String(goalEl.value)); } catch (e) {}
-        /* addDeposit резолвит true, поэтому db передаём в замыкании:
-         * следующий then в цепочке получает не db, а результат записи. */
-        dbPromiseCache.then(function (db) {
-            return addDeposit(db, amount).then(function () { return render(db); });
-        })
+        dbPromiseCache
+            .then(function (db) { return addDeposit(db, amount); })
+            .then(function (db) { return render(db); })
             .then(function () { amountEl.value = '1000'; })
             .catch(function () { flash('⚠️ Не удалось сохранить пополнение.'); });
     });
