@@ -167,26 +167,25 @@ document.addEventListener('DOMContentLoaded', function () {
                     var rows = Array.isArray(parsed && parsed.deposits) ? parsed.deposits : [];
                     if (parsed && parsed.goal && goalEl) goalEl.value = String(parsed.goal);
                     dbPromiseCache.then(function (db) {
-                        var added = 0;
-                        var chain = Promise.resolve();
+                        /* Одна readwrite-транзакция: все store.add выдаются
+                         * синхронно, до первой паузы в скрипте. Резолв по
+                         * tx.oncomplete, счётчики ok/bad честные. */
+                        var tx = db.transaction(STORE, 'readwrite');
+                        var store = tx.objectStore(STORE);
+                        var okCount = 0;
                         rows.forEach(function (r) {
-                            chain = chain.then(function () {
-                                return new Promise(function (resolve) {
-                                    /* Своя readwrite-транзакция на каждую запись:
-                                     * транзакция авто-коммитится, как только цепочка
-                                     * промисов уступает очередь, поэтому один store
-                                     * на все записи использовать нельзя. */
-                                    var store = db.transaction(STORE, 'readwrite').objectStore(STORE);
-                                    var req = store.add({ amount: Number(r.amount) || 0, at: String(r.at || new Date().toISOString()) });
-                                    req.onsuccess = function () { added += 1; resolve(); };
-                                    req.onerror = function () { resolve(); };
-                                });
-                            });
+                            var req = store.add({ amount: Number(r.amount) || 0, at: String(r.at || new Date().toISOString()) });
+                            req.onsuccess = function () { okCount += 1; };
                         });
-                        return chain.then(function () { return render(db).then(function () { return added; }); });
-                    }).then(function (added) {
-                        if (added === rows.length) flash('✅ Импорт завершён: ' + added + ' записей.');
-                        else flash('⚠️ Импортировано ' + added + ' из ' + rows.length + ' записей.');
+                        return new Promise(function (resolve) {
+                            tx.oncomplete = function () { resolve(okCount); };
+                            tx.onabort = function () { resolve(okCount); };
+                        }).then(function (okCount) {
+                            return render(db).then(function () { return { ok: okCount, bad: rows.length - okCount }; });
+                        });
+                    }).then(function (res) {
+                        if (res.bad === 0) flash('✅ Импорт завершён: ' + res.ok + ' записей.');
+                        else flash('⚠️ Импортировано ' + res.ok + ' из ' + (res.ok + res.bad) + ', пропущено ' + res.bad + '.');
                     });
                 } catch (e) { flash('⚠️ Не удалось прочитать файл.'); }
             };
