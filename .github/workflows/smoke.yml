@@ -1,0 +1,41 @@
+name: smoke
+
+on:
+  push:
+    branches: ['tz-2026-11-27']
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Playwright and Chromium
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm i --no-fund --no-audit playwright@1.49.1
+          npx playwright install --with-deps chromium
+
+      - name: Serve site locally
+        run: |
+          npx -y http-server -p 8080 --silent &
+          sleep 3
+
+      - name: Run smoke (SW, offline, tracker, search)
+        run: node tests/smoke.js
+
+      - name: Upload G5 screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: g5-screenshots
+          path: tests/artifacts/
+          if-no-files-found: warn
