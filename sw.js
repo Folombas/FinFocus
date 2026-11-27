@@ -84,7 +84,11 @@ self.addEventListener('fetch', function (e) {
                 return res;
             });
             if (hit) { net.catch(function () { /* снимок остаётся актуальным */ }); return hit; }
-            return net;
+            return net.catch(function () {
+                /* Нет сети и нет снимка: явная ошибка вместо undefined,
+                 * который браузер считает сбоем respondWith */
+                return new Response('', { status: 504, statusText: 'Offline' });
+            });
         }));
         return;
     }
