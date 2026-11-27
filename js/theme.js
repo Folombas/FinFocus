@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
 /* База сайта для SW. Вычисляется на этапе выполнения скрипта: внутри
  * load-обработчика document.currentScript уже равен null, и база
  * ошибочно схлопнулась бы в '/'. */
-var pwaBase = (function () {
+var FF_BASE = (function () {
     var sc = /** @type {HTMLScriptElement | null} */ (document.currentScript);
     if (sc && sc.src) {
         var mm = String(sc.src).match(/^(.*\/)js\//i);
@@ -116,7 +116,7 @@ var hadController = 'serviceWorker' in navigator && !!navigator.serviceWorker.co
 
 if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
     window.addEventListener('load', function () {
-        navigator.serviceWorker.register(pwaBase + 'sw.js').then(function (reg) {
+        navigator.serviceWorker.register(FF_BASE + 'sw.js', { scope: FF_BASE }).then(function (reg) {
             /* Обновление только по действию пользователя: не перезагружаем
              * страницу молча посреди ввода данных (трекер, калькуляторы). */
             if (reg.waiting && hadController) showUpdateToast(reg.waiting);

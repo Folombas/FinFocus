@@ -3,6 +3,7 @@
   "short_name": "FinFocus",
   "description": "Обучающий сайт о личных финансах: бюджет, накопления, скидки, кредиты и привычки экономии.",
   "lang": "ru",
+  "id": "/FinFocus/",
   "start_url": "/FinFocus/",
   "scope": "/FinFocus/",
   "display": "standalone",
@@ -11,6 +12,10 @@
   "theme_color": "#0e1118",
   "icons": [
     { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+    { "src": "icons/maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Поиск по сайту", "url": "search.html" },
+    { "name": "Тренажёр бюджета", "url": "app.html" }
   ]
 }
