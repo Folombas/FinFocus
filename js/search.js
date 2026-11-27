@@ -99,6 +99,9 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(function (data) {
             index = data;
             if (status && !input.value) status.textContent = 'Индекс загружен: ' + index.length + ' страниц.';
+            /* Индекс мог прийти позже первого рендера (например, при ?q=...):
+             * перерисовываем результаты. */
+            render();
         })
         .catch(function () {
             if (status) status.textContent = 'Индекс не загрузился (нужен http, а не file://).';
